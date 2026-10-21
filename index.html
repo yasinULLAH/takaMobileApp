@@ -934,6 +934,43 @@
                         </div>
                     </div>
 
+                    <div class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-sm space-y-5">
+                        <div class="border-b border-slate-200 pb-3">
+                            <h3 class="font-extrabold text-base text-slate-900"><i class="fa-solid fa-sliders text-emerald-600 ml-1"></i> شہر، علاقے اور مزدور ہنر کی لسٹ کنٹرول (Custom Cities & Roles CRUD)</h3>
+                            <p class="text-xs text-slate-500">یہاں سے آپ نئے شہر، علاقے یا مزدوروں کی کیٹیگری شامل، تبدیل یا حذف کر سکتے ہیں۔ ڈراپ ڈاؤن میں بھی نیا نام براہ راست ٹائپ کیا جا سکتا ہے۔</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <h4 class="font-bold text-sm text-slate-800"><i class="fa-solid fa-map-location-dot text-emerald-600 ml-1"></i> ٹھیکہ شہر و علاقے (Cities / Locations)</h4>
+                                    <span id="city-count-badge" class="bg-emerald-100 text-emerald-800 text-[11px] font-bold px-2 py-0.5 rounded-full"></span>
+                                </div>
+                                <form onsubmit="App.addCity(event)" class="flex gap-2">
+                                    <input type="text" id="new-city-input" placeholder="نیا شہر یا علاقہ لکھیں..." class="flex-1 border border-slate-300 rounded-xl px-3 py-2 text-xs bg-white touch-target" required>
+                                    <button type="submit" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-3.5 py-2 rounded-xl shadow touch-target flex items-center gap-1">
+                                        <i class="fa-solid fa-plus"></i> شامل
+                                    </button>
+                                </form>
+                                <div id="cities-list-container" class="space-y-1.5 max-h-60 overflow-y-auto pr-1"></div>
+                            </div>
+
+                            <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <h4 class="font-bold text-sm text-slate-800"><i class="fa-solid fa-user-gear text-sky-600 ml-1"></i> مزدور ہنر و کام کی اقسام (Mazdoor Roles)</h4>
+                                    <span id="role-count-badge" class="bg-sky-100 text-sky-800 text-[11px] font-bold px-2 py-0.5 rounded-full"></span>
+                                </div>
+                                <form onsubmit="App.addRole(event)" class="flex gap-2">
+                                    <input type="text" id="new-role-input" placeholder="نیا ہنر یا کام کی قسم لکھیں..." class="flex-1 border border-slate-300 rounded-xl px-3 py-2 text-xs bg-white touch-target" required>
+                                    <button type="submit" class="bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs px-3.5 py-2 rounded-xl shadow touch-target flex items-center gap-1">
+                                        <i class="fa-solid fa-plus"></i> شامل
+                                    </button>
+                                </form>
+                                <div id="roles-list-container" class="space-y-1.5 max-h-60 overflow-y-auto pr-1"></div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div id="admin-users-panel" class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-sm space-y-4">
                         <div class="flex items-center justify-between border-b border-slate-200 pb-3">
                             <div>
@@ -1002,15 +1039,7 @@
                     </div>
                     <div>
                         <label for="theka-city" class="block text-xs font-bold text-slate-700 mb-1">شہر / علاقہ (KPK) <span class="text-red-500">*</span></label>
-                        <select id="theka-city" class="w-full">
-                            <option value="پشاور (حیات آباد / رنگ روڈ)">پشاور (حیات آباد / رنگ روڈ)</option>
-                            <option value="مردان (شیخ ملتون ٹاؤن)">مردان (شیخ ملتون ٹاؤن)</option>
-                            <option value="سوات (مینگورہ / سیدو شریف)">سوات (مینگورہ / سیدو شریف)</option>
-                            <option value="ایبٹ آباد (مانسہرہ روڈ)">ایبٹ آباد (مانسہرہ روڈ)</option>
-                            <option value="نوشہرہ / چارسدہ">نوشہرہ / چارسدہ</option>
-                            <option value="کوہاٹ / بنوں / ڈیرہ">کوہاٹ / بنوں / ڈیرہ</option>
-                            <option value="صوابی / ملاکنڈ / دیر">صوابی / ملاکنڈ / دیر</option>
-                        </select>
+                        <select id="theka-city" class="w-full"></select>
                     </div>
                     <div>
                         <label for="theka-type" class="block text-xs font-bold text-slate-700 mb-1">ٹھیکہ کی قسم <span class="text-red-500">*</span></label>
@@ -1078,14 +1107,7 @@
                     </div>
                     <div>
                         <label for="mazdoor-role" class="block text-xs font-bold text-slate-700 mb-1">ہنر / کام کی قسم <span class="text-red-500">*</span></label>
-                        <select id="mazdoor-role" class="w-full">
-                            <option value="راج مستری (Mason)">راج مستری (Mason)</option>
-                            <option value="مزدور / ہیلپر (Helper)">مزدور / ہیلپر (Helper)</option>
-                            <option value="شٹرنگ مستری (Shuttering)">شٹرنگ مستری (Shuttering)</option>
-                            <option value="سریا بائنڈر (Steel Fixer)">سریا بائنڈر (Steel Fixer)</option>
-                            <option value="پلمبر / الیکٹریشن">پلمبر / الیکٹریشن</option>
-                            <option value="ٹائل / ماربل مستری">ٹائل / ماربل مستری</option>
-                        </select>
+                        <select id="mazdoor-role" class="w-full"></select>
                     </div>
                     <div>
                         <label for="mazdoor-wage" class="block text-xs font-bold text-slate-700 mb-1">روزانہ دیہاڑی ریٹ (PKR) <span class="text-red-500">*</span></label>
@@ -1656,6 +1678,23 @@
                             desc: "استاد گلزار خان کو ہفتہ وار گھر خرچہ و دیہاڑی ادائیگی",
                             receiptImg: ""
                         }
+                    ],
+                    cities: [
+                        "پشاور (حیات آباد / رنگ روڈ)",
+                        "مردان (شیخ ملتون ٹاؤن)",
+                        "سوات (مینگورہ / سیدو شریف)",
+                        "ایبٹ آباد (مانسہرہ روڈ)",
+                        "نوشہرہ / چارسدہ",
+                        "کوہاٹ / بنوں / ڈیرہ",
+                        "صوابی / ملاکنڈ / دیر"
+                    ],
+                    roles: [
+                        "راج مستری (Mason)",
+                        "مزدور / ہیلپر (Helper)",
+                        "شٹرنگ مستری (Shuttering)",
+                        "سریا بائنڈر (Steel Fixer)",
+                        "پلمبر / الیکٹریشن",
+                        "ٹائل / ماربل مستری"
                     ]
                 };
             },
@@ -1685,6 +1724,15 @@
                     }
                 } catch (e) {
                     this.db = this.getSeedDatabase();
+                }
+                const seed = this.getSeedDatabase();
+                if (!this.db.cities || !Array.isArray(this.db.cities) || this.db.cities.length === 0) {
+                    this.db.cities = seed.cities;
+                    this.saveDatabase();
+                }
+                if (!this.db.roles || !Array.isArray(this.db.roles) || this.db.roles.length === 0) {
+                    this.db.roles = seed.roles;
+                    this.saveDatabase();
                 }
             },
 
@@ -2007,9 +2055,11 @@
                 $("select").each(function () {
                     const $el = $(this);
                     const $modalParent = $el.closest(".fixed");
+                    const isTagable = ($el.attr("id") === "theka-city" || $el.attr("id") === "mazdoor-role");
                     $el.select2({
                         dir: "rtl",
                         width: "100%",
+                        tags: isTagable,
                         dropdownParent: $modalParent.length ? $modalParent : $(document.body)
                     });
                 });
@@ -2018,6 +2068,37 @@
             populateDropdowns() {
                 const thekaOptions = this.db.thekas.map(t => `<option value="${this.escapeHtml(t.id)}">${this.escapeHtml(t.title)} (${this.escapeHtml(t.status)})</option>`).join("");
                 const mazdoorOptions = this.db.mazdoors.map(m => `<option value="${this.escapeHtml(m.id)}">${this.escapeHtml(m.name)} - ${this.escapeHtml(m.role)} (Rs ${m.dailyWage})</option>`).join("");
+
+                const cityOptions = (this.db.cities || []).map(c => `<option value="${this.escapeHtml(c)}">${this.escapeHtml(c)}</option>`).join("");
+                const roleOptions = (this.db.roles || []).map(r => `<option value="${this.escapeHtml(r)}">${this.escapeHtml(r)}</option>`).join("");
+
+                const thekaCityEl = document.getElementById("theka-city");
+                if (thekaCityEl) {
+                    const currentVal = $(thekaCityEl).val();
+                    thekaCityEl.innerHTML = cityOptions;
+                    if (currentVal) {
+                        if (!$(thekaCityEl).find(`option[value="${currentVal}"]`).length) {
+                            $(thekaCityEl).append(new Option(currentVal, currentVal, true, true));
+                        } else {
+                            $(thekaCityEl).val(currentVal);
+                        }
+                    }
+                    $(thekaCityEl).trigger("change.select2");
+                }
+
+                const mazdoorRoleEl = document.getElementById("mazdoor-role");
+                if (mazdoorRoleEl) {
+                    const currentVal = $(mazdoorRoleEl).val();
+                    mazdoorRoleEl.innerHTML = roleOptions;
+                    if (currentVal) {
+                        if (!$(mazdoorRoleEl).find(`option[value="${currentVal}"]`).length) {
+                            $(mazdoorRoleEl).append(new Option(currentVal, currentVal, true, true));
+                        } else {
+                            $(mazdoorRoleEl).val(currentVal);
+                        }
+                    }
+                    $(mazdoorRoleEl).trigger("change.select2");
+                }
 
                 ["mazdoor-theka", "att-theka", "hisab-theka"].forEach(id => {
                     const el = document.getElementById(id);
@@ -2087,6 +2168,7 @@
                 this.renderAttendanceTable();
                 this.renderHisabTable();
                 this.renderUsersTable();
+                this.renderSettingsLists();
                 this.syncSettingsForm();
             },
 
@@ -2657,6 +2739,7 @@
             },
 
             openThekaModal(editId = "") {
+                this.populateDropdowns();
                 document.getElementById("form-theka").reset();
                 document.getElementById("theka-id").value = "";
                 document.getElementById("theka-start").value = new Date().toISOString().slice(0, 10);
@@ -2669,6 +2752,9 @@
                         document.getElementById("theka-title").value = t.title;
                         document.getElementById("theka-client").value = t.client;
                         document.getElementById("theka-phone").value = t.phone;
+                        if (!$("#theka-city").find(`option[value="${t.city}"]`).length) {
+                            $("#theka-city").append(new Option(t.city, t.city, true, true));
+                        }
                         $("#theka-city").val(t.city).trigger("change.select2");
                         $("#theka-type").val(t.type).trigger("change.select2");
                         $("#theka-status").val(t.status).trigger("change.select2");
@@ -2690,12 +2776,16 @@
 
                 setTimeout(() => {
                     const id = document.getElementById("theka-id").value;
+                    const cityVal = document.getElementById("theka-city").value.trim();
+                    if (cityVal && !this.db.cities.includes(cityVal)) {
+                        this.db.cities.push(cityVal);
+                    }
                     const payload = {
                         id: id || "THK-" + Date.now(),
                         title: document.getElementById("theka-title").value.trim(),
                         client: document.getElementById("theka-client").value.trim(),
                         phone: document.getElementById("theka-phone").value.trim(),
-                        city: document.getElementById("theka-city").value,
+                        city: cityVal,
                         type: document.getElementById("theka-type").value,
                         status: document.getElementById("theka-status").value,
                         contractAmount: Number(document.getElementById("theka-amount").value) || 0,
@@ -2754,6 +2844,9 @@
                         document.getElementById("modal-mazdoor-title").textContent = "مزدور / مستری کے ریکارڈ میں ترمیم";
                         document.getElementById("mazdoor-id").value = m.id;
                         document.getElementById("mazdoor-name").value = m.name;
+                        if (!$("#mazdoor-role").find(`option[value="${m.role}"]`).length) {
+                            $("#mazdoor-role").append(new Option(m.role, m.role, true, true));
+                        }
                         $("#mazdoor-role").val(m.role).trigger("change.select2");
                         document.getElementById("mazdoor-wage").value = m.dailyWage;
                         document.getElementById("mazdoor-phone").value = m.phone;
@@ -2779,10 +2872,14 @@
 
                 setTimeout(() => {
                     const id = document.getElementById("mazdoor-id").value;
+                    const roleVal = document.getElementById("mazdoor-role").value.trim();
+                    if (roleVal && !this.db.roles.includes(roleVal)) {
+                        this.db.roles.push(roleVal);
+                    }
                     const payload = {
                         id: id || "MZD-" + Date.now(),
                         name: document.getElementById("mazdoor-name").value.trim(),
-                        role: document.getElementById("mazdoor-role").value,
+                        role: roleVal,
                         dailyWage: Number(document.getElementById("mazdoor-wage").value) || 0,
                         phone: document.getElementById("mazdoor-phone").value.trim(),
                         thekaId: document.getElementById("mazdoor-theka").value,
