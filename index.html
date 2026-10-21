@@ -61,6 +61,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
     <style id="dynamic-theme-vars">
         :root {
@@ -651,100 +652,470 @@
             <main class="theme-main flex-1 p-3 sm:p-5 max-w-7xl w-full mx-auto space-y-5 no-print">
 
                 <section id="view-dashboard" class="route-view space-y-5 animate__animated animate__fadeIn">
-                    <div class="bg-gradient-to-l from-emerald-800 via-emerald-700 to-teal-800 text-white rounded-2xl p-3 sm:p-5 shadow-lg">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3">
-                            <div>
-                                <span class="bg-white/20 text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded-full">خیبر پختونخوا کنسٹرکشن سسٹم</span>
-                                <h2 class="text-sm sm:text-xl font-extrabold mt-1 sm:mt-2 leading-snug">السلام علیکم! آج کا مکمل ٹھیکہ اور مزدور حساب</h2>
-                                <p class="text-emerald-100 text-[11px] sm:text-xs mt-0.5">اپنے جاری اور مکمل ٹھیکوں، مزدور دیہاڑی اور نقد لین دین پر ایک نظر ڈالیں۔</p>
+                    <div class="bg-gradient-to-l from-emerald-900 via-emerald-800 to-teal-900 text-white rounded-3xl p-4 sm:p-6 shadow-xl border border-emerald-700/40 relative overflow-hidden">
+                        <div class="absolute -right-16 -top-16 w-52 h-52 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                        <div class="absolute -left-16 -bottom-16 w-52 h-52 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                        <div class="relative z-10 space-y-4">
+                            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+                                <div>
+                                    <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                                        <span class="bg-emerald-500/30 text-emerald-200 border border-emerald-400/40 text-[10px] sm:text-xs font-bold px-2.5 py-0.5 rounded-full">خیبر پختونخوا کنسٹرکشن مینیجمنٹ سسٹم</span>
+                                        <span id="dash-user-role-badge" class="bg-white/20 text-white text-[10px] sm:text-xs font-bold px-2.5 py-0.5 rounded-full">بڑا ٹھیکیدار (Admin)</span>
+                                        <span class="bg-emerald-400/20 text-emerald-200 border border-emerald-400/30 text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded-full flex items-center gap-1.5">
+                                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> سسٹم 100% آن لائن و محفوظ
+                                        </span>
+                                    </div>
+                                    <h2 class="text-base sm:text-2xl font-extrabold leading-snug">
+                                        السلام علیکم، <span id="dash-user-name" class="text-emerald-300">حاجی یاسین اللہ خان</span>!
+                                    </h2>
+                                    <p class="text-emerald-100 text-xs sm:text-sm mt-1 max-w-2xl leading-relaxed">
+                                        تمام جاری و مکمل ٹھیکوں، مزدور حاضری رجسٹر، نقد آمدن و اخراجات، اور خالص نفع کا مکمل اور تفصیلی تجزیہ۔
+                                    </p>
+                                </div>
+
+                                <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2">
+                                    <button type="button" onclick="App.openAttendanceModal()" class="bg-white text-emerald-950 hover:bg-emerald-50 font-bold text-xs px-3 sm:px-4 py-2.5 rounded-xl shadow-md flex items-center justify-center gap-2 touch-target transition">
+                                        <i class="fa-solid fa-user-check text-emerald-700"></i>
+                                        <span>آج کی حاضری</span>
+                                    </button>
+                                    <button type="button" onclick="App.openBulkAttendanceModal()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs px-3 sm:px-4 py-2.5 rounded-xl shadow-md flex items-center justify-center gap-2 touch-target transition">
+                                        <i class="fa-solid fa-list-check"></i>
+                                        <span>اجتماعی شیٹ</span>
+                                    </button>
+                                    <button type="button" onclick="App.openHisabModal()" class="bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs px-3 sm:px-4 py-2.5 rounded-xl shadow-md flex items-center justify-center gap-2 touch-target transition">
+                                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                                        <span>نیا خرچہ / وصولی</span>
+                                    </button>
+                                    <button type="button" onclick="App.openThekaModal()" class="bg-slate-900/80 hover:bg-slate-900 text-white border border-emerald-500/40 font-bold text-xs px-3 sm:px-4 py-2.5 rounded-xl shadow flex items-center justify-center gap-2 touch-target transition">
+                                        <i class="fa-solid fa-plus text-emerald-400"></i>
+                                        <span>نیا ٹھیکہ</span>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
-                                <button type="button" onclick="App.openAttendanceModal()" class="bg-white text-emerald-900 hover:bg-emerald-50 font-bold text-xs px-2.5 sm:px-3.5 py-2 sm:py-2.5 rounded-xl shadow flex items-center justify-center gap-1.5 touch-target">
-                                    <i class="fa-solid fa-user-check text-emerald-700"></i>
-                                    <span class="truncate">آج کی حاضری</span>
-                                </button>
-                                <button type="button" onclick="App.openHisabModal()" class="bg-amber-400 text-slate-950 hover:bg-amber-300 font-bold text-xs px-2.5 sm:px-3.5 py-2 sm:py-2.5 rounded-xl shadow flex items-center justify-center gap-1.5 touch-target">
-                                    <i class="fa-solid fa-hand-holding-dollar"></i>
-                                    <span class="truncate">نیا خرچہ / وصولی</span>
-                                </button>
+
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-3 border-t border-emerald-700/50 text-xs">
+                                <div class="bg-white/10 rounded-xl p-2 sm:p-2.5">
+                                    <div class="text-[10px] sm:text-xs text-emerald-200">آج کی تاریخ</div>
+                                    <div class="font-bold text-white mt-0.5 truncate" id="dash-hero-date">-</div>
+                                </div>
+                                <div class="bg-white/10 rounded-xl p-2 sm:p-2.5">
+                                    <div class="text-[10px] sm:text-xs text-emerald-200">فعال تعمیراتی سائٹس</div>
+                                    <div class="font-extrabold text-emerald-200 mt-0.5 truncate" id="dash-hero-sites">0 سائٹس</div>
+                                </div>
+                                <div class="bg-white/10 rounded-xl p-2 sm:p-2.5">
+                                    <div class="text-[10px] sm:text-xs text-emerald-200">آج کے حاضر مزدور</div>
+                                    <div class="font-extrabold text-teal-200 mt-0.5 truncate" id="dash-hero-workers">0 مزدور</div>
+                                </div>
+                                <div class="bg-white/10 rounded-xl p-2 sm:p-2.5">
+                                    <div class="text-[10px] sm:text-xs text-emerald-200">دستیاب نقد بیلنس</div>
+                                    <div class="font-extrabold text-amber-200 num-ltr mt-0.5 truncate" id="dash-hero-cash">Rs 0</div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3">
-                        <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div class="bg-white rounded-2xl border border-slate-200 p-3 sm:p-4 shadow-sm flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
+                        <div class="flex items-center gap-2.5 min-w-0">
+                            <span class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-sm shrink-0 border border-emerald-200">
+                                <i class="fa-solid fa-filter"></i>
+                            </span>
+                            <div class="min-w-0">
+                                <div class="text-xs font-bold text-slate-800">ڈیش بورڈ سائٹ فلٹر</div>
+                                <div class="text-[11px] text-slate-500">پورے ڈیش بورڈ کو ایک ٹھیکہ یا تمام سائٹس پر فلٹر کریں</div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-wrap items-center gap-2">
+                            <select id="dash-theka-filter" onchange="App.onDashboardThekaFilterChange(this.value)" class="text-xs bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-800 font-bold focus:ring-2 focus:ring-emerald-500 flex-1 sm:flex-none touch-target min-w-[200px]">
+                                <option value="ALL">تمام ٹھیکے (مجموعی جائزہ)</option>
+                            </select>
+                            <button type="button" onclick="App.renderDashboard()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 rounded-xl px-3 py-2 text-xs font-bold flex items-center gap-1.5 touch-target" title="ریفریش کریں">
+                                <i class="fa-solid fa-arrows-rotate text-emerald-600"></i>
+                                <span>تازہ کریں</span>
+                            </button>
+                            <button type="button" onclick="App.openQuickReceiptModal()" class="bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl px-3.5 py-2 text-xs font-bold flex items-center gap-1.5 shadow touch-target" title="رپورٹ پرنٹ">
+                                <i class="fa-solid fa-print"></i>
+                                <span>رپورٹ</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3.5">
+                        <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition">
                             <div class="flex items-center justify-between">
                                 <span class="text-[11px] sm:text-xs font-bold text-slate-500 truncate">جاری اور مکمل ٹھیکے</span>
-                                <span class="w-7 h-7 sm:w-9 sm:h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0"><i class="fa-solid fa-building text-xs sm:text-sm"></i></span>
+                                <span class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0"><i class="fa-solid fa-building text-xs sm:text-sm"></i></span>
                             </div>
-                            <div class="mt-1.5 sm:mt-2 min-w-0">
+                            <div class="mt-2 min-w-0">
                                 <div class="text-sm sm:text-xl lg:text-2xl font-extrabold text-slate-900 truncate" id="kpi-theka-counts">0 جاری / 0 مکمل</div>
                                 <p class="text-[10px] sm:text-[11px] text-emerald-700 font-semibold mt-0.5 truncate" id="kpi-total-contract">کل مالیت: Rs 0</p>
                             </div>
+                            <div class="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-500 font-semibold">
+                                <span>تعمیراتی پروجیکٹس</span>
+                                <span class="text-emerald-700 font-bold" id="kpi-theka-active-badge">فعال پورٹ فولیو</span>
+                            </div>
                         </div>
 
-                        <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+                        <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition">
                             <div class="flex items-center justify-between">
                                 <span class="text-[11px] sm:text-xs font-bold text-slate-500 truncate">مالکان سے کل وصولی</span>
-                                <span class="w-7 h-7 sm:w-9 sm:h-9 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center shrink-0"><i class="fa-solid fa-arrow-down-wide-short text-xs sm:text-sm"></i></span>
+                                <span class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center shrink-0"><i class="fa-solid fa-arrow-down-wide-short text-xs sm:text-sm"></i></span>
                             </div>
-                            <div class="mt-1.5 sm:mt-2 min-w-0">
+                            <div class="mt-2 min-w-0">
                                 <div class="text-sm sm:text-xl lg:text-2xl font-extrabold text-sky-700 num-ltr truncate" id="kpi-total-received">Rs 0</div>
                                 <p class="text-[10px] sm:text-[11px] text-amber-700 font-semibold mt-0.5 truncate" id="kpi-remaining-receivable">مالکان ذمہ بقایا: Rs 0</p>
                             </div>
+                            <div class="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-500 font-semibold">
+                                <span>وصولی کی شرح</span>
+                                <span class="text-sky-700 font-bold" id="kpi-recovery-rate-badge">0% وصول شدہ</span>
+                            </div>
                         </div>
 
-                        <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+                        <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition">
                             <div class="flex items-center justify-between">
                                 <span class="text-[11px] sm:text-xs font-bold text-slate-500 truncate">کل مزدوری و میٹریل خرچہ</span>
-                                <span class="w-7 h-7 sm:w-9 sm:h-9 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center shrink-0"><i class="fa-solid fa-money-bill-transfer text-xs sm:text-sm"></i></span>
+                                <span class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center shrink-0"><i class="fa-solid fa-money-bill-transfer text-xs sm:text-sm"></i></span>
                             </div>
-                            <div class="mt-1.5 sm:mt-2 min-w-0">
+                            <div class="mt-2 min-w-0">
                                 <div class="text-sm sm:text-xl lg:text-2xl font-extrabold text-rose-600 num-ltr truncate" id="kpi-total-spent">Rs 0</div>
                                 <p class="text-[10px] sm:text-[11px] text-slate-600 font-semibold mt-0.5 truncate" id="kpi-cash-in-hand">موجودہ نقد بیلنس: Rs 0</p>
                             </div>
+                            <div class="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-500 font-semibold">
+                                <span>کل بجٹ خرچ</span>
+                                <span class="text-rose-600 font-bold" id="kpi-burn-rate-badge">بجٹ تناسب</span>
+                            </div>
                         </div>
 
-                        <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+                        <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition">
                             <div class="flex items-center justify-between">
                                 <span class="text-[11px] sm:text-xs font-bold text-slate-500 truncate">مزدوروں کا بقایا حساب</span>
-                                <span class="w-7 h-7 sm:w-9 sm:h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0"><i class="fa-solid fa-person-digging text-xs sm:text-sm"></i></span>
+                                <span class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0"><i class="fa-solid fa-person-digging text-xs sm:text-sm"></i></span>
                             </div>
-                            <div class="mt-1.5 sm:mt-2 min-w-0">
+                            <div class="mt-2 min-w-0">
                                 <div class="text-sm sm:text-xl lg:text-2xl font-extrabold text-amber-700 num-ltr truncate" id="kpi-mazdoor-payable">Rs 0</div>
                                 <p class="text-[10px] sm:text-[11px] text-slate-600 font-semibold mt-0.5 truncate" id="kpi-active-mazdoors">فعال مزدور: 0</p>
+                            </div>
+                            <div class="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-500 font-semibold">
+                                <span>واجب الادا مزدوری</span>
+                                <span class="text-amber-700 font-bold" id="kpi-unpaid-workers-count">0 ورکرز</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[11px] sm:text-xs font-bold text-slate-500 truncate">خالص متوقع منافع / بچت</span>
+                                <span class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0"><i class="fa-solid fa-sack-dollar text-xs sm:text-sm"></i></span>
+                            </div>
+                            <div class="mt-2 min-w-0">
+                                <div class="text-sm sm:text-xl lg:text-2xl font-extrabold text-emerald-700 num-ltr truncate" id="kpi-projected-profit">Rs 0</div>
+                                <p class="text-[10px] sm:text-[11px] text-emerald-800 font-semibold mt-0.5 truncate" id="kpi-profit-margin">منافع مارجن: 0%</p>
+                            </div>
+                            <div class="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-500 font-semibold">
+                                <span>مالیاتی نفع شرح</span>
+                                <span class="text-emerald-700 font-bold" id="kpi-profit-status-badge">مثبت منافع</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[11px] sm:text-xs font-bold text-slate-500 truncate">آج کی سائٹ حاضری</span>
+                                <span class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center shrink-0"><i class="fa-solid fa-clipboard-user text-xs sm:text-sm"></i></span>
+                            </div>
+                            <div class="mt-2 min-w-0">
+                                <div class="text-sm sm:text-xl lg:text-2xl font-extrabold text-teal-800 truncate" id="kpi-today-attendance">0 آن سائٹ</div>
+                                <p class="text-[10px] sm:text-[11px] text-slate-600 font-semibold mt-0.5 truncate" id="kpi-today-att-details">مکمل: 0 • ہاف: 0 • غیر حاضر: 0</p>
+                            </div>
+                            <div class="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-500 font-semibold">
+                                <span>آج کا حاضری ریکارڈ</span>
+                                <span class="text-teal-700 font-bold" id="kpi-today-att-pct">0% حاضری</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[11px] sm:text-xs font-bold text-slate-500 truncate">میٹریل و سامان کل خرچہ</span>
+                                <span class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center shrink-0"><i class="fa-solid fa-truck-ramp-box text-xs sm:text-sm"></i></span>
+                            </div>
+                            <div class="mt-2 min-w-0">
+                                <div class="text-sm sm:text-xl lg:text-2xl font-extrabold text-indigo-700 num-ltr truncate" id="kpi-material-spent">Rs 0</div>
+                                <p class="text-[10px] sm:text-[11px] text-slate-600 font-semibold mt-0.5 truncate" id="kpi-material-sites-count">سیمنٹ، سریا، ریت، اینٹ وغیرہ</p>
+                            </div>
+                            <div class="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-500 font-semibold">
+                                <span>سامان لاگت تناسب</span>
+                                <span class="text-indigo-700 font-bold" id="kpi-material-ratio-badge">0% کل اخراجات</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[11px] sm:text-xs font-bold text-slate-500 truncate">سسٹم کیش فلو پوزیشن</span>
+                                <span class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center shrink-0"><i class="fa-solid fa-scale-balanced text-xs sm:text-sm"></i></span>
+                            </div>
+                            <div class="mt-2 min-w-0">
+                                <div class="text-sm sm:text-lg lg:text-xl font-extrabold text-purple-800 truncate" id="kpi-cashflow-status">مستحکم کیش فلو</div>
+                                <p class="text-[10px] sm:text-[11px] text-slate-600 font-semibold mt-0.5 truncate" id="kpi-cashflow-ratio">نیٹ کیش بنام واجبات</p>
+                            </div>
+                            <div class="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-500 font-semibold">
+                                <span>لیکویڈیٹی ہیلتھ</span>
+                                <span class="text-purple-700 font-bold" id="kpi-liquidity-badge">محفوظ پوزیشن</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5">
-                        <button type="button" onclick="App.openThekaModal()" class="bg-white hover:bg-emerald-50 border border-slate-200 rounded-2xl p-2.5 sm:p-3 flex items-center gap-2 sm:gap-3 shadow-sm touch-target transition">
-                            <span class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 text-xs sm:text-base"><i class="fa-solid fa-plus"></i></span>
-                            <div class="text-right min-w-0">
-                                <div class="font-bold text-[11px] sm:text-xs text-slate-900 truncate">نیا ٹھیکہ لکھیں</div>
-                                <div class="text-[9px] sm:text-[11px] text-slate-500 truncate">سائٹ کا اندراج</div>
+                    <div id="dash-alerts-section" class="space-y-2">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-extrabold text-sm text-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-bell text-amber-500"></i>
+                                <span>اہم توجہ طلب انتباہات اور ہنگامی الرٹس (Smart Alerts)</span>
+                            </h3>
+                            <span class="text-[11px] text-slate-500" id="dash-alerts-count-badge">0 الرٹس</span>
+                        </div>
+                        <div id="dash-alerts-container" class="space-y-2"></div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+                        <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+                            <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+                                <div>
+                                    <h4 class="font-extrabold text-xs sm:text-sm text-slate-900 flex items-center gap-1.5">
+                                        <i class="fa-solid fa-heart-pulse text-rose-500"></i> ٹھیکیدار بزنس ہیلتھ انڈیکس
+                                    </h4>
+                                    <p class="text-[11px] text-slate-500">وصولی، لاگت اور واجبات کی بنیاد پر جامع سکور</p>
+                                </div>
+                                <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800" id="health-score-grade">A+ گریڈ</span>
                             </div>
+
+                            <div class="my-4 flex items-center justify-around">
+                                <div class="relative w-28 h-28 flex items-center justify-center">
+                                    <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
+                                        <path class="text-slate-100" stroke-width="3.5" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                        <path id="health-score-circle" class="text-emerald-500 transition-all duration-1000 ease-out" stroke-dasharray="88, 100" stroke-width="3.5" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                    </svg>
+                                    <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                        <span class="text-2xl font-black text-slate-900 num-ltr" id="health-score-number">88</span>
+                                        <span class="text-[9px] font-bold text-slate-400">از 100 سکور</span>
+                                    </div>
+                                </div>
+                                <div class="space-y-1.5 text-xs">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                                        <span class="text-slate-600">وصولی کارکردگی:</span>
+                                        <span class="font-bold text-slate-900 num-ltr" id="health-stat-recovery">85%</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span>
+                                        <span class="text-slate-600">اخراجات کنٹرول:</span>
+                                        <span class="font-bold text-slate-900 num-ltr" id="health-stat-cost">90%</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                                        <span class="text-slate-600">مزدور ادائیگی:</span>
+                                        <span class="font-bold text-slate-900 num-ltr" id="health-stat-labor">88%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p class="text-[11px] text-slate-500 text-center" id="health-score-summary">ماشاءاللہ! کاروبار کی مالیاتی پوزیشن مستحکم اور خطرے سے باہر ہے۔</p>
+                        </div>
+
+                        <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+                            <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+                                <div>
+                                    <h4 class="font-extrabold text-xs sm:text-sm text-slate-900 flex items-center gap-1.5">
+                                        <i class="fa-solid fa-map-location-dot text-teal-600"></i> خیبر پختونخوا اضلاع وار پروجیکٹس
+                                    </h4>
+                                    <p class="text-[11px] text-slate-500">پشاور، مردان، سوات، ایبٹ آباد اور دیگر اضلاع</p>
+                                </div>
+                                <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-teal-50 text-teal-700" id="dash-cities-count">0 اضلاع</span>
+                            </div>
+
+                            <div class="my-3 space-y-2" id="dash-cities-breakdown"></div>
+
+                            <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-semibold">
+                                <span>سب سے زیادہ کام</span>
+                                <span class="font-bold text-slate-800" id="dash-top-city">-</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+                            <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+                                <div>
+                                    <h4 class="font-extrabold text-xs sm:text-sm text-slate-900 flex items-center gap-1.5">
+                                        <i class="fa-solid fa-receipt text-indigo-600"></i> کل بیلنس شیٹ فلو (Cashflow Flow)
+                                    </h4>
+                                    <p class="text-[11px] text-slate-500">طے شدہ مالیت سے موجودہ فری کیش تک فلو</p>
+                                </div>
+                                <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700">بیلنس شیٹ</span>
+                            </div>
+
+                            <div class="my-3 space-y-2 text-xs">
+                                <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 border border-slate-100">
+                                    <span class="text-slate-600 font-semibold">1. کل طے شدہ ٹھیکہ مالیت</span>
+                                    <span class="font-extrabold text-slate-900 num-ltr" id="waterfall-contract">Rs 0</span>
+                                </div>
+                                <div class="flex items-center justify-between p-2 rounded-xl bg-sky-50 border border-sky-100">
+                                    <span class="text-sky-800 font-semibold">2. مالکان سے وصول شدہ (+)</span>
+                                    <span class="font-extrabold text-sky-700 num-ltr" id="waterfall-received">Rs 0</span>
+                                </div>
+                                <div class="flex items-center justify-between p-2 rounded-xl bg-rose-50 border border-rose-100">
+                                    <span class="text-rose-800 font-semibold">3. ادا شدہ اخراجات (-)</span>
+                                    <span class="font-extrabold text-rose-600 num-ltr" id="waterfall-spent">Rs 0</span>
+                                </div>
+                                <div class="flex items-center justify-between p-2 rounded-xl bg-emerald-50 border border-emerald-100">
+                                    <span class="text-emerald-900 font-bold">4. خالص نقد کیش ان ہینڈ (=)</span>
+                                    <span class="font-black text-emerald-700 num-ltr text-sm" id="waterfall-cash">Rs 0</span>
+                                </div>
+                            </div>
+
+                            <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+                                <span>مالکان ذمہ بقایا</span>
+                                <span class="font-bold text-amber-700 num-ltr" id="waterfall-receivable">Rs 0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="font-extrabold text-base text-slate-900 flex items-center gap-2">
+                                    <i class="fa-solid fa-chart-pie text-emerald-600"></i>
+                                    <span>بصری گراف اور چارٹس (Visual Analytics & Charts)</span>
+                                </h3>
+                                <p class="text-xs text-slate-500">ہر چارٹ کے ساتھ 'ڈیٹا دیکھیں' کے ذریعے بنیادی حساب اور اصل ڈیٹا ٹیبل ملاحظہ کریں</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-4">
+                            <div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-slate-100">
+                                <div>
+                                    <h4 class="font-extrabold text-sm text-slate-900 flex items-center gap-2">
+                                        <i class="fa-solid fa-chart-column text-emerald-600"></i>
+                                        <span>ٹھیکہ جاتی فنانشل موازنہ: کل مالیت، وصولی، خرچہ اور خالص بچت</span>
+                                    </h4>
+                                    <p class="text-xs text-slate-500">ہر تعمیراتی سائٹ کا جامع مالیاتی موازنہ اور متوقع منافع</p>
+                                </div>
+                                <button type="button" onclick="App.viewChartData('theka-finance')" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 touch-target shadow-sm transition">
+                                    <i class="fa-solid fa-table-list text-sm"></i>
+                                    <span>ڈیٹا دیکھیں</span>
+                                </button>
+                            </div>
+                            <div class="relative h-72 sm:h-80 w-full">
+                                <canvas id="chart-theka-finance"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 flex flex-col justify-between">
+                                <div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-slate-100">
+                                    <div>
+                                        <h4 class="font-extrabold text-sm text-slate-900 flex items-center gap-2">
+                                            <i class="fa-solid fa-chart-pie text-sky-600"></i>
+                                            <span>تعمیراتی اخراجات کی تفصیلی تقسیم (Expense Breakdown)</span>
+                                        </h4>
+                                        <p class="text-xs text-slate-500">میٹریل و سامان بنام ادا شدہ مزدوری بنام واجب الادا بقایا</p>
+                                    </div>
+                                    <button type="button" onclick="App.viewChartData('expense-dist')" class="bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-300 px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 touch-target shadow-sm transition">
+                                        <i class="fa-solid fa-table-list text-sm"></i>
+                                        <span>ڈیٹا دیکھیں</span>
+                                    </button>
+                                </div>
+                                <div class="relative h-64 sm:h-72 w-full flex items-center justify-center">
+                                    <canvas id="chart-expense-dist"></canvas>
+                                </div>
+                            </div>
+
+                            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 flex flex-col justify-between">
+                                <div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-slate-100">
+                                    <div>
+                                        <h4 class="font-extrabold text-sm text-slate-900 flex items-center gap-2">
+                                            <i class="fa-solid fa-bars-progress text-amber-600"></i>
+                                            <span>وصولی اور بجٹ استعمال کا تناسب % (Recovery vs Budget)</span>
+                                        </h4>
+                                        <p class="text-xs text-slate-500">طے شدہ بجٹ میں سے کتنی رقم وصول ہوئی اور کتنا خرچ ہوا</p>
+                                    </div>
+                                    <button type="button" onclick="App.viewChartData('recovery-rate')" class="bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 touch-target shadow-sm transition">
+                                        <i class="fa-solid fa-table-list text-sm"></i>
+                                        <span>ڈیٹا دیکھیں</span>
+                                    </button>
+                                </div>
+                                <div class="relative h-64 sm:h-72 w-full">
+                                    <canvas id="chart-recovery-rate"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 flex flex-col justify-between">
+                                <div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-slate-100">
+                                    <div>
+                                        <h4 class="font-extrabold text-sm text-slate-900 flex items-center gap-2">
+                                            <i class="fa-solid fa-people-group text-purple-600"></i>
+                                            <span>افرادی قوت کی درجہ بندی اور دیہاڑی کا بوجھ (Workforce Roles)</span>
+                                        </h4>
+                                        <p class="text-xs text-slate-500">راج مستری، شٹرنگ مستری، سریا بائنڈر اور ہیلپر کی تفصیل</p>
+                                    </div>
+                                    <button type="button" onclick="App.viewChartData('workforce-roles')" class="bg-purple-50 hover:bg-purple-100 text-purple-800 border border-purple-300 px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 touch-target shadow-sm transition">
+                                        <i class="fa-solid fa-table-list text-sm"></i>
+                                        <span>ڈیٹا دیکھیں</span>
+                                    </button>
+                                </div>
+                                <div class="relative h-64 sm:h-72 w-full flex items-center justify-center">
+                                    <canvas id="chart-workforce-roles"></canvas>
+                                </div>
+                            </div>
+
+                            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 flex flex-col justify-between">
+                                <div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-slate-100">
+                                    <div>
+                                        <h4 class="font-extrabold text-sm text-slate-900 flex items-center gap-2">
+                                            <i class="fa-solid fa-chart-line text-teal-600"></i>
+                                            <span>حالیہ مزدور حاضری اور یومیہ مزدوری کا رجحان (Attendance Trend)</span>
+                                        </h4>
+                                        <p class="text-xs text-slate-500">تاریخ وار حاضر ورکرز اور یومیہ ادا شدہ/کمائے گئے روپوں کا ٹرینڈ</p>
+                                    </div>
+                                    <button type="button" onclick="App.viewChartData('attendance-trend')" class="bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-300 px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 touch-target shadow-sm transition">
+                                        <i class="fa-solid fa-table-list text-sm"></i>
+                                        <span>ڈیٹا دیکھیں</span>
+                                    </button>
+                                </div>
+                                <div class="relative h-64 sm:h-72 w-full">
+                                    <canvas id="chart-attendance-trend"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-2.5">
+                        <button type="button" onclick="App.openThekaModal()" class="bg-white hover:bg-emerald-50 border border-slate-200 rounded-2xl p-3 flex flex-col items-center text-center gap-1.5 shadow-sm touch-target transition">
+                            <span class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-base"><i class="fa-solid fa-plus"></i></span>
+                            <div class="font-bold text-xs text-slate-900">نیا ٹھیکہ لکھیں</div>
+                            <div class="text-[10px] text-slate-500">سائٹ کا اندراج</div>
                         </button>
-                        <button type="button" onclick="App.openMazdoorModal()" class="bg-white hover:bg-sky-50 border border-slate-200 rounded-2xl p-2.5 sm:p-3 flex items-center gap-2 sm:gap-3 shadow-sm touch-target transition">
-                            <span class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-sky-600 text-white flex items-center justify-center shrink-0 text-xs sm:text-base"><i class="fa-solid fa-user-plus"></i></span>
-                            <div class="text-right min-w-0">
-                                <div class="font-bold text-[11px] sm:text-xs text-slate-900 truncate">نیا مزدور / مستری</div>
-                                <div class="text-[9px] sm:text-[11px] text-slate-500 truncate">دیہاڑی مقرر کریں</div>
-                            </div>
+                        <button type="button" onclick="App.openMazdoorModal()" class="bg-white hover:bg-sky-50 border border-slate-200 rounded-2xl p-3 flex flex-col items-center text-center gap-1.5 shadow-sm touch-target transition">
+                            <span class="w-10 h-10 rounded-xl bg-sky-600 text-white flex items-center justify-center text-base"><i class="fa-solid fa-user-plus"></i></span>
+                            <div class="font-bold text-xs text-slate-900">نیا مزدور / مستری</div>
+                            <div class="text-[10px] text-slate-500">دیہاڑی مقرر کریں</div>
                         </button>
-                        <button type="button" onclick="App.openBulkAttendanceModal()" class="bg-white hover:bg-amber-50 border border-slate-200 rounded-2xl p-2.5 sm:p-3 flex items-center gap-2 sm:gap-3 shadow-sm touch-target transition">
-                            <span class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center shrink-0 text-xs sm:text-base"><i class="fa-solid fa-list-check"></i></span>
-                            <div class="text-right min-w-0">
-                                <div class="font-bold text-[11px] sm:text-xs text-slate-900 truncate">اجتماعی حاضری شیٹ</div>
-                                <div class="text-[9px] sm:text-[11px] text-slate-500 truncate">ایک کلک میں حاضری</div>
-                            </div>
+                        <button type="button" onclick="App.openBulkAttendanceModal()" class="bg-white hover:bg-amber-50 border border-slate-200 rounded-2xl p-3 flex flex-col items-center text-center gap-1.5 shadow-sm touch-target transition">
+                            <span class="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center text-base"><i class="fa-solid fa-list-check"></i></span>
+                            <div class="font-bold text-xs text-slate-900">اجتماعی حاضری شیٹ</div>
+                            <div class="text-[10px] text-slate-500">سائٹ وار حاضری</div>
                         </button>
-                        <button type="button" onclick="App.navigate('/hisab')" class="bg-white hover:bg-purple-50 border border-slate-200 rounded-2xl p-2.5 sm:p-3 flex items-center gap-2 sm:gap-3 shadow-sm touch-target transition">
-                            <span class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-purple-600 text-white flex items-center justify-center shrink-0 text-xs sm:text-base"><i class="fa-solid fa-book-open"></i></span>
-                            <div class="text-right min-w-0">
-                                <div class="font-bold text-[11px] sm:text-xs text-slate-900 truncate">مکمل روزنامچہ کھاتہ</div>
-                                <div class="text-[9px] sm:text-[11px] text-slate-500 truncate">قسط اور خرچے</div>
-                            </div>
+                        <button type="button" onclick="App.openHisabModal()" class="bg-white hover:bg-rose-50 border border-slate-200 rounded-2xl p-3 flex flex-col items-center text-center gap-1.5 shadow-sm touch-target transition">
+                            <span class="w-10 h-10 rounded-xl bg-rose-600 text-white flex items-center justify-center text-base"><i class="fa-solid fa-hand-holding-dollar"></i></span>
+                            <div class="font-bold text-xs text-slate-900">نیا خرچہ / وصولی</div>
+                            <div class="text-[10px] text-slate-500">نقد لین دین درج</div>
+                        </button>
+                        <button type="button" onclick="App.openQuickReceiptModal()" class="bg-white hover:bg-teal-50 border border-slate-200 rounded-2xl p-3 flex flex-col items-center text-center gap-1.5 shadow-sm touch-target transition">
+                            <span class="w-10 h-10 rounded-xl bg-teal-600 text-white flex items-center justify-center text-base"><i class="fa-solid fa-print"></i></span>
+                            <div class="font-bold text-xs text-slate-900">مکمل رپورٹ پرنٹ</div>
+                            <div class="text-[10px] text-slate-500">کھاتہ خلاصہ / PDF</div>
+                        </button>
+                        <button type="button" onclick="App.navigate('/settings')" class="bg-white hover:bg-purple-50 border border-slate-200 rounded-2xl p-3 flex flex-col items-center text-center gap-1.5 shadow-sm touch-target transition">
+                            <span class="w-10 h-10 rounded-xl bg-purple-600 text-white flex items-center justify-center text-base"><i class="fa-solid fa-sliders"></i></span>
+                            <div class="font-bold text-xs text-slate-900">سیٹنگز و بیک اپ</div>
+                            <div class="text-[10px] text-slate-500">محفوظ ڈاؤن لوڈ</div>
                         </button>
                     </div>
 
@@ -760,6 +1131,49 @@
                             </button>
                         </div>
                         <div id="dashboard-theka-cards" class="grid grid-cols-1 md:grid-cols-2 gap-3.5"></div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 flex flex-col justify-between">
+                            <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
+                                <div>
+                                    <h4 class="font-extrabold text-sm text-slate-900 flex items-center gap-2">
+                                        <i class="fa-solid fa-clock-rotate-left text-amber-600"></i>
+                                        <span>اعلیٰ واجب الادا مزدور (Top Unpaid Labor)</span>
+                                    </h4>
+                                    <p class="text-xs text-slate-500">جن مزدوروں اور مستریوں کے بقایا جات سب سے زیادہ ہیں</p>
+                                </div>
+                                <button type="button" onclick="App.navigate('/mazdoors')" class="text-xs font-bold text-emerald-700 hover:underline touch-target px-2">تمام ورکرز</button>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-right text-xs">
+                                    <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
+                                        <tr>
+                                            <th class="p-2">نام و عہدہ</th>
+                                            <th class="p-2">سائٹ</th>
+                                            <th class="p-2">کل کمائی</th>
+                                            <th class="p-2">واجب الادا بقایا</th>
+                                            <th class="p-2 text-center">ادائیگی</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dashboard-unpaid-labor-tbody" class="divide-y divide-slate-100"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 flex flex-col justify-between">
+                            <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
+                                <div>
+                                    <h4 class="font-extrabold text-sm text-slate-900 flex items-center gap-2">
+                                        <i class="fa-solid fa-receipt text-sky-600"></i>
+                                        <span>حالیہ روزنامچہ و مالیاتی لین دین (Recent Activity)</span>
+                                    </h4>
+                                    <p class="text-xs text-slate-500">تازہ ترین وصولیاں، میٹریل خریداری اور مزدور ادائیگیاں</p>
+                                </div>
+                                <button type="button" onclick="App.navigate('/hisab')" class="text-xs font-bold text-emerald-700 hover:underline touch-target px-2">مکمل کھاتہ</button>
+                            </div>
+                            <div id="dashboard-recent-activity-list" class="space-y-2.5"></div>
+                        </div>
                     </div>
                 </section>
 
@@ -1533,6 +1947,43 @@
                 </div>
             </form>
         </div>
+    <div id="modal-chart-data" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 overflow-y-auto no-print">
+        <div class="bg-white rounded-2xl max-w-4xl w-full p-4 sm:p-6 shadow-2xl border border-slate-200 my-auto animate__animated animate__fadeInUp">
+            <div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-4">
+                <div class="flex items-center gap-2.5">
+                    <span class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-lg shrink-0">
+                        <i class="fa-solid fa-chart-simple"></i>
+                    </span>
+                    <div>
+                        <h3 id="modal-chart-data-title" class="font-extrabold text-base text-slate-900 leading-tight">چارٹ کا بنیادی ڈیٹا و حساب کتاب</h3>
+                        <p id="modal-chart-data-subtitle" class="text-xs text-slate-500">چارٹ میں دکھائے گئے تمام حسابی ریکارڈز کی تفصیلی فہرست</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-1.5">
+                    <button type="button" onclick="App.exportChartDataCSV()" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-300 px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 touch-target" title="ایکسپورٹ CSV">
+                        <i class="fa-solid fa-file-csv text-sm"></i>
+                        <span class="hidden sm:inline">CSV ڈاؤن لوڈ</span>
+                    </button>
+                    <button type="button" onclick="App.closeModal('modal-chart-data')" class="bg-slate-100 hover:bg-rose-100 text-slate-700 hover:text-rose-600 w-9 h-9 sm:w-10 sm:h-10 rounded-xl text-xs font-bold flex items-center justify-center touch-target">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="modal-chart-data-stats" class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4"></div>
+
+            <div class="overflow-x-auto border border-slate-200 rounded-xl max-h-96">
+                <table id="modal-chart-data-table" class="w-full text-right text-xs">
+                    <thead class="bg-slate-100 text-slate-700 font-bold sticky top-0 border-b border-slate-200"></thead>
+                    <tbody class="divide-y divide-slate-100"></tbody>
+                </table>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-500">
+                <span id="modal-chart-data-notes">یہ اعداد و شمار حقیقی ڈیٹا بیس ریکارڈز کے مطابق اخذ کیے گئے ہیں۔</span>
+                <button type="button" onclick="App.closeModal('modal-chart-data')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl touch-target">بند کریں</button>
+            </div>
+        </div>
     </div>
 
     <div id="modal-print-preview" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 overflow-y-auto">
@@ -1603,6 +2054,9 @@
             validators: {},
             formDirty: false,
             currentThekaFilter: "ALL",
+            dashboardThekaFilter: "ALL",
+            charts: {},
+            currentChartModalData: null,
             idleTimer: null,
             lastScrollY: 0,
 
@@ -2239,6 +2693,10 @@
                     } catch (e) {}
                 }
 
+                if (baseSegment === "/dashboard") {
+                    this.renderDashboard();
+                }
+
                 setTimeout(() => {
                     Object.values(this.dataTables).forEach(dt => {
                         if (dt && dt.columns) {
@@ -2407,38 +2865,375 @@
                 this.syncSettingsForm();
             },
 
+            onDashboardThekaFilterChange(thekaId) {
+                this.dashboardThekaFilter = thekaId || "ALL";
+                this.renderDashboard();
+            },
+
             renderDashboard() {
-                const runningCount = this.db.thekas.filter(t => t.status === "جاری ہے").length;
-                const completedCount = this.db.thekas.filter(t => t.status === "مکمل شدہ").length;
-                const totalContract = this.db.thekas.reduce((s, t) => s + Number(t.contractAmount || 0), 0);
+                const filterSelect = document.getElementById("dash-theka-filter");
+                if (filterSelect) {
+                    const currentVal = this.dashboardThekaFilter || "ALL";
+                    let optionsHtml = `<option value="ALL" ${currentVal === "ALL" ? "selected" : ""}>تمام ٹھیکے (مجموعی جائزہ)</option>`;
+                    this.db.thekas.forEach(t => {
+                        optionsHtml += `<option value="${this.escapeHtml(t.id)}" ${currentVal === t.id ? "selected" : ""}>${this.escapeHtml(t.title)} (${this.escapeHtml(t.status)})</option>`;
+                    });
+                    filterSelect.innerHTML = optionsHtml;
+                }
+
+                const isFiltered = this.dashboardThekaFilter && this.dashboardThekaFilter !== "ALL";
+                const thekasList = isFiltered ? this.db.thekas.filter(t => t.id === this.dashboardThekaFilter) : this.db.thekas;
+                const thekaIds = new Set(thekasList.map(t => t.id));
+
+                const attendanceList = isFiltered ? this.db.attendance.filter(a => thekaIds.has(a.thekaId)) : this.db.attendance;
+                const hisabList = isFiltered ? this.db.hisab.filter(h => thekaIds.has(h.thekaId)) : this.db.hisab;
+                const mazdoorsList = isFiltered ? this.db.mazdoors.filter(m => thekaIds.has(m.thekaId)) : this.db.mazdoors;
+
+                const runningCount = thekasList.filter(t => t.status === "جاری ہے").length;
+                const completedCount = thekasList.filter(t => t.status === "مکمل شدہ").length;
+                const totalContract = thekasList.reduce((s, t) => s + Number(t.contractAmount || 0), 0);
 
                 let totalReceived = 0;
                 let totalSpent = 0;
                 let totalCashOut = 0;
+                let materialSpent = 0;
+                let laborPaid = 0;
 
-                this.db.thekas.forEach(t => {
+                thekasList.forEach(t => {
                     const fin = this.getThekaFinancials(t.id);
                     totalReceived += fin.received;
                     totalSpent += fin.totalSpent;
                     totalCashOut += (fin.laborPaid + fin.materialSpent);
+                    materialSpent += fin.materialSpent;
+                    laborPaid += fin.laborPaid;
                 });
 
                 let totalMazdoorPayable = 0;
-                this.db.mazdoors.forEach(m => {
+                let unpaidWorkersCount = 0;
+                mazdoorsList.forEach(m => {
                     const mf = this.getMazdoorFinancials(m.id);
-                    totalMazdoorPayable += mf.netPayable;
+                    if (mf.netPayable > 0) {
+                        totalMazdoorPayable += mf.netPayable;
+                        unpaidWorkersCount++;
+                    }
                 });
+
+                const cashInHand = totalReceived - totalCashOut;
+                const remainingReceivable = Math.max(0, totalContract - totalReceived);
+                const projectedProfit = totalContract - totalSpent;
+                const profitMargin = totalContract > 0 ? ((projectedProfit / totalContract) * 100).toFixed(1) : "0.0";
+                const recoveryRate = totalContract > 0 ? Math.min(100, Math.round((totalReceived / totalContract) * 100)) : 0;
+                const burnRate = totalContract > 0 ? Math.min(100, Math.round((totalSpent / totalContract) * 100)) : 0;
+
+                const today = new Date();
+                const todayStr = today.toISOString().slice(0, 10);
+                const urduMonths = ["جنوری", "فروری", "مارچ", "اپریل", "مئی", "جون", "جولائی", "اگست", "ستمبر", "اکتوبر", "نومبر", "دسمبر"];
+                const formattedUrduDate = `${today.getDate()} ${urduMonths[today.getMonth()]} ${today.getFullYear()}`;
+
+                const todayAtt = attendanceList.filter(a => a.date === todayStr);
+                const presentCount = todayAtt.filter(a => String(a.status).includes("Full") || String(a.status).includes("پورا") || String(a.status).includes("Double") || String(a.status).includes("ڈبل")).length;
+                const halfCount = todayAtt.filter(a => String(a.status).includes("Half") || String(a.status).includes("آدھی") || String(a.status).includes("ہاف")).length;
+                const absentCount = todayAtt.filter(a => String(a.status).includes("Absent") || String(a.status).includes("غیر")).length;
+                const todayOnSite = presentCount + halfCount;
+                const todayAttPct = mazdoorsList.length > 0 ? Math.round((todayOnSite / mazdoorsList.length) * 100) : 0;
+
+                const userNameEl = document.getElementById("dash-user-name");
+                if (userNameEl) {
+                    userNameEl.textContent = this.session && this.session.user ? this.session.user.name : "حاجی یاسین اللہ خان";
+                }
+                const roleBadgeEl = document.getElementById("dash-user-role-badge");
+                if (roleBadgeEl) {
+                    const isAdmin = this.session && this.session.user && this.session.user.role === "Admin";
+                    roleBadgeEl.textContent = isAdmin ? "بڑا ٹھیکیدار (Admin) - مکمل اختیارات" : "سائٹ منشی / سپروائزر (آپریشنل)";
+                }
+                const heroDateEl = document.getElementById("dash-hero-date");
+                if (heroDateEl) heroDateEl.textContent = formattedUrduDate;
+                const heroSitesEl = document.getElementById("dash-hero-sites");
+                if (heroSitesEl) heroSitesEl.textContent = `${runningCount} فعال سائٹس`;
+                const heroWorkersEl = document.getElementById("dash-hero-workers");
+                if (heroWorkersEl) heroWorkersEl.textContent = `${todayOnSite} حاضر مزدور`;
+                const heroCashEl = document.getElementById("dash-hero-cash");
+                if (heroCashEl) heroCashEl.textContent = this.formatPKR(cashInHand);
 
                 document.getElementById("kpi-theka-counts").textContent = `${runningCount} جاری / ${completedCount} مکمل`;
                 document.getElementById("kpi-total-contract").textContent = `کل مالیت: ${this.formatPKR(totalContract)}`;
-                document.getElementById("kpi-total-received").textContent = this.formatPKR(totalReceived);
-                document.getElementById("kpi-remaining-receivable").textContent = `مالکان ذمہ بقایا: ${this.formatPKR(totalContract - totalReceived)}`;
-                document.getElementById("kpi-total-spent").textContent = this.formatPKR(totalSpent);
-                document.getElementById("kpi-cash-in-hand").textContent = `موجودہ نقد بیلنس: ${this.formatPKR(totalReceived - totalCashOut)}`;
-                document.getElementById("kpi-mazdoor-payable").textContent = this.formatPKR(totalMazdoorPayable);
-                document.getElementById("kpi-active-mazdoors").textContent = `کل رجسٹرڈ مزدور: ${this.db.mazdoors.length}`;
+                const thekaBadge = document.getElementById("kpi-theka-active-badge");
+                if (thekaBadge) thekaBadge.textContent = `${thekasList.length} پروجیکٹس`;
 
-                const cardsHtml = this.db.thekas.map(t => {
+                document.getElementById("kpi-total-received").textContent = this.formatPKR(totalReceived);
+                document.getElementById("kpi-remaining-receivable").textContent = `مالکان ذمہ بقایا: ${this.formatPKR(remainingReceivable)}`;
+                const recoveryBadge = document.getElementById("kpi-recovery-rate-badge");
+                if (recoveryBadge) recoveryBadge.textContent = `${recoveryRate}% وصول شدہ`;
+
+                document.getElementById("kpi-total-spent").textContent = this.formatPKR(totalSpent);
+                document.getElementById("kpi-cash-in-hand").textContent = `موجودہ نقد بیلنس: ${this.formatPKR(cashInHand)}`;
+                const burnBadge = document.getElementById("kpi-burn-rate-badge");
+                if (burnBadge) burnBadge.textContent = `بجٹ خرچ: ${burnRate}%`;
+
+                document.getElementById("kpi-mazdoor-payable").textContent = this.formatPKR(totalMazdoorPayable);
+                document.getElementById("kpi-active-mazdoors").textContent = `کل رجسٹرڈ مزدور: ${mazdoorsList.length}`;
+                const unpaidBadge = document.getElementById("kpi-unpaid-workers-count");
+                if (unpaidBadge) unpaidBadge.textContent = `${unpaidWorkersCount} ورکرز بقایا`;
+
+                const profitEl = document.getElementById("kpi-projected-profit");
+                if (profitEl) profitEl.textContent = this.formatPKR(projectedProfit);
+                const marginEl = document.getElementById("kpi-profit-margin");
+                if (marginEl) marginEl.textContent = `منافع مارجن: ${profitMargin}%`;
+                const profitBadge = document.getElementById("kpi-profit-status-badge");
+                if (profitBadge) {
+                    profitBadge.textContent = projectedProfit >= 0 ? "مثبت منافع" : "خسارہ";
+                    profitBadge.className = projectedProfit >= 0 ? "text-emerald-700 font-bold" : "text-rose-600 font-bold";
+                }
+
+                const todayAttEl = document.getElementById("kpi-today-attendance");
+                if (todayAttEl) todayAttEl.textContent = `${todayOnSite} مزدور آن سائٹ`;
+                const todayDetailsEl = document.getElementById("kpi-today-att-details");
+                if (todayDetailsEl) todayDetailsEl.textContent = `مکمل: ${presentCount} • ہاف: ${halfCount} • غیر: ${absentCount}`;
+                const todayPctEl = document.getElementById("kpi-today-att-pct");
+                if (todayPctEl) todayPctEl.textContent = `${todayAttPct}% حاضری شرح`;
+
+                const matSpentEl = document.getElementById("kpi-material-spent");
+                if (matSpentEl) matSpentEl.textContent = this.formatPKR(materialSpent);
+                const matRatioBadge = document.getElementById("kpi-material-ratio-badge");
+                if (matRatioBadge) {
+                    const matPct = totalSpent > 0 ? Math.round((materialSpent / totalSpent) * 100) : 0;
+                    matRatioBadge.textContent = `${matPct}% اخراجات`;
+                }
+
+                const cashflowStatusEl = document.getElementById("kpi-cashflow-status");
+                if (cashflowStatusEl) {
+                    cashflowStatusEl.textContent = cashInHand >= 0 ? "مثبت و محفوظ نقد فلو" : "منفی کیش فلو (توجہ طلب)";
+                    cashflowStatusEl.className = `text-sm sm:text-lg lg:text-xl font-extrabold truncate ${cashInHand >= 0 ? 'text-purple-800' : 'text-rose-600'}`;
+                }
+                const cashflowRatioEl = document.getElementById("kpi-cashflow-ratio");
+                if (cashflowRatioEl) {
+                    const netSurplus = cashInHand - totalMazdoorPayable;
+                    cashflowRatioEl.textContent = `نیٹ کیش بنام واجبات: ${this.formatPKR(netSurplus)}`;
+                }
+                const liquidityBadge = document.getElementById("kpi-liquidity-badge");
+                if (liquidityBadge) {
+                    liquidityBadge.textContent = cashInHand >= totalMazdoorPayable ? "مکمل محفوظ" : "واجبات زیادہ ہیں";
+                    liquidityBadge.className = cashInHand >= totalMazdoorPayable ? "text-purple-700 font-bold" : "text-rose-600 font-bold";
+                }
+
+                const totals = {
+                    runningCount, completedCount, totalContract,
+                    totalReceived, totalSpent, totalCashOut,
+                    materialSpent, laborPaid, totalMazdoorPayable,
+                    cashInHand, remainingReceivable, projectedProfit,
+                    profitMargin, recoveryRate, burnRate
+                };
+
+                this.renderDashboardAlerts(thekasList, attendanceList, hisabList, mazdoorsList);
+                this.renderDashboardInfographics(thekasList, attendanceList, hisabList, mazdoorsList, totals);
+                this.renderDashboardThekaCards(thekasList);
+                this.renderDashboardUnpaidLabor(mazdoorsList);
+                this.renderDashboardRecentActivity();
+                this.renderDashboardCharts(thekasList, attendanceList, hisabList, mazdoorsList, totals);
+            },
+
+            renderDashboardAlerts(thekasList, attendanceList, hisabList, mazdoorsList) {
+                const container = document.getElementById("dash-alerts-container");
+                const countBadge = document.getElementById("dash-alerts-count-badge");
+                if (!container) return;
+
+                const alerts = [];
+
+                thekasList.forEach(t => {
+                    const fin = this.getThekaFinancials(t.id);
+                    if (fin.balanceReceivable > 400000 && fin.contract > 0) {
+                        alerts.push({
+                            type: "warning",
+                            icon: "fa-solid fa-triangle-exclamation text-amber-600",
+                            bg: "bg-amber-50 border-amber-200 text-amber-950",
+                            title: `مالک سے واجب الوصول بقایا: ${this.escapeHtml(t.title)}`,
+                            desc: `اس ٹھیکے میں مالک کی طرف ${this.formatPKR(fin.balanceReceivable)} بقایا ہیں۔ وصولی کے لیے مالک سے رابطہ کریں۔`,
+                            actionText: "کھاتہ پرنٹ",
+                            actionFn: `App.printSingleThekaReport('${this.escapeHtml(t.id)}')`
+                        });
+                    }
+                    if (fin.totalSpent > fin.received && fin.received > 0) {
+                        alerts.push({
+                            type: "danger",
+                            icon: "fa-solid fa-circle-exclamation text-rose-600",
+                            bg: "bg-rose-50 border-rose-200 text-rose-950",
+                            title: `اخراجات وصولی سے زیادہ: ${this.escapeHtml(t.title)}`,
+                            desc: `سائٹ کا کل خرچہ (${this.formatPKR(fin.totalSpent)}) اب تک کی موصولہ رقم (${this.formatPKR(fin.received)}) سے تجاوز کر چکا ہے۔`,
+                            actionText: "نیا فنڈ وصولی",
+                            actionFn: `App.openHisabModal('', 'مالک سے قسط وصولی', '', '${this.escapeHtml(t.id)}')`
+                        });
+                    }
+                });
+
+                const highDueWorkers = mazdoorsList
+                    .map(m => ({ m, fin: this.getMazdoorFinancials(m.id) }))
+                    .filter(x => x.fin.netPayable >= 5000)
+                    .sort((a, b) => b.fin.netPayable - a.fin.netPayable);
+
+                if (highDueWorkers.length > 0) {
+                    const top = highDueWorkers[0];
+                    alerts.push({
+                        type: "info",
+                        icon: "fa-solid fa-user-clock text-sky-600",
+                        bg: "bg-sky-50 border-sky-200 text-sky-950",
+                        title: `مزدور واجب الادا دیہاڑی: ${this.escapeHtml(top.m.name)}`,
+                        desc: `${this.escapeHtml(top.m.name)} کے ذمے کل ${this.formatPKR(top.fin.netPayable)} واجب الادا ہیں۔ بروقت ادائیگی درج کریں۔`,
+                        actionText: "ادائیگی درج کریں",
+                        actionFn: `App.openHisabModal('', 'مزدور ادائیگی / ایڈوانس', '${this.escapeHtml(top.m.id)}', '${this.escapeHtml(top.m.thekaId || '')}')`
+                    });
+                }
+
+                const todayStr = new Date().toISOString().slice(0, 10);
+                const todayAttendanceCount = attendanceList.filter(a => a.date === todayStr).length;
+                if (todayAttendanceCount === 0 && mazdoorsList.length > 0) {
+                    alerts.push({
+                        type: "attendance",
+                        icon: "fa-solid fa-calendar-xmark text-teal-600",
+                        bg: "bg-teal-50 border-teal-200 text-teal-950",
+                        title: "آج کی روزانہ مزدور حاضری ابھی تک نہیں لگی",
+                        desc: "سائٹ ورکرز کی درست دیہاڑی اور اخراجات کے حساب کے لیے آج کی اجتماعی حاضری شیٹ مکمل کریں۔",
+                        actionText: "اجتماعی حاضری کھولیں",
+                        actionFn: "App.openBulkAttendanceModal()"
+                    });
+                }
+
+                if (countBadge) countBadge.textContent = `${alerts.length} الرٹس`;
+
+                if (alerts.length === 0) {
+                    container.innerHTML = `
+                        <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-3 flex items-center gap-3 text-emerald-900 text-xs">
+                            <span class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-check-double"></i>
+                            </span>
+                            <div class="flex-1">
+                                <div class="font-bold">تمام کھاتے اور پروجیکٹس بروقت اور درست ہیں!</div>
+                                <div class="text-[11px] text-emerald-700">کوئی ہنگامی انتباہ یا زائد المعیاد بقایا جات موجود نہیں۔</div>
+                            </div>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = alerts.map(a => `
+                    <div class="${a.bg} border rounded-2xl p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 shadow-sm text-xs transition">
+                        <div class="flex items-start gap-2.5 min-w-0">
+                            <span class="text-base mt-0.5 shrink-0"><i class="${a.icon}"></i></span>
+                            <div class="min-w-0">
+                                <div class="font-extrabold truncate">${a.title}</div>
+                                <div class="text-[11px] opacity-85 leading-relaxed mt-0.5">${a.desc}</div>
+                            </div>
+                        </div>
+                        <button type="button" onclick="${a.actionFn}" class="bg-white border border-slate-300 hover:border-slate-400 text-slate-800 px-3 py-1.5 rounded-xl font-bold text-xs shrink-0 touch-target self-end sm:self-auto shadow-sm">
+                            ${a.actionText}
+                        </button>
+                    </div>
+                `).join("");
+            },
+
+            renderDashboardInfographics(thekasList, attendanceList, hisabList, mazdoorsList, totals) {
+                const recRatio = totals.totalContract > 0 ? (totals.totalReceived / totals.totalContract) : 0;
+                const recScore = Math.min(40, Math.round(recRatio * 40));
+
+                let costScore = 30;
+                if (totals.totalSpent > totals.totalReceived && totals.totalReceived > 0) {
+                    const diff = (totals.totalSpent - totals.totalReceived) / totals.totalReceived;
+                    costScore = Math.max(5, Math.round(30 - (diff * 30)));
+                }
+
+                let laborScore = 30;
+                if (totals.totalMazdoorPayable > 0 && totals.cashInHand > 0) {
+                    const ratio = totals.cashInHand / totals.totalMazdoorPayable;
+                    laborScore = ratio >= 1 ? 30 : Math.max(5, Math.round(ratio * 30));
+                } else if (totals.totalMazdoorPayable === 0) {
+                    laborScore = 30;
+                }
+
+                const healthScore = Math.min(100, Math.max(10, recScore + costScore + laborScore));
+                const healthCircle = document.getElementById("health-score-circle");
+                if (healthCircle) {
+                    healthCircle.setAttribute("stroke-dasharray", `${healthScore}, 100`);
+                    if (healthScore >= 80) healthCircle.setAttribute("class", "text-emerald-500 transition-all duration-1000 ease-out");
+                    else if (healthScore >= 60) healthCircle.setAttribute("class", "text-amber-500 transition-all duration-1000 ease-out");
+                    else healthCircle.setAttribute("class", "text-rose-500 transition-all duration-1000 ease-out");
+                }
+
+                const healthNum = document.getElementById("health-score-number");
+                if (healthNum) healthNum.textContent = healthScore;
+
+                const healthGrade = document.getElementById("health-score-grade");
+                if (healthGrade) {
+                    if (healthScore >= 85) { healthGrade.textContent = "A+ گریڈ"; healthGrade.className = "text-xs font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800"; }
+                    else if (healthScore >= 70) { healthGrade.textContent = "A گریڈ"; healthGrade.className = "text-xs font-bold px-2 py-0.5 rounded-full bg-teal-100 text-teal-800"; }
+                    else if (healthScore >= 55) { healthGrade.textContent = "B گریڈ"; healthGrade.className = "text-xs font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800"; }
+                    else { healthGrade.textContent = "C گریڈ (توجہ طلب)"; healthGrade.className = "text-xs font-bold px-2 py-0.5 rounded-full bg-rose-100 text-rose-800"; }
+                }
+
+                const statRec = document.getElementById("health-stat-recovery");
+                if (statRec) statRec.textContent = `${totals.recoveryRate}%`;
+                const statCost = document.getElementById("health-stat-cost");
+                if (statCost) statCost.textContent = `${Math.min(100, totals.burnRate)}%`;
+                const statLab = document.getElementById("health-stat-labor");
+                if (statLab) {
+                    const totalLaborEarned = attendanceList.reduce((s, a) => s + Number(a.totalEarned || 0), 0);
+                    const paidPct = totalLaborEarned > 0 ? Math.min(100, Math.round((totals.laborPaid / totalLaborEarned) * 100)) : 100;
+                    statLab.textContent = `${paidPct}%`;
+                }
+
+                const cityMap = {};
+                this.db.thekas.forEach(t => {
+                    const city = t.city || "دیگر اضلاع";
+                    if (!cityMap[city]) cityMap[city] = { count: 0, totalAmount: 0 };
+                    cityMap[city].count += 1;
+                    cityMap[city].totalAmount += Number(t.contractAmount || 0);
+                });
+
+                const cityEntries = Object.entries(cityMap).sort((a, b) => b[1].count - a[1].count);
+                const citiesCountEl = document.getElementById("dash-cities-count");
+                if (citiesCountEl) citiesCountEl.textContent = `${cityEntries.length} اضلاع`;
+
+                const citiesBreakdownEl = document.getElementById("dash-cities-breakdown");
+                if (citiesBreakdownEl) {
+                    citiesBreakdownEl.innerHTML = cityEntries.slice(0, 4).map(([city, data]) => `
+                        <div class="flex items-center justify-between text-xs p-2 rounded-xl bg-slate-50 border border-slate-100">
+                            <div class="flex items-center gap-2 truncate">
+                                <span class="w-2 h-2 rounded-full bg-teal-600"></span>
+                                <span class="font-bold text-slate-800 truncate">${this.escapeHtml(city)}</span>
+                            </div>
+                            <div class="flex items-center gap-2 shrink-0">
+                                <span class="bg-teal-100 text-teal-800 px-2 py-0.5 rounded-md font-bold text-[10px]">${data.count} سائٹس</span>
+                                <span class="font-extrabold text-slate-700 num-ltr text-[11px]">${this.formatPKR(data.totalAmount)}</span>
+                            </div>
+                        </div>
+                    `).join("");
+                }
+
+                const topCityEl = document.getElementById("dash-top-city");
+                if (topCityEl && cityEntries.length > 0) {
+                    topCityEl.textContent = `${cityEntries[0][0]} (${cityEntries[0][1].count} سائٹس)`;
+                }
+
+                const wfContract = document.getElementById("waterfall-contract");
+                if (wfContract) wfContract.textContent = this.formatPKR(totals.totalContract);
+                const wfReceived = document.getElementById("waterfall-received");
+                if (wfReceived) wfReceived.textContent = this.formatPKR(totals.totalReceived);
+                const wfSpent = document.getElementById("waterfall-spent");
+                if (wfSpent) wfSpent.textContent = this.formatPKR(totals.totalSpent);
+                const wfCash = document.getElementById("waterfall-cash");
+                if (wfCash) wfCash.textContent = this.formatPKR(totals.cashInHand);
+                const wfReceivable = document.getElementById("waterfall-receivable");
+                if (wfReceivable) wfReceivable.textContent = `بقایا مالکان: ${this.formatPKR(totals.remainingReceivable)}`;
+            },
+
+            renderDashboardThekaCards(thekasList) {
+                const container = document.getElementById("dashboard-theka-cards");
+                if (!container) return;
+
+                if (thekasList.length === 0) {
+                    container.innerHTML = `<div class="col-span-full p-6 text-center text-slate-400 text-xs">کوئی مماثل ٹھیکہ ریکارڈ موجود نہیں۔</div>`;
+                    return;
+                }
+
+                const cardsHtml = thekasList.map(t => {
                     const fin = this.getThekaFinancials(t.id);
                     const pct = fin.contract > 0 ? Math.min(100, Math.round((fin.received / fin.contract) * 100)) : 0;
                     const isRunning = t.status === "جاری ہے";
@@ -2482,7 +3277,586 @@
                         </div>
                     `;
                 }).join("");
-                document.getElementById("dashboard-theka-cards").innerHTML = cardsHtml;
+                container.innerHTML = cardsHtml;
+            },
+
+            renderDashboardUnpaidLabor(mazdoorsList) {
+                const tbody = document.getElementById("dashboard-unpaid-labor-tbody");
+                if (!tbody) return;
+
+                const withDues = mazdoorsList
+                    .map(m => ({ m, fin: this.getMazdoorFinancials(m.id) }))
+                    .filter(x => x.fin.netPayable > 0)
+                    .sort((a, b) => b.fin.netPayable - a.fin.netPayable);
+
+                if (withDues.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="5" class="p-4 text-center text-slate-400 text-xs">الحمدللہ! تمام مزدوروں اور مستریوں کے واجبات ادا شدہ ہیں، کوئی بقایا نہیں۔</td>
+                        </tr>
+                    `;
+                    return;
+                }
+
+                tbody.innerHTML = withDues.slice(0, 5).map(x => {
+                    const theka = this.db.thekas.find(t => t.id === x.m.thekaId);
+                    const thekaTitle = theka ? theka.title : "غیر معین";
+                    return `
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-2">
+                                <div class="font-bold text-slate-900">${this.escapeHtml(x.m.name)}</div>
+                                <div class="text-[10px] text-slate-500">${this.escapeHtml(x.m.role)}</div>
+                            </td>
+                            <td class="p-2 text-slate-700 max-w-[130px] truncate" title="${this.escapeHtml(thekaTitle)}">
+                                ${this.escapeHtml(thekaTitle)}
+                            </td>
+                            <td class="p-2 num-ltr font-bold text-emerald-700">${this.formatPKR(x.fin.earned)}</td>
+                            <td class="p-2 num-ltr font-extrabold text-amber-800">${this.formatPKR(x.fin.netPayable)}</td>
+                            <td class="p-2 text-center">
+                                <button type="button" onclick="App.openHisabModal('', 'مزدور ادائیگی / ایڈوانس', '${this.escapeHtml(x.m.id)}', '${this.escapeHtml(x.m.thekaId || '')}')" class="bg-amber-100 hover:bg-amber-200 text-amber-900 px-2 py-1 rounded-lg font-bold text-[10px] touch-target" title="ادائیگی درج کریں">
+                                    ادائیگی
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                }).join("");
+            },
+
+            renderDashboardRecentActivity() {
+                const container = document.getElementById("dashboard-recent-activity-list");
+                if (!container) return;
+
+                const combined = [];
+                this.db.hisab.forEach(h => {
+                    const theka = this.db.thekas.find(t => t.id === h.thekaId);
+                    combined.push({
+                        date: h.date || "",
+                        title: h.type,
+                        theka: theka ? theka.title : "",
+                        amount: Number(h.amount || 0),
+                        isIncome: h.type === "مالک سے قسط وصولی",
+                        desc: h.desc || h.method,
+                        type: "hisab"
+                    });
+                });
+
+                this.db.attendance.forEach(a => {
+                    const mazdoor = this.db.mazdoors.find(m => m.id === a.mazdoorId);
+                    const theka = this.db.thekas.find(t => t.id === a.thekaId);
+                    combined.push({
+                        date: a.date || "",
+                        title: `حاضری: ${mazdoor ? mazdoor.name : 'ورکر'}`,
+                        theka: theka ? theka.title : "",
+                        amount: Number(a.totalEarned || 0),
+                        isIncome: false,
+                        desc: `${a.status} (دیہاڑی + اوورٹائم)`,
+                        type: "attendance"
+                    });
+                });
+
+                combined.sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+
+                if (combined.length === 0) {
+                    container.innerHTML = `<div class="p-4 text-center text-slate-400 text-xs">کوئی حالیہ سرگرمی ریکارڈ موجود نہیں۔</div>`;
+                    return;
+                }
+
+                container.innerHTML = combined.slice(0, 6).map(item => `
+                    <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-100 text-xs hover:bg-slate-100 transition">
+                        <div class="flex items-center gap-2.5 min-w-0">
+                            <span class="w-8 h-8 rounded-xl ${item.isIncome ? 'bg-sky-100 text-sky-700' : 'bg-rose-100 text-rose-700'} flex items-center justify-center shrink-0 text-xs">
+                                <i class="${item.isIncome ? 'fa-solid fa-arrow-down' : 'fa-solid fa-arrow-up'}"></i>
+                            </span>
+                            <div class="min-w-0">
+                                <div class="font-extrabold text-slate-900 truncate">${this.escapeHtml(item.title)}</div>
+                                <div class="text-[10px] text-slate-500 truncate">${this.escapeHtml(item.theka)} • ${this.escapeHtml(item.date)}</div>
+                            </div>
+                        </div>
+                        <div class="text-left shrink-0">
+                            <div class="font-extrabold num-ltr ${item.isIncome ? 'text-sky-700' : 'text-rose-600'}">
+                                ${item.isIncome ? '+' : '-'} ${this.formatPKR(item.amount)}
+                            </div>
+                            <div class="text-[10px] text-slate-500 truncate max-w-[100px]">${this.escapeHtml(item.desc)}</div>
+                        </div>
+                    </div>
+                `).join("");
+            },
+
+            renderDashboardCharts(thekasList, attendanceList, hisabList, mazdoorsList, totals) {
+                if (typeof Chart === "undefined") return;
+
+                Chart.defaults.font.family = "'Calibri', 'Segoe UI', sans-serif";
+                Chart.defaults.color = "#334155";
+
+                Object.values(this.charts).forEach(c => {
+                    if (c && typeof c.destroy === "function") {
+                        try { c.destroy(); } catch (e) {}
+                    }
+                });
+                this.charts = {};
+
+                const thekaLabels = thekasList.map(t => t.title.length > 22 ? t.title.slice(0, 20) + "..." : t.title);
+                const thekaContracts = thekasList.map(t => Number(t.contractAmount || 0));
+                const thekaReceived = thekasList.map(t => this.getThekaFinancials(t.id).received);
+                const thekaSpent = thekasList.map(t => this.getThekaFinancials(t.id).totalSpent);
+                const thekaProfits = thekasList.map(t => this.getThekaFinancials(t.id).projectedProfit);
+
+                const ctx1 = document.getElementById("chart-theka-finance");
+                if (ctx1) {
+                    this.charts.thekaFinance = new Chart(ctx1, {
+                        type: "bar",
+                        data: {
+                            labels: thekaLabels,
+                            datasets: [
+                                { label: "کل طے شدہ مالیت", data: thekaContracts, backgroundColor: "#0284c7", borderRadius: 6 },
+                                { label: "وصول شدہ رقم", data: thekaReceived, backgroundColor: "#059669", borderRadius: 6 },
+                                { label: "کل خرچہ (میٹریل+لیبر)", data: thekaSpent, backgroundColor: "#e11d48", borderRadius: 6 },
+                                { label: "خالص متوقع بچت", data: thekaProfits, backgroundColor: "#d97706", borderRadius: 6 }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { position: "top", labels: { boxWidth: 12, font: { size: 11, weight: "bold" } } },
+                                tooltip: {
+                                    callbacks: {
+                                        label: (context) => ` ${context.dataset.label}: Rs ${Number(context.raw || 0).toLocaleString("en-PK")}`
+                                    }
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    ticks: {
+                                        callback: (value) => value >= 1000000 ? (value / 1000000).toFixed(1) + "M" : value >= 1000 ? (value / 1000).toFixed(0) + "k" : value
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+
+                const ctx2 = document.getElementById("chart-expense-dist");
+                if (ctx2) {
+                    this.charts.expenseDist = new Chart(ctx2, {
+                        type: "doughnut",
+                        data: {
+                            labels: ["میٹریل و سامان خرچہ", "ادا شدہ مزدور دیہاڑی", "مزدور واجب الادا بقایا"],
+                            datasets: [{
+                                data: [totals.materialSpent, totals.laborPaid, totals.totalMazdoorPayable],
+                                backgroundColor: ["#0284c7", "#059669", "#d97706"],
+                                borderWidth: 2,
+                                borderColor: "#ffffff"
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            cutout: "60%",
+                            plugins: {
+                                legend: { position: "bottom", labels: { boxWidth: 12, font: { size: 11 } } },
+                                tooltip: {
+                                    callbacks: {
+                                        label: (context) => ` ${context.label}: Rs ${Number(context.raw || 0).toLocaleString("en-PK")}`
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+
+                const ctx3 = document.getElementById("chart-recovery-rate");
+                if (ctx3) {
+                    const recPctList = thekasList.map(t => {
+                        const f = this.getThekaFinancials(t.id);
+                        return f.contract > 0 ? Math.min(100, Math.round((f.received / f.contract) * 100)) : 0;
+                    });
+                    const spentPctList = thekasList.map(t => {
+                        const f = this.getThekaFinancials(t.id);
+                        return f.contract > 0 ? Math.min(100, Math.round((f.totalSpent / f.contract) * 100)) : 0;
+                    });
+
+                    this.charts.recoveryRate = new Chart(ctx3, {
+                        type: "bar",
+                        data: {
+                            labels: thekaLabels,
+                            datasets: [
+                                { label: "وصولی شرح %", data: recPctList, backgroundColor: "#059669", borderRadius: 6 },
+                                { label: "بجٹ خرچ %", data: spentPctList, backgroundColor: "#ea580c", borderRadius: 6 }
+                            ]
+                        },
+                        options: {
+                            indexAxis: "y",
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { position: "top", labels: { boxWidth: 12, font: { size: 11 } } },
+                                tooltip: {
+                                    callbacks: {
+                                        label: (context) => ` ${context.dataset.label}: ${context.raw}%`
+                                    }
+                                }
+                            },
+                            scales: {
+                                x: { max: 100, ticks: { callback: v => v + "%" } }
+                            }
+                        }
+                    });
+                }
+
+                const ctx4 = document.getElementById("chart-workforce-roles");
+                if (ctx4) {
+                    const roleMap = {};
+                    mazdoorsList.forEach(m => {
+                        const r = m.role || "دیگر مزدور";
+                        if (!roleMap[r]) roleMap[r] = { count: 0, wageSum: 0 };
+                        roleMap[r].count += 1;
+                        roleMap[r].wageSum += Number(m.dailyWage || 0);
+                    });
+                    const roleLabels = Object.keys(roleMap);
+                    const roleWageSums = roleLabels.map(r => roleMap[r].wageSum);
+
+                    this.charts.workforceRoles = new Chart(ctx4, {
+                        type: "polarArea",
+                        data: {
+                            labels: roleLabels,
+                            datasets: [{
+                                data: roleWageSums,
+                                backgroundColor: [
+                                    "rgba(5, 150, 105, 0.75)",
+                                    "rgba(2, 132, 199, 0.75)",
+                                    "rgba(217, 119, 6, 0.75)",
+                                    "rgba(124, 58, 237, 0.75)",
+                                    "rgba(225, 29, 72, 0.75)",
+                                    "rgba(13, 148, 136, 0.75)"
+                                ]
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { position: "bottom", labels: { boxWidth: 10, font: { size: 10 } } },
+                                tooltip: {
+                                    callbacks: {
+                                        label: (context) => ` مجموعی یومیہ دیہاڑی پول: Rs ${Number(context.raw || 0).toLocaleString("en-PK")}`
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+
+                const ctx5 = document.getElementById("chart-attendance-trend");
+                if (ctx5) {
+                    const dateMap = {};
+                    attendanceList.forEach(a => {
+                        const d = a.date || "غیر معین";
+                        if (!dateMap[d]) dateMap[d] = { workers: 0, totalEarned: 0 };
+                        dateMap[d].workers += 1;
+                        dateMap[d].totalEarned += Number(a.totalEarned || 0);
+                    });
+
+                    const sortedDates = Object.keys(dateMap).sort();
+                    const trendDates = sortedDates.slice(-7);
+                    const trendWorkers = trendDates.map(d => dateMap[d].workers);
+                    const trendEarned = trendDates.map(d => dateMap[d].totalEarned);
+
+                    this.charts.attendanceTrend = new Chart(ctx5, {
+                        type: "line",
+                        data: {
+                            labels: trendDates.length > 0 ? trendDates : ["آج"],
+                            datasets: [
+                                {
+                                    label: "حاضر مزدور (تعداد)",
+                                    data: trendWorkers.length > 0 ? trendWorkers : [0],
+                                    borderColor: "#059669",
+                                    backgroundColor: "rgba(5, 150, 105, 0.15)",
+                                    fill: true,
+                                    tension: 0.35,
+                                    yAxisID: "y"
+                                },
+                                {
+                                    label: "یومیہ مزدوری لاگت (PKR)",
+                                    data: trendEarned.length > 0 ? trendEarned : [0],
+                                    borderColor: "#0284c7",
+                                    backgroundColor: "transparent",
+                                    borderDash: [4, 4],
+                                    tension: 0.35,
+                                    yAxisID: "y1"
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { position: "top", labels: { boxWidth: 12, font: { size: 11 } } },
+                                tooltip: {
+                                    callbacks: {
+                                        label: (context) => {
+                                            if (context.datasetIndex === 0) return ` حاضر ورکرز: ${context.raw} مزدور`;
+                                            return ` یومیہ مزدوری لاگت: Rs ${Number(context.raw || 0).toLocaleString("en-PK")}`;
+                                        }
+                                    }
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    type: "linear",
+                                    position: "left",
+                                    ticks: { precision: 0 }
+                                },
+                                y1: {
+                                    type: "linear",
+                                    position: "right",
+                                    grid: { drawOnChartArea: false },
+                                    ticks: {
+                                        callback: (value) => value >= 1000 ? (value / 1000).toFixed(0) + "k" : value
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            },
+
+            viewChartData(chartKey) {
+                const thekasList = this.dashboardThekaFilter && this.dashboardThekaFilter !== "ALL"
+                    ? this.db.thekas.filter(t => t.id === this.dashboardThekaFilter)
+                    : this.db.thekas;
+                const thekaIds = new Set(thekasList.map(t => t.id));
+                const attendanceList = this.dashboardThekaFilter && this.dashboardThekaFilter !== "ALL"
+                    ? this.db.attendance.filter(a => thekaIds.has(a.thekaId))
+                    : this.db.attendance;
+                const hisabList = this.dashboardThekaFilter && this.dashboardThekaFilter !== "ALL"
+                    ? this.db.hisab.filter(h => thekaIds.has(h.thekaId))
+                    : this.db.hisab;
+                const mazdoorsList = this.dashboardThekaFilter && this.dashboardThekaFilter !== "ALL"
+                    ? this.db.mazdoors.filter(m => thekaIds.has(m.thekaId))
+                    : this.db.mazdoors;
+
+                let title = "";
+                let subtitle = "";
+                let statsHtml = "";
+                let headers = [];
+                let rows = [];
+
+                if (chartKey === "theka-finance") {
+                    title = "ٹھیکہ جاتی مالیاتی موازنہ: بنیادی ڈیٹا و حسابی شیٹ";
+                    subtitle = "ہر تعمیراتی پروجیکٹ کی طے شدہ رقم، وصولی، کل اخراجات اور متوقع خالص بچت";
+                    headers = ["ٹھیکہ سائٹ کا نام", "مالک مکان", "علاقہ", "طے شدہ رقم", "موصولہ رقم", "کل خرچہ", "خالص بچت", "وصولی %"];
+
+                    let sumContract = 0, sumReceived = 0, sumSpent = 0, sumProfit = 0;
+                    rows = thekasList.map(t => {
+                        const f = this.getThekaFinancials(t.id);
+                        const pct = f.contract > 0 ? Math.round((f.received / f.contract) * 100) : 0;
+                        sumContract += f.contract;
+                        sumReceived += f.received;
+                        sumSpent += f.totalSpent;
+                        sumProfit += f.projectedProfit;
+                        return [
+                            t.title,
+                            t.client,
+                            t.city,
+                            this.formatPKR(f.contract),
+                            this.formatPKR(f.received),
+                            this.formatPKR(f.totalSpent),
+                            this.formatPKR(f.projectedProfit),
+                            pct + "%"
+                        ];
+                    });
+
+                    statsHtml = `
+                        <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200"><div class="text-[10px] text-slate-500">کل سائٹس</div><div class="font-extrabold text-sm text-slate-900">${thekasList.length}</div></div>
+                        <div class="bg-sky-50 p-2.5 rounded-xl border border-sky-200"><div class="text-[10px] text-sky-700">کل طے شدہ رقم</div><div class="font-extrabold text-sm text-sky-800 num-ltr">${this.formatPKR(sumContract)}</div></div>
+                        <div class="bg-emerald-50 p-2.5 rounded-xl border border-emerald-200"><div class="text-[10px] text-emerald-700">کل وصول شدہ</div><div class="font-extrabold text-sm text-emerald-800 num-ltr">${this.formatPKR(sumReceived)}</div></div>
+                        <div class="bg-amber-50 p-2.5 rounded-xl border border-amber-200"><div class="text-[10px] text-amber-700">متوقع خالص بچت</div><div class="font-extrabold text-sm text-amber-800 num-ltr">${this.formatPKR(sumProfit)}</div></div>
+                    `;
+                } else if (chartKey === "expense-dist") {
+                    title = "تعمیراتی اخراجات کی تفصیلی تقسیم: بنیادی ڈیٹا";
+                    subtitle = "میٹریل و سامان، ادا شدہ مزدوری اور واجب الادا بقایا جات کا حسابی تجزیہ";
+                    headers = ["خرچہ کی قسم", "متعلقہ تفصیل", "رقم (روپے)", "کل اخراجات کا تناسب %"];
+
+                    let matSpent = 0, labPaid = 0, labDue = 0;
+                    thekasList.forEach(t => {
+                        const f = this.getThekaFinancials(t.id);
+                        matSpent += f.materialSpent;
+                        labPaid += f.laborPaid;
+                    });
+                    mazdoorsList.forEach(m => {
+                        const mf = this.getMazdoorFinancials(m.id);
+                        if (mf.netPayable > 0) labDue += mf.netPayable;
+                    });
+                    const totalExpensePool = matSpent + labPaid + labDue;
+                    const pMat = totalExpensePool > 0 ? ((matSpent / totalExpensePool) * 100).toFixed(1) : 0;
+                    const pPaid = totalExpensePool > 0 ? ((labPaid / totalExpensePool) * 100).toFixed(1) : 0;
+                    const pDue = totalExpensePool > 0 ? ((labDue / totalExpensePool) * 100).toFixed(1) : 0;
+
+                    rows = [
+                        ["میٹریل و سائٹ سامان", "سیمنٹ، سریا، اینٹ، ریت، شٹرنگ اور ٹرانسپورٹ", this.formatPKR(matSpent), pMat + "%"],
+                        ["ادا شدہ مزدور دیہاڑی", "مزدوروں اور مستریوں کو نقد، ایزی پیسہ یا بینک ادا شدہ", this.formatPKR(labPaid), pPaid + "%"],
+                        ["مزدور واجب الادا بقایا", "مزدوروں کی کمائی گئی دیہاڑی جو ابھی ادا کرنا باقی ہے", this.formatPKR(labDue), pDue + "%"]
+                    ];
+
+                    statsHtml = `
+                        <div class="bg-sky-50 p-2.5 rounded-xl border border-sky-200"><div class="text-[10px] text-sky-700">میٹریل لاگت</div><div class="font-extrabold text-sm text-sky-800 num-ltr">${this.formatPKR(matSpent)}</div></div>
+                        <div class="bg-emerald-50 p-2.5 rounded-xl border border-emerald-200"><div class="text-[10px] text-emerald-700">ادا شدہ مزدوری</div><div class="font-extrabold text-sm text-emerald-800 num-ltr">${this.formatPKR(labPaid)}</div></div>
+                        <div class="bg-amber-50 p-2.5 rounded-xl border border-amber-200"><div class="text-[10px] text-amber-700">واجب الادا بقایا</div><div class="font-extrabold text-sm text-amber-800 num-ltr">${this.formatPKR(labDue)}</div></div>
+                        <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200"><div class="text-[10px] text-slate-600">کل اخراجاتی پول</div><div class="font-extrabold text-sm text-slate-900 num-ltr">${this.formatPKR(totalExpensePool)}</div></div>
+                    `;
+                } else if (chartKey === "recovery-rate") {
+                    title = "وصولی بمقابلہ بجٹ شرح %: بنیادی حسابی شیٹ";
+                    subtitle = "ہر ٹھیکہ میں طے شدہ رقم کے مقابلے میں کتنے فیصد وصول ہوا اور کتنا خرچ ہوا";
+                    headers = ["ٹھیکہ سائٹ کا نام", "طے شدہ بجٹ", "وصول شدہ", "وصولی شرح %", "کل خرچہ", "بجٹ خرچ %", "حیثیت"];
+
+                    rows = thekasList.map(t => {
+                        const f = this.getThekaFinancials(t.id);
+                        const recPct = f.contract > 0 ? Math.round((f.received / f.contract) * 100) : 0;
+                        const spentPct = f.contract > 0 ? Math.round((f.totalSpent / f.contract) * 100) : 0;
+                        return [
+                            t.title,
+                            this.formatPKR(f.contract),
+                            this.formatPKR(f.received),
+                            recPct + "%",
+                            this.formatPKR(f.totalSpent),
+                            spentPct + "%",
+                            t.status
+                        ];
+                    });
+
+                    statsHtml = `
+                        <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200"><div class="text-[10px] text-slate-500">زیر جائزہ ٹھیکے</div><div class="font-extrabold text-sm text-slate-900">${thekasList.length} سائٹس</div></div>
+                        <div class="bg-emerald-50 p-2.5 rounded-xl border border-emerald-200"><div class="text-[10px] text-emerald-700">اوسط وصولی شرح</div><div class="font-extrabold text-sm text-emerald-800 num-ltr">${rows.length > 0 ? Math.round(rows.reduce((s, r) => s + parseInt(r[3]), 0) / rows.length) : 0}%</div></div>
+                        <div class="bg-amber-50 p-2.5 rounded-xl border border-amber-200"><div class="text-[10px] text-amber-700">اوسط خرچ شرح</div><div class="font-extrabold text-sm text-amber-800 num-ltr">${rows.length > 0 ? Math.round(rows.reduce((s, r) => s + parseInt(r[5]), 0) / rows.length) : 0}%</div></div>
+                        <div class="bg-sky-50 p-2.5 rounded-xl border border-sky-200"><div class="text-[10px] text-sky-700">مالکان بقایا</div><div class="font-extrabold text-sm text-sky-800 num-ltr">${this.formatPKR(thekasList.reduce((s, t) => s + this.getThekaFinancials(t.id).balanceReceivable, 0))}</div></div>
+                    `;
+                } else if (chartKey === "workforce-roles") {
+                    title = "افرادی قوت کی درجہ بندی اور دیہاڑی بوجھ: بنیادی ڈیٹا";
+                    subtitle = "راج مستری، شٹرنگ مستری، سریا بائنڈر اور ہیلپر ورکرز کا یومیہ ریٹ اور پول";
+                    headers = ["عہدہ / ہنر کی قسم", "رجسٹرڈ ورکرز", "اوسط یومیہ دیہاڑی", "مجموعی یومیہ دیہاڑی پول", "افرادی قوت تناسب %"];
+
+                    const roleMap = {};
+                    mazdoorsList.forEach(m => {
+                        const r = m.role || "دیگر مزدور";
+                        if (!roleMap[r]) roleMap[r] = { count: 0, wageSum: 0 };
+                        roleMap[r].count += 1;
+                        roleMap[r].wageSum += Number(m.dailyWage || 0);
+                    });
+
+                    const totalWorkers = mazdoorsList.length || 1;
+                    const totalWagePool = Object.values(roleMap).reduce((s, x) => s + x.wageSum, 0);
+
+                    rows = Object.entries(roleMap).map(([role, data]) => {
+                        const avgWage = data.count > 0 ? Math.round(data.wageSum / data.count) : 0;
+                        const pct = ((data.count / totalWorkers) * 100).toFixed(1);
+                        return [
+                            role,
+                            `${data.count} ورکرز`,
+                            this.formatPKR(avgWage),
+                            this.formatPKR(data.wageSum),
+                            pct + "%"
+                        ];
+                    });
+
+                    statsHtml = `
+                        <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200"><div class="text-[10px] text-slate-500">کل رجسٹرڈ ورکرز</div><div class="font-extrabold text-sm text-slate-900">${mazdoorsList.length}</div></div>
+                        <div class="bg-purple-50 p-2.5 rounded-xl border border-purple-200"><div class="text-[10px] text-purple-700">مجموعی یومیہ پول</div><div class="font-extrabold text-sm text-purple-800 num-ltr">${this.formatPKR(totalWagePool)}</div></div>
+                        <div class="bg-emerald-50 p-2.5 rounded-xl border border-emerald-200"><div class="text-[10px] text-emerald-700">مختلف کیٹیگریز</div><div class="font-extrabold text-sm text-emerald-800">${Object.keys(roleMap).length} شعبے</div></div>
+                        <div class="bg-sky-50 p-2.5 rounded-xl border border-sky-200"><div class="text-[10px] text-sky-700">اوسط یومیہ دیہاڑی</div><div class="font-extrabold text-sm text-sky-800 num-ltr">${this.formatPKR(mazdoorsList.length > 0 ? Math.round(totalWagePool / mazdoorsList.length) : 0)}</div></div>
+                    `;
+                } else if (chartKey === "attendance-trend") {
+                    title = "حالیہ مزدور حاضری اور یومیہ لاگت: بنیادی روزنامچہ ڈیٹا";
+                    subtitle = "تاریخ وار حاضر ورکرز، اوور ٹائم گھنٹے اور یومیہ کل مزدوری لاگت";
+                    headers = ["تاریخ", "کل حاضر ورکرز", "مکمل شفٹ", "ڈبل / ہاف شفٹ", "کل کمائی گئی دیہاڑی"];
+
+                    const dateMap = {};
+                    attendanceList.forEach(a => {
+                        const d = a.date || "غیر معین";
+                        if (!dateMap[d]) dateMap[d] = { count: 0, full: 0, half: 0, earned: 0 };
+                        dateMap[d].count += 1;
+                        if (String(a.status).includes("Full") || String(a.status).includes("پورا")) dateMap[d].full += 1;
+                        else dateMap[d].half += 1;
+                        dateMap[d].earned += Number(a.totalEarned || 0);
+                    });
+
+                    const dates = Object.keys(dateMap).sort().reverse();
+                    let sumAttendance = 0, sumWageCost = 0;
+                    rows = dates.map(d => {
+                        const item = dateMap[d];
+                        sumAttendance += item.count;
+                        sumWageCost += item.earned;
+                        return [
+                            d,
+                            `${item.count} ورکرز`,
+                            `${item.full} حاضر`,
+                            `${item.half} ورکرز`,
+                            this.formatPKR(item.earned)
+                        ];
+                    });
+
+                    statsHtml = `
+                        <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200"><div class="text-[10px] text-slate-500">حاضری ریکارڈ شدہ دن</div><div class="font-extrabold text-sm text-slate-900">${dates.length} ایام</div></div>
+                        <div class="bg-teal-50 p-2.5 rounded-xl border border-teal-200"><div class="text-[10px] text-teal-700">مجموعی یومیہ لاگت</div><div class="font-extrabold text-sm text-teal-800 num-ltr">${this.formatPKR(sumWageCost)}</div></div>
+                        <div class="bg-emerald-50 p-2.5 rounded-xl border border-emerald-200"><div class="text-[10px] text-emerald-700">مجموعی حاضری اندراجات</div><div class="font-extrabold text-sm text-emerald-800">${sumAttendance} حاضری</div></div>
+                        <div class="bg-sky-50 p-2.5 rounded-xl border border-sky-200"><div class="text-[10px] text-sky-700">اوسط روزانہ لاگت</div><div class="font-extrabold text-sm text-sky-800 num-ltr">${this.formatPKR(dates.length > 0 ? Math.round(sumWageCost / dates.length) : 0)}</div></div>
+                    `;
+                }
+
+                document.getElementById("modal-chart-data-title").textContent = title;
+                document.getElementById("modal-chart-data-subtitle").textContent = subtitle;
+                document.getElementById("modal-chart-data-stats").innerHTML = statsHtml;
+
+                const thead = document.querySelector("#modal-chart-data-table thead");
+                const tbody = document.querySelector("#modal-chart-data-table tbody");
+
+                if (thead) {
+                    thead.innerHTML = `<tr>${headers.map(h => `<th class="p-2.5 text-right font-bold">${this.escapeHtml(h)}</th>`).join("")}</tr>`;
+                }
+                if (tbody) {
+                    if (rows.length === 0) {
+                        tbody.innerHTML = `<tr><td colspan="${headers.length}" class="p-4 text-center text-slate-400">کوئی ریکارڈ موجود نہیں۔</td></tr>`;
+                    } else {
+                        tbody.innerHTML = rows.map(r => `
+                            <tr class="hover:bg-slate-50">
+                                ${r.map((cell) => `<td class="p-2.5 ${String(cell).includes("Rs ") || String(cell).includes("%") ? 'num-ltr font-bold text-slate-800' : 'text-slate-700'}">${this.escapeHtml(cell)}</td>`).join("")}
+                            </tr>
+                        `).join("");
+                    }
+                }
+
+                this.currentChartModalData = { chartKey, title, headers, rows };
+                this.openModal("modal-chart-data");
+            },
+
+            exportChartDataCSV() {
+                if (!this.currentChartModalData || !this.currentChartModalData.headers || !this.currentChartModalData.rows) {
+                    this.toast("ایکسپورٹ کے لیے کوئی ڈیٹا موجود نہیں۔", "warning");
+                    return;
+                }
+
+                const d = this.currentChartModalData;
+                const escapeCsv = (val) => {
+                    const s = String(val === null || val === undefined ? "" : val).replace(/"/g, '""');
+                    return `"${s}"`;
+                };
+
+                let csv = "\uFEFF";
+                csv += d.headers.map(escapeCsv).join(",") + "\r\n";
+                d.rows.forEach(row => {
+                    csv += row.map(escapeCsv).join(",") + "\r\n";
+                });
+
+                const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = `kpk-tekedar-${d.chartKey || 'chart-data'}-${new Date().toISOString().slice(0, 10)}.csv`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                this.toast("CSV فائل کامیابی سے ڈاؤن لوڈ ہو گئی۔", "success");
             },
 
             buildDataTableConfig() {
@@ -3595,7 +4969,7 @@
                 }
             },
 
-            openHisabModal(editId = "") {
+            openHisabModal(editId = "", defaultType = "", defaultMazdoorId = "", defaultThekaId = "") {
                 this.populateDropdowns();
                 document.getElementById("form-hisab").reset();
                 document.getElementById("hisab-id").value = "";
@@ -3620,6 +4994,16 @@
                             prev.src = h.receiptImg;
                             prev.classList.remove("hidden");
                         }
+                    }
+                } else {
+                    if (defaultType) {
+                        $("#hisab-type").val(defaultType).trigger("change");
+                    }
+                    if (defaultMazdoorId) {
+                        $("#hisab-mazdoor").val(defaultMazdoorId).trigger("change");
+                    }
+                    if (defaultThekaId) {
+                        $("#hisab-theka").val(defaultThekaId).trigger("change");
                     }
                 }
                 this.toggleHisabMazdoorField();
