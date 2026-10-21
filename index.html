@@ -159,6 +159,31 @@
                 transform: translateY(110%);
             }
         }
+        select {
+            width: 100%;
+            height: 46px;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.75rem;
+            background-color: #ffffff;
+            color: #0f172a;
+            padding: 0 0.85rem;
+            font-size: 0.95rem;
+            direction: rtl;
+            outline: none;
+            cursor: pointer;
+            box-sizing: border-box;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: left 0.85rem center;
+            background-size: 1rem;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+        select:focus {
+            border-color: #059669;
+            box-shadow: 0 0 0 2px rgba(5, 150, 105, 0.2);
+        }
         .select2-container {
             width: 100% !important;
             direction: rtl;
@@ -2054,14 +2079,26 @@
             initSelect2() {
                 $("select").each(function () {
                     const $el = $(this);
+                    if ($el.hasClass("swal2-select") || $el.closest(".dataTables_length").length) {
+                        return;
+                    }
+                    const optionCount = $el.find("option").length;
                     const $modalParent = $el.closest(".fixed");
                     const isTagable = ($el.attr("id") === "theka-city" || $el.attr("id") === "mazdoor-role");
-                    $el.select2({
-                        dir: "rtl",
-                        width: "100%",
-                        tags: isTagable,
-                        dropdownParent: $modalParent.length ? $modalParent : $(document.body)
-                    });
+                    if (optionCount > 8) {
+                        if (!$el.hasClass("select2-hidden-accessible")) {
+                            $el.select2({
+                                dir: "rtl",
+                                width: "100%",
+                                tags: isTagable,
+                                dropdownParent: $modalParent.length ? $modalParent : $(document.body)
+                            });
+                        }
+                    } else {
+                        if ($el.hasClass("select2-hidden-accessible")) {
+                            $el.select2("destroy");
+                        }
+                    }
                 });
             },
 
@@ -2083,7 +2120,7 @@
                             $(thekaCityEl).val(currentVal);
                         }
                     }
-                    $(thekaCityEl).trigger("change.select2");
+                    $(thekaCityEl).trigger("change");
                 }
 
                 const mazdoorRoleEl = document.getElementById("mazdoor-role");
@@ -2097,14 +2134,14 @@
                             $(mazdoorRoleEl).val(currentVal);
                         }
                     }
-                    $(mazdoorRoleEl).trigger("change.select2");
+                    $(mazdoorRoleEl).trigger("change");
                 }
 
                 ["mazdoor-theka", "att-theka", "hisab-theka"].forEach(id => {
                     const el = document.getElementById(id);
                     if (el) {
                         el.innerHTML = thekaOptions;
-                        $(el).trigger("change.select2");
+                        $(el).trigger("change");
                     }
                 });
 
@@ -2112,9 +2149,11 @@
                     const el = document.getElementById(id);
                     if (el) {
                         el.innerHTML = mazdoorOptions;
-                        $(el).trigger("change.select2");
+                        $(el).trigger("change");
                     }
                 });
+
+                this.initSelect2();
             },
 
             getThekaFinancials(thekaId) {
@@ -2755,9 +2794,9 @@
                         if (!$("#theka-city").find(`option[value="${t.city}"]`).length) {
                             $("#theka-city").append(new Option(t.city, t.city, true, true));
                         }
-                        $("#theka-city").val(t.city).trigger("change.select2");
-                        $("#theka-type").val(t.type).trigger("change.select2");
-                        $("#theka-status").val(t.status).trigger("change.select2");
+                        $("#theka-city").val(t.city).trigger("change");
+                        $("#theka-type").val(t.type).trigger("change");
+                        $("#theka-status").val(t.status).trigger("change");
                         document.getElementById("theka-amount").value = t.contractAmount;
                         document.getElementById("theka-start").value = t.startDate;
                         document.getElementById("theka-sqft").value = t.sqft || "";
@@ -2847,10 +2886,10 @@
                         if (!$("#mazdoor-role").find(`option[value="${m.role}"]`).length) {
                             $("#mazdoor-role").append(new Option(m.role, m.role, true, true));
                         }
-                        $("#mazdoor-role").val(m.role).trigger("change.select2");
+                        $("#mazdoor-role").val(m.role).trigger("change");
                         document.getElementById("mazdoor-wage").value = m.dailyWage;
                         document.getElementById("mazdoor-phone").value = m.phone;
-                        $("#mazdoor-theka").val(m.thekaId).trigger("change.select2");
+                        $("#mazdoor-theka").val(m.thekaId).trigger("change");
                         document.getElementById("mazdoor-cnic").value = m.cnic || "";
                         if (m.photo) {
                             document.getElementById("mazdoor-photo-data").value = m.photo;
@@ -2928,7 +2967,7 @@
                 const mId = document.getElementById("att-mazdoor").value;
                 const m = this.db.mazdoors.find(x => x.id === mId);
                 if (m && m.thekaId) {
-                    $("#att-theka").val(m.thekaId).trigger("change.select2");
+                    $("#att-theka").val(m.thekaId).trigger("change");
                 }
             },
 
@@ -2944,9 +2983,9 @@
                     if (a) {
                         document.getElementById("att-id").value = a.id;
                         document.getElementById("att-date").value = a.date;
-                        $("#att-mazdoor").val(a.mazdoorId).trigger("change.select2");
-                        $("#att-theka").val(a.thekaId).trigger("change.select2");
-                        $("#att-status").val(a.status).trigger("change.select2");
+                        $("#att-mazdoor").val(a.mazdoorId).trigger("change");
+                        $("#att-theka").val(a.thekaId).trigger("change");
+                        $("#att-status").val(a.status).trigger("change");
                         document.getElementById("att-overtime").value = a.overtime || 0;
                         document.getElementById("att-note").value = a.note || "";
                     }
@@ -3110,11 +3149,11 @@
                     if (h) {
                         document.getElementById("hisab-id").value = h.id;
                         document.getElementById("hisab-date").value = h.date;
-                        $("#hisab-type").val(h.type).trigger("change.select2");
-                        $("#hisab-theka").val(h.thekaId).trigger("change.select2");
-                        $("#hisab-mazdoor").val(h.mazdoorId).trigger("change.select2");
+                        $("#hisab-type").val(h.type).trigger("change");
+                        $("#hisab-theka").val(h.thekaId).trigger("change");
+                        $("#hisab-mazdoor").val(h.mazdoorId).trigger("change");
                         document.getElementById("hisab-amount").value = h.amount;
-                        $("#hisab-method").val(h.method).trigger("change.select2");
+                        $("#hisab-method").val(h.method).trigger("change");
                         document.getElementById("hisab-desc").value = h.desc;
                         if (h.receiptImg) {
                             document.getElementById("hisab-receipt-data").value = h.receiptImg;
@@ -3284,8 +3323,8 @@
             syncSettingsForm() {
                 const user = this.getCurrentUser();
                 const t = (user && user.theme) ? user.theme : this.getDefaultTheme();
-                $("#theme-font-family").val(t.fontFamily).trigger("change.select2");
-                $("#theme-font-size").val(t.fontSize).trigger("change.select2");
+                $("#theme-font-family").val(t.fontFamily).trigger("change");
+                $("#theme-font-size").val(t.fontSize).trigger("change");
                 document.getElementById("theme-header-bg").value = t.headerBg;
                 document.getElementById("theme-header-text").value = t.headerText;
                 document.getElementById("theme-sidebar-bg").value = t.sidebarBg;
@@ -3296,7 +3335,7 @@
                 document.getElementById("theme-footer-text").value = t.footerText;
 
                 if (this.db.meta) {
-                    $("#auto-backup-schedule").val(this.db.meta.backupSchedule || "daily").trigger("change.select2");
+                    $("#auto-backup-schedule").val(this.db.meta.backupSchedule || "daily").trigger("change");
                     document.getElementById("auto-backup-days").value = this.db.meta.backupCustomDays || 3;
                     document.getElementById("last-backup-status").textContent = `آخری محفوظ بیک اپ: ${this.db.meta.lastBackupAt || "ابھی تک نہیں"}`;
                     const wrap = document.getElementById("custom-backup-days-wrap");
