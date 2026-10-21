@@ -457,9 +457,7 @@
         <div class="max-w-md w-full mx-auto my-auto py-4 animate__animated animate__fadeIn">
             <div class="bg-slate-800 border border-slate-700 rounded-2xl shadow-2xl overflow-hidden">
                 <div class="bg-gradient-to-l from-emerald-700 to-teal-800 p-5 text-center border-b border-slate-700">
-                    <div class="w-16 h-16 rounded-2xl bg-white/15 backdrop-blur flex items-center justify-center mx-auto mb-3 shadow-inner border border-white/20">
-                        <i class="fa-solid fa-trowel-bricks text-3xl text-emerald-300"></i>
-                    </div>
+                    <img src="logo.png" alt="Logo" class="app-logo-img w-16 h-16 rounded-2xl mx-auto mb-3 object-contain shadow-inner border border-white/20 bg-white/10 p-1">
                     <h1 class="text-xl font-extrabold text-white nastaliq-heading">پختونخوا ٹھیکیدار حساب کتاب</h1>
                     <p class="text-emerald-100 text-xs mt-1">مزدور حاضری، جاری اور پرانے ٹھیکوں کا مکمل موبائل کھاتہ</p>
                 </div>
@@ -584,9 +582,7 @@
 
         <nav id="main-app-nav" class="theme-sidebar fixed bottom-0 left-0 right-0 z-40 md:static md:w-64 md:min-h-screen border-t md:border-t-0 md:border-l border-slate-700/80 shadow-2xl no-print flex md:flex-col justify-between md:justify-start p-1 md:p-4">
             <div class="hidden md:flex items-center gap-3 pb-4 mb-4 border-b border-slate-700">
-                <div class="w-11 h-11 rounded-xl bg-emerald-600 flex items-center justify-center text-white shadow">
-                    <i class="fa-solid fa-helmet-safety text-xl"></i>
-                </div>
+                <img src="logo.png" alt="Logo" class="app-logo-img w-11 h-11 rounded-xl object-contain shadow bg-slate-900/40 p-1 border border-emerald-500/30">
                 <div>
                     <h2 class="font-extrabold text-base leading-tight">پختونخوا ٹھیکیدار</h2>
                     <p class="text-xs text-emerald-400" id="nav-user-role-badge">بڑا ٹھیکیدار</p>
@@ -627,9 +623,7 @@
         <div class="flex-1 flex flex-col min-w-0 pb-20 sm:pb-24 md:pb-0">
             <header class="theme-header sticky top-0 z-30 shadow-md px-3 sm:px-4 py-2 sm:py-2.5 flex items-center justify-between gap-2 no-print">
                 <div class="flex items-center gap-2 sm:gap-2.5 min-w-0">
-                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-white shadow shrink-0">
-                        <i class="fa-solid fa-trowel-bricks text-base sm:text-lg"></i>
-                    </div>
+                    <img src="logo.png" alt="Logo" class="app-logo-img w-9 h-9 sm:w-10 sm:h-10 rounded-xl object-contain bg-slate-900/50 p-1 border border-emerald-500/30 shadow shrink-0">
                     <div class="min-w-0">
                         <h1 id="page-header-title" class="font-extrabold text-xs sm:text-base leading-tight truncate">ٹھیکیدار خلاصہ ڈیش بورڈ</h1>
                         <div class="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-[11px] opacity-85 truncate">
@@ -787,7 +781,7 @@
                     </div>
 
                     <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm overflow-x-auto">
-                        <table id="table-thekas" class="dt-table display responsive nowrap w-full text-sm">
+                        <table id="table-thekas" class="dt-table display w-full text-sm">
                             <thead>
                                 <tr>
                                     <th>ٹھیکہ سائٹ کا نام</th>
@@ -819,7 +813,7 @@
                     </div>
 
                     <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm overflow-x-auto">
-                        <table id="table-mazdoors" class="dt-table display responsive nowrap w-full text-sm">
+                        <table id="table-mazdoors" class="dt-table display w-full text-sm">
                             <thead>
                                 <tr>
                                     <th>تصویر و نام</th>
@@ -857,7 +851,7 @@
                     </div>
 
                     <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm overflow-x-auto">
-                        <table id="table-attendance" class="dt-table display responsive nowrap w-full text-sm">
+                        <table id="table-attendance" class="dt-table display w-full text-sm">
                             <thead>
                                 <tr>
                                     <th>تاریخ</th>
@@ -889,7 +883,7 @@
                     </div>
 
                     <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm overflow-x-auto">
-                        <table id="table-hisab" class="dt-table display responsive nowrap w-full text-sm">
+                        <table id="table-hisab" class="dt-table display w-full text-sm">
                             <thead>
                                 <tr>
                                     <th>تاریخ</th>
@@ -1082,6 +1076,33 @@
                         </div>
                     </div>
 
+                    <div id="admin-logo-panel" class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-sm space-y-4">
+                        <div class="border-b border-slate-200 pb-3">
+                            <h3 class="font-extrabold text-base text-slate-900"><i class="fa-solid fa-image text-emerald-600 ml-1"></i> ایپ لوگو اور آئیکونز مینجمنٹ (Logo & Favicon Control)</h3>
+                            <p class="text-xs text-slate-500">یہاں سے ایڈمن نیا لوگو اپلوڈ کر سکتا ہے۔ PHP از خود تصویر کو 200KB کے اندر محدود کر کے Favicon.ico اور تمام سائزز کے PWA آئیکونز جنریٹ کر دے گا۔</p>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row items-center gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <div class="shrink-0 text-center">
+                                <img id="settings-logo-preview" src="logo.png" alt="App Logo" class="app-logo-img w-20 h-20 rounded-2xl object-contain bg-white p-1 border-2 border-emerald-500/40 shadow-sm mx-auto">
+                                <span class="text-[10px] text-slate-500 font-bold block mt-1">موجودہ لوگو</span>
+                            </div>
+                            <div class="flex-1 space-y-3 w-full">
+                                <div>
+                                    <label for="logo-upload-input" class="block text-xs font-bold text-slate-700 mb-1">نیا لوگو منتخب کریں (PNG, JPG, یا WEBP):</label>
+                                    <input type="file" id="logo-upload-input" accept="image/png, image/jpeg, image/webp" class="block w-full text-xs text-slate-500 file:mr-0 file:ml-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 cursor-pointer">
+                                </div>
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <button type="button" id="btn-upload-logo" onclick="App.uploadNewLogo()" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow flex items-center justify-center gap-1.5 touch-target">
+                                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                                        <span>نیا لوگو اپلوڈ اور محفوظ کریں</span>
+                                    </button>
+                                    <span class="text-[11px] text-slate-500">تمام PWA اور Favicon فائلز از خود تبدیل ہو جائیں گی</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div id="admin-users-panel" class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-sm space-y-4">
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 pb-3">
                             <div>
@@ -1094,7 +1115,7 @@
                             </button>
                         </div>
                         <div class="overflow-x-auto">
-                            <table id="table-users" class="dt-table display responsive nowrap w-full text-sm">
+                            <table id="table-users" class="dt-table display w-full text-sm">
                                 <thead>
                                     <tr>
                                         <th>صارف کا نام</th>
@@ -1319,23 +1340,40 @@
         <div class="bg-white rounded-2xl max-w-2xl w-full p-5 shadow-2xl border border-slate-200 animate__animated animate__slideInUp my-auto">
             <div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-4">
                 <div>
-                    <h3 class="font-extrabold text-base text-slate-900">اجتماعی حاضری شیٹ (تمام مزدوروں کی ایک کلک حاضری)</h3>
-                    <p class="text-xs text-slate-500">آج کی تاریخ میں تمام فعال مزدوروں کی حاضری ایک ساتھ درج کریں</p>
+                    <h3 class="font-extrabold text-base text-slate-900">اجتماعی حاضری شیٹ (ٹھیکہ و چیک باکس سلیکشن)</h3>
+                    <p class="text-xs text-slate-500">ٹھیکہ منتخب کریں اور مطلوبہ مزدوروں کو چیک کر کے انفرادی یا اجتماعی حاضری لگائیں</p>
                 </div>
                 <button type="button" onclick="App.closeModal('modal-bulk-attendance')" class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-rose-100 text-slate-600 hover:text-rose-600 flex items-center justify-center touch-target">
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
             </div>
             <div class="space-y-3">
-                <div class="flex items-center justify-between gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                    <label for="bulk-att-date" class="text-xs font-bold text-slate-700">حاضری کی تاریخ:</label>
-                    <input type="date" id="bulk-att-date" class="border border-slate-300 rounded-xl px-3 py-1.5 text-sm bg-white touch-target">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
+                    <div>
+                        <label for="bulk-att-theka" class="block text-xs font-bold text-slate-700 mb-1">ٹھیکہ سائٹ فلٹر کریں:</label>
+                        <select id="bulk-att-theka" onchange="App.filterBulkAttendanceByTheka()" class="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs font-bold bg-white touch-target">
+                        </select>
+                    </div>
+                    <div>
+                        <label for="bulk-att-date" class="block text-xs font-bold text-slate-700 mb-1">حاضری کی تاریخ:</label>
+                        <input type="date" id="bulk-att-date" class="w-full border border-slate-300 rounded-xl px-3 py-1.5 text-sm bg-white touch-target">
+                    </div>
                 </div>
+
+                <div class="flex items-center justify-between bg-emerald-50 border border-emerald-200 px-3 py-2 rounded-xl text-xs">
+                    <label class="flex items-center gap-2 cursor-pointer font-bold text-emerald-900">
+                        <input type="checkbox" id="bulk-select-all" onchange="App.toggleBulkSelectAll(this)" checked class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500">
+                        <span>تمام منتخب کریں / غیر منتخب کریں</span>
+                    </label>
+                    <span id="bulk-selected-counter" class="font-extrabold text-emerald-700">0 مزدور منتخب شدہ</span>
+                </div>
+
                 <div id="bulk-attendance-list" class="space-y-2 max-h-80 overflow-y-auto pr-1"></div>
+
                 <div class="flex justify-end gap-2 pt-3 border-t border-slate-200">
                     <button type="button" onclick="App.closeModal('modal-bulk-attendance')" class="px-4 py-2.5 rounded-xl bg-slate-100 text-slate-700 font-bold text-xs touch-target">بند کریں</button>
                     <button type="button" onclick="App.saveBulkAttendance()" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow touch-target flex items-center justify-center gap-1.5">
-                        <i class="fa-solid fa-check-double ml-1"></i> تمام حاضری محفوظ کریں
+                        <i class="fa-solid fa-check-double ml-1"></i> منتخب شدہ مزدوروں کی حاضری محفوظ کریں
                     </button>
                 </div>
             </div>
@@ -1513,10 +1551,13 @@
             </div>
 
             <div id="printable-area" class="bg-white text-slate-900 p-4 rounded-xl border border-slate-300 space-y-4">
-                <div class="border-b-2 border-slate-800 pb-3 flex items-center justify-between">
-                    <div>
-                        <h2 class="text-xl font-extrabold" id="print-doc-title">پختونخوا ٹھیکیدار اینڈ مزدور حساب کتاب</h2>
-                        <p class="text-xs text-slate-600" id="print-doc-subtitle">مصدقہ کھاتہ خلاصہ و حساب کتاب رپورٹ</p>
+                <div class="border-b-2 border-slate-800 pb-3 flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-3">
+                        <img src="logo.png" alt="Logo" class="app-logo-img w-12 h-12 object-contain shrink-0">
+                        <div>
+                            <h2 class="text-xl font-extrabold" id="print-doc-title">پختونخوا ٹھیکیدار اینڈ مزدور حساب کتاب</h2>
+                            <p class="text-xs text-slate-600" id="print-doc-subtitle">مصدقہ کھاتہ خلاصہ و حساب کتاب رپورٹ</p>
+                        </div>
                     </div>
                     <div class="text-left text-xs num-ltr">
                         <div id="print-doc-date" class="font-bold"></div>
@@ -2082,10 +2123,14 @@
                 }
 
                 const adminPanel = document.getElementById("admin-users-panel");
-                if (user.role === "Admin") {
-                    adminPanel.classList.remove("hidden");
-                } else {
-                    adminPanel.classList.add("hidden");
+                if (adminPanel) {
+                    if (user.role === "Admin") adminPanel.classList.remove("hidden");
+                    else adminPanel.classList.add("hidden");
+                }
+                const logoPanel = document.getElementById("admin-logo-panel");
+                if (logoPanel) {
+                    if (user.role === "Admin") logoPanel.classList.remove("hidden");
+                    else logoPanel.classList.add("hidden");
                 }
 
                 this.applyUserTheme(user.theme || this.getDefaultTheme());
@@ -2197,7 +2242,7 @@
                 setTimeout(() => {
                     Object.values(this.dataTables).forEach(dt => {
                         if (dt && dt.columns) {
-                            dt.columns.adjust().responsive.recalc();
+                            dt.columns.adjust();
                         }
                     });
                 }, 60);
@@ -2442,7 +2487,8 @@
 
             buildDataTableConfig() {
                 return {
-                    responsive: true,
+                    responsive: false,
+                    autoWidth: false,
                     pageLength: 10,
                     dom: "Bfrtip",
                     buttons: [
@@ -3397,32 +3443,104 @@
 
             openBulkAttendanceModal() {
                 document.getElementById("bulk-att-date").value = new Date().toISOString().slice(0, 10);
-                const listHtml = this.db.mazdoors.map(m => {
-                    const t = this.db.thekas.find(x => x.id === m.thekaId);
+                const thekaSelect = document.getElementById("bulk-att-theka");
+                let thekaOptions = '<option value="all">تمام ٹھیکے (All Sites)</option>';
+                this.db.thekas.forEach(t => {
+                    thekaOptions += `<option value="${this.escapeHtml(t.id)}">${this.escapeHtml(t.title)} (${this.escapeHtml(t.city)})</option>`;
+                });
+                thekaSelect.innerHTML = thekaOptions;
+                thekaSelect.value = "all";
+
+                this.renderBulkAttendanceList("all");
+                this.openModal("modal-bulk-attendance");
+            },
+
+            filterBulkAttendanceByTheka() {
+                const thekaId = document.getElementById("bulk-att-theka").value;
+                this.renderBulkAttendanceList(thekaId);
+            },
+
+            renderBulkAttendanceList(thekaFilter = "all") {
+                const filteredMazdoors = thekaFilter === "all"
+                    ? this.db.mazdoors
+                    : this.db.mazdoors.filter(m => m.thekaId === thekaFilter || (!m.thekaId && thekaFilter === "all"));
+
+                if (filteredMazdoors.length === 0) {
+                    document.getElementById("bulk-attendance-list").innerHTML = `
+                        <div class="text-center py-6 bg-slate-50 border border-slate-200 rounded-xl text-slate-500 text-xs">
+                            اس ٹھیکہ سائٹ کے ساتھ کوئی مزدور منسلک نہیں ہے۔ اوپر ڈراپ ڈاؤن سے "تمام ٹھیکے" منتخب کریں یا مزدور کو اس سائٹ سے منسلک کریں۔
+                        </div>
+                    `;
+                    document.getElementById("bulk-select-all").checked = false;
+                    this.updateBulkSelectedCount();
+                    return;
+                }
+
+                const listHtml = filteredMazdoors.map(m => {
+                    const assignedTheka = this.db.thekas.find(x => x.id === m.thekaId);
+                    const thekaOptions = this.db.thekas.map(t => {
+                        const isSel = (thekaFilter !== "all" && t.id === thekaFilter) || (thekaFilter === "all" && t.id === m.thekaId);
+                        return `<option value="${this.escapeHtml(t.id)}" ${isSel ? 'selected' : ''}>${this.escapeHtml(t.title)}</option>`;
+                    }).join("");
+
                     return `
-                        <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                            <div>
-                                <div class="font-extrabold text-sm text-slate-900">${this.escapeHtml(m.name)} <span class="text-xs text-emerald-700 font-bold">(Rs ${m.dailyWage})</span></div>
-                                <div class="text-xs text-slate-500">${this.escapeHtml(m.role)} • ${t ? this.escapeHtml(t.title) : ""}</div>
+                        <div class="bulk-mazdoor-row bg-slate-50 border border-slate-200 rounded-xl p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 hover:bg-emerald-50/40 transition">
+                            <div class="flex items-center gap-3">
+                                <input type="checkbox" data-mazdoor-id="${this.escapeHtml(m.id)}" onchange="App.updateBulkSelectedCount()" checked class="bulk-mazdoor-check w-5 h-5 rounded text-emerald-600 focus:ring-emerald-500 touch-target shrink-0 cursor-pointer">
+                                <div>
+                                    <div class="font-extrabold text-sm text-slate-900">${this.escapeHtml(m.name)} <span class="text-xs text-emerald-700 font-bold num-ltr">(Rs ${this.formatPKR(m.dailyWage)})</span></div>
+                                    <div class="text-xs text-slate-500">${this.escapeHtml(m.role)} ${assignedTheka ? '• سائٹ: ' + this.escapeHtml(assignedTheka.title) : ''}</div>
+                                </div>
                             </div>
-                            <div class="flex items-center gap-2">
-                                <select data-bulk-mazdoor="${this.escapeHtml(m.id)}" class="bulk-status-select border border-slate-300 rounded-xl px-3 py-2 text-xs font-bold bg-white touch-target">
+                            <div class="flex flex-wrap items-center gap-2">
+                                <select data-mazdoor-theka="${this.escapeHtml(m.id)}" class="bulk-theka-select border border-slate-300 rounded-xl px-2.5 py-1.5 text-xs font-bold bg-white touch-target">
+                                    ${thekaOptions}
+                                </select>
+                                <select data-bulk-mazdoor="${this.escapeHtml(m.id)}" class="bulk-status-select border border-slate-300 rounded-xl px-2.5 py-1.5 text-xs font-bold bg-white touch-target">
                                     <option value="پورا دن (Full)">پورا دن (1.0)</option>
                                     <option value="آدھا دن (Half)">آدھا دن (0.5)</option>
                                     <option value="ڈبل شفٹ (Double)">ڈبل شفٹ (2.0)</option>
                                     <option value="غیر حاضر (Absent)">غیر حاضر (0)</option>
                                 </select>
+                                <input type="number" data-mazdoor-overtime="${this.escapeHtml(m.id)}" min="0" placeholder="بونس/OT" value="0" class="bulk-overtime-input w-20 border border-slate-300 rounded-xl px-2 py-1.5 text-xs num-ltr text-right bg-white touch-target" title="اضافی رقم / بونس">
                             </div>
                         </div>
                     `;
                 }).join("");
+
                 document.getElementById("bulk-attendance-list").innerHTML = listHtml;
-                this.openModal("modal-bulk-attendance");
+                document.getElementById("bulk-select-all").checked = true;
+                this.updateBulkSelectedCount();
+            },
+
+            toggleBulkSelectAll(masterEl) {
+                const checks = document.querySelectorAll(".bulk-mazdoor-check");
+                checks.forEach(c => c.checked = masterEl.checked);
+                this.updateBulkSelectedCount();
+            },
+
+            updateBulkSelectedCount() {
+                const checkedCount = document.querySelectorAll(".bulk-mazdoor-check:checked").length;
+                const totalCount = document.querySelectorAll(".bulk-mazdoor-check").length;
+                const counter = document.getElementById("bulk-selected-counter");
+                if (counter) {
+                    counter.textContent = `${checkedCount} / ${totalCount} مزدور منتخب شدہ`;
+                }
+                const master = document.getElementById("bulk-select-all");
+                if (master && totalCount > 0) {
+                    master.checked = (checkedCount === totalCount);
+                }
             },
 
             saveBulkAttendance() {
                 const date = document.getElementById("bulk-att-date").value || new Date().toISOString().slice(0, 10);
-                const selects = document.querySelectorAll(".bulk-status-select");
+                const checkedBoxes = Array.from(document.querySelectorAll(".bulk-mazdoor-check:checked"));
+
+                if (checkedBoxes.length === 0) {
+                    this.toast("براہ کرم حاضری درج کرنے کے لیے کم از کم ایک مزدور منتخب کریں۔", "error");
+                    return;
+                }
+
                 const multMap = {
                     "پورا دن (Full)": 1,
                     "آدھا دن (Half)": 0.5,
@@ -3430,32 +3548,41 @@
                     "غیر حاضر (Absent)": 0
                 };
 
-                selects.forEach((sel, index) => {
-                    const mId = sel.getAttribute("data-bulk-mazdoor");
-                    const status = sel.value;
+                let savedCount = 0;
+                checkedBoxes.forEach((cb, index) => {
+                    const mId = cb.getAttribute("data-mazdoor-id");
                     const m = this.db.mazdoors.find(x => x.id === mId);
-                    if (m) {
-                        const mult = multMap[status] !== undefined ? multMap[status] : 1;
-                        const totalEarned = Math.round(Number(m.dailyWage) * mult);
-                        this.db.attendance.unshift({
-                            id: "ATT-" + Date.now() + "-" + index,
-                            date,
-                            mazdoorId: m.id,
-                            thekaId: m.thekaId || (this.db.thekas[0] ? this.db.thekas[0].id : ""),
-                            status,
-                            multiplier: mult,
-                            baseWage: Number(m.dailyWage),
-                            overtime: 0,
-                            totalEarned,
-                            note: "اجتماعی حاضری شیٹ"
-                        });
-                    }
+                    if (!m) return;
+
+                    const statusSelect = document.querySelector(`.bulk-status-select[data-bulk-mazdoor="${mId}"]`);
+                    const thekaSelect = document.querySelector(`.bulk-theka-select[data-mazdoor-theka="${mId}"]`);
+                    const overtimeInput = document.querySelector(`.bulk-overtime-input[data-mazdoor-overtime="${mId}"]`);
+
+                    const status = statusSelect ? statusSelect.value : "پورا دن (Full)";
+                    const thekaId = thekaSelect ? thekaSelect.value : (m.thekaId || (this.db.thekas[0] ? this.db.thekas[0].id : ""));
+                    const overtime = overtimeInput ? (Number(overtimeInput.value) || 0) : 0;
+                    const mult = multMap[status] !== undefined ? multMap[status] : 1;
+                    const totalEarned = Math.round(Number(m.dailyWage) * mult) + overtime;
+
+                    this.db.attendance.unshift({
+                        id: "ATT-" + Date.now() + "-" + index,
+                        date,
+                        mazdoorId: m.id,
+                        thekaId,
+                        status,
+                        multiplier: mult,
+                        baseWage: Number(m.dailyWage),
+                        overtime,
+                        totalEarned,
+                        note: "اجتماعی ٹھیکہ حاضری"
+                    });
+                    savedCount++;
                 });
 
                 this.saveDatabase();
                 this.refreshAllViews();
                 this.closeModal("modal-bulk-attendance");
-                this.toast("تمام مزدوروں کی آج کی حاضری کامیابی سے درج ہو گئی!", "success");
+                this.toast(`${savedCount} منتخب مزدوروں کی حاضری کامیابی سے درج ہو گئی!`, "success");
             },
 
             toggleHisabMazdoorField() {
