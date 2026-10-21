@@ -3503,6 +3503,197 @@
                 });
             },
 
+            renderSettingsLists() {
+                const cities = this.db.cities || [];
+                const roles = this.db.roles || [];
+
+                const cityBadge = document.getElementById("city-count-badge");
+                if (cityBadge) cityBadge.textContent = `${cities.length} شہر / علاقے`;
+
+                const roleBadge = document.getElementById("role-count-badge");
+                if (roleBadge) roleBadge.textContent = `${roles.length} اقسام`;
+
+                const citiesContainer = document.getElementById("cities-list-container");
+                if (citiesContainer) {
+                    if (cities.length === 0) {
+                        citiesContainer.innerHTML = '<div class="text-xs text-slate-400 py-2 text-center">کوئی شہر درج نہیں ہے۔</div>';
+                    } else {
+                        citiesContainer.innerHTML = cities.map((c, idx) => `
+                            <div class="flex items-center justify-between p-2 bg-white rounded-lg border border-slate-200 text-xs">
+                                <span class="font-bold text-slate-800">${this.escapeHtml(c)}</span>
+                                <div class="flex items-center gap-1">
+                                    <button type="button" onclick="App.editCity(${idx})" class="w-7 h-7 rounded-md bg-sky-50 text-sky-600 hover:bg-sky-600 hover:text-white flex items-center justify-center transition" title="تبدیل کریں">
+                                        <i class="fa-solid fa-pen text-[11px]"></i>
+                                    </button>
+                                    <button type="button" onclick="App.deleteCity(${idx})" class="w-7 h-7 rounded-md bg-rose-50 text-rose-600 hover:bg-rose-600 hover:text-white flex items-center justify-center transition" title="حذف کریں">
+                                        <i class="fa-solid fa-trash text-[11px]"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        `).join("");
+                    }
+                }
+
+                const rolesContainer = document.getElementById("roles-list-container");
+                if (rolesContainer) {
+                    if (roles.length === 0) {
+                        rolesContainer.innerHTML = '<div class="text-xs text-slate-400 py-2 text-center">کوئی ہنر / قسم درج نہیں ہے۔</div>';
+                    } else {
+                        rolesContainer.innerHTML = roles.map((r, idx) => `
+                            <div class="flex items-center justify-between p-2 bg-white rounded-lg border border-slate-200 text-xs">
+                                <span class="font-bold text-slate-800">${this.escapeHtml(r)}</span>
+                                <div class="flex items-center gap-1">
+                                    <button type="button" onclick="App.editRole(${idx})" class="w-7 h-7 rounded-md bg-sky-50 text-sky-600 hover:bg-sky-600 hover:text-white flex items-center justify-center transition" title="تبدیل کریں">
+                                        <i class="fa-solid fa-pen text-[11px]"></i>
+                                    </button>
+                                    <button type="button" onclick="App.deleteRole(${idx})" class="w-7 h-7 rounded-md bg-rose-50 text-rose-600 hover:bg-rose-600 hover:text-white flex items-center justify-center transition" title="حذف کریں">
+                                        <i class="fa-solid fa-trash text-[11px]"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        `).join("");
+                    }
+                }
+            },
+
+            addCity(event) {
+                event.preventDefault();
+                const input = document.getElementById("new-city-input");
+                const val = input.value.trim();
+                if (!val) return;
+                if (!this.db.cities) this.db.cities = [];
+                if (this.db.cities.includes(val)) {
+                    this.toast("یہ شہر / علاقہ پہلے سے موجود ہے!", "warning");
+                    return;
+                }
+                this.db.cities.push(val);
+                this.saveDatabase();
+                this.populateDropdowns();
+                this.renderSettingsLists();
+                input.value = "";
+                this.toast("نیا شہر / علاقہ کامیابی سے شامل ہو گیا!", "success");
+            },
+
+            editCity(index) {
+                const current = (this.db.cities || [])[index];
+                if (!current) return;
+                Swal.fire({
+                    title: "شہر / علاقہ کا نام تبدیل کریں",
+                    input: "text",
+                    inputValue: current,
+                    showCancelButton: true,
+                    confirmButtonText: "محفوظ کریں",
+                    cancelButtonText: "منسوخ کریں",
+                    confirmButtonColor: "#059669",
+                    cancelButtonColor: "#475569",
+                    inputValidator: (value) => {
+                        if (!value || !value.trim()) {
+                            return "نام خالی نہیں ہو سکتا!";
+                        }
+                    }
+                }).then((res) => {
+                    if (res.isConfirmed && res.value) {
+                        const newVal = res.value.trim();
+                        this.db.cities[index] = newVal;
+                        this.saveDatabase();
+                        this.populateDropdowns();
+                        this.renderSettingsLists();
+                        this.toast("شہر / علاقہ اپڈیٹ ہو گیا!", "success");
+                    }
+                });
+            },
+
+            deleteCity(index) {
+                const current = (this.db.cities || [])[index];
+                if (!current) return;
+                Swal.fire({
+                    title: `کیا آپ "${current}" کو فہرست سے ہٹانا چاہتے ہیں؟`,
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#dc2626",
+                    cancelButtonColor: "#475569",
+                    confirmButtonText: "ہاں، حذف کریں",
+                    cancelButtonText: "منسوخ کریں"
+                }).then((res) => {
+                    if (res.isConfirmed) {
+                        this.db.cities.splice(index, 1);
+                        this.saveDatabase();
+                        this.populateDropdowns();
+                        this.renderSettingsLists();
+                        this.toast("شہر فہرست سے ہٹا دیا گیا۔", "success");
+                    }
+                });
+            },
+
+            addRole(event) {
+                event.preventDefault();
+                const input = document.getElementById("new-role-input");
+                const val = input.value.trim();
+                if (!val) return;
+                if (!this.db.roles) this.db.roles = [];
+                if (this.db.roles.includes(val)) {
+                    this.toast("یہ ہنر / قسم پہلے سے موجود ہے!", "warning");
+                    return;
+                }
+                this.db.roles.push(val);
+                this.saveDatabase();
+                this.populateDropdowns();
+                this.renderSettingsLists();
+                input.value = "";
+                this.toast("نیا ہنر کامیابی سے شامل ہو گیا!", "success");
+            },
+
+            editRole(index) {
+                const current = (this.db.roles || [])[index];
+                if (!current) return;
+                Swal.fire({
+                    title: "ہنر / کام کی قسم تبدیل کریں",
+                    input: "text",
+                    inputValue: current,
+                    showCancelButton: true,
+                    confirmButtonText: "محفوظ کریں",
+                    cancelButtonText: "منسوخ کریں",
+                    confirmButtonColor: "#059669",
+                    cancelButtonColor: "#475569",
+                    inputValidator: (value) => {
+                        if (!value || !value.trim()) {
+                            return "نام خالی نہیں ہو سکتا!";
+                        }
+                    }
+                }).then((res) => {
+                    if (res.isConfirmed && res.value) {
+                        const newVal = res.value.trim();
+                        this.db.roles[index] = newVal;
+                        this.saveDatabase();
+                        this.populateDropdowns();
+                        this.renderSettingsLists();
+                        this.toast("ہنر / قسم اپڈیٹ ہو گیا!", "success");
+                    }
+                });
+            },
+
+            deleteRole(index) {
+                const current = (this.db.roles || [])[index];
+                if (!current) return;
+                Swal.fire({
+                    title: `کیا آپ "${current}" کو فہرست سے ہٹانا چاہتے ہیں؟`,
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#dc2626",
+                    cancelButtonColor: "#475569",
+                    confirmButtonText: "ہاں، حذف کریں",
+                    cancelButtonText: "منسوخ کریں"
+                }).then((res) => {
+                    if (res.isConfirmed) {
+                        this.db.roles.splice(index, 1);
+                        this.saveDatabase();
+                        this.populateDropdowns();
+                        this.renderSettingsLists();
+                        this.toast("ہنر فہرست سے ہٹا دیا گیا۔", "success");
+                    }
+                });
+            },
+
             printSingleThekaReport(thekaId) {
                 const t = this.db.thekas.find(x => x.id === thekaId);
                 if (!t) return;
