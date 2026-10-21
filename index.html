@@ -48,7 +48,7 @@
 
     <style id="dynamic-theme-vars">
         :root {
-            --app-font-family: 'Calibri', 'Segoe UI', sans-serif;
+            --app-font-family: 'Noto Sans Arabic', 'Segoe UI', Tahoma, sans-serif;
             --app-font-size: 16px;
             --header-bg: #0f172a;
             --header-text: #f8fafc;
@@ -67,15 +67,36 @@
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
         }
-        html, body, * {
-            font-family: 'Calibri', 'Segoe UI', var(--app-font-family), sans-serif !important;
-            font-size: var(--app-font-size);
-            background-color: var(--main-bg);
-            color: var(--main-text);
+        html {
+            font-size: var(--app-font-size, 16px);
+            overflow-x: hidden;
+        }
+        body {
+            font-family: var(--app-font-family, 'Noto Sans Arabic', 'Segoe UI', Tahoma, sans-serif);
+            background-color: var(--main-bg, #f1f5f9);
+            color: var(--main-text, #0f172a);
             line-height: 1.7;
             margin: 0;
             padding: 0;
             overflow-x: hidden;
+        }
+        .fa, .fas, .far, .fab, .fa-solid, .fa-regular, .fa-brands, [class*="fa-"] {
+            font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+            font-style: normal;
+            display: inline-block;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+        }
+        .fa-brands, [class*="fa-brands"] {
+            font-family: "Font Awesome 6 Brands" !important;
+        }
+        .fa-solid, [class*="fa-solid"], .fas {
+            font-family: "Font Awesome 6 Free" !important;
+            font-weight: 900 !important;
+        }
+        .fa-regular, [class*="fa-regular"], .far {
+            font-family: "Font Awesome 6 Free" !important;
+            font-weight: 400 !important;
         }
         .nastaliq-heading {
             font-family: 'Noto Nastaliq Urdu', 'Noto Sans Arabic', serif;
@@ -1346,7 +1367,7 @@
 
             getDefaultTheme() {
                 return {
-                    fontFamily: "Calibri, sans-serif",
+                    fontFamily: "'Noto Sans Arabic', sans-serif",
                     fontSize: "16px",
                     headerBg: "#0f172a",
                     headerText: "#f8fafc",
