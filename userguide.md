@@ -92,27 +92,66 @@ The app uses **hash-based routing** (`#/route`). Actual URL pattern: `https://yo
 
 ### 4.2 🏠 Dashboard (`/dashboard`)
 
-**What it does:** Central summary of the whole business.
+**What it does:** Central executive command center and live intelligence hub of the entire business with full role-based visibility.
 
-**4 KPI Cards:**
-1. **جاری اور مکمل ٹھیکے** — count of running vs completed + total contract value.
-2. **مالکان سے کل وصولی** — total cash received from owners + remaining receivable.
-3. **کل مزدوری و میٹریل خرچہ** — labor earned + material spent + live cash balance.
-4. **مزدوروں کا بقایا حساب** — total unpaid wages to all workers.
+**Role-Based Adaptive Presentation:**
+- **بڑا ٹھیکیدار (Admin / Super Admin):** Complete system visibility, net profit margins, cashflow solvency ratios, labor liabilities, and system administration status.
+- **سائٹ منشی / سپروائزر (Standard User):** Operational on-site metrics, daily attendance headcounts, material logs, and immediate field actions.
 
-**Quick Action Buttons (top):**
-- 🟢 **آج کی حاضری** → opens individual attendance modal
-- 🟡 **نیا خرچہ / وصولی** → opens Hisab modal
+**Interactive Site Filter (ڈیش بورڈ سائٹ فلٹر):**
+- Dropdown at the top of the dashboard allowing the contractor to filter all KPI cards, financial calculations, charts, and tables for **ALL sites** or a **specific Theka project** in real time.
 
-**4 Quick Buttons (below KPIs):**
-- نیا ٹھیکہ لکھیں → Theka modal
-- نیا مزدور / مستری → Mazdoor modal
-- اجتماعی حاضری شیٹ → Bulk attendance modal
-- مکمل روزنامچہ کھاتہ → navigates to `/hisab`
+**8 High-Impact KPI Metric Cards:**
+1. **جاری اور مکمل ٹھیکے** — Running vs Completed sites, active portfolio count, and total contract volume (PKR).
+2. **مالکان سے کل وصولی** — Total cash received from clients, recovery rate percentage (%), and remaining receivables due from owners.
+3. **کل مزدوری و میٹریل خرچہ** — Combined expenditures (labor wages + construction materials), budget burn rate (%), and current cash-in-hand.
+4. **مزدوروں کا بقایا حساب** — Net unpaid labor liabilities across all workers, total registered workforce, and count of workers with pending wages.
+5. **خالص متوقع منافع / بچت** — Projected net profit in PKR, overall profit margin percentage (`(contract - spent) / contract * 100`), and profitability status badge.
+6. **آج کی سائٹ حاضری** — On-site workers present today, shift breakdown (Full / Half-Day / Absent), and today's workforce attendance percentage (%).
+7. **میٹریل و سامان کل خرچہ** — Total spent on cement, steel, bricks, sand, and crushing, with material-to-total-expense ratio.
+8. **سسٹم کیش فلو پوزیشن** — Real-time liquidity assessment, net cash surplus compared to pending liabilities, and financial safety badge.
 
-**Contract Cards:** Each theka shows progress bar (% received), contract value, received, spent, and projected profit. **"کھاتہ"** button prints that theka's full report.
+**Smart Alerts & Operational Watchlist (اہم انتباہات اور ہنگامی الرٹس):**
+- **High Receivables Alert:** Flags any site where owner balance exceeds Rs 400,000 with a direct "کھاتہ پرنٹ" button.
+- **Deficit / Overrun Alert:** Warns if site expenses exceed received cash with a direct "نیا فنڈ وصولی" button.
+- **Labor Overdue Alert:** Identifies workers with unpaid wages ≥ Rs 5,000 with a direct "ادائیگی درج کریں" button.
+- **Daily Attendance Status:** Reminds supervisors if today's attendance has not yet been registered, with a direct 1-click shortcut to Bulk Attendance.
+- Displays an all-clear green badge ("تمام کھاتے اور پروجیکٹس بروقت اور درست ہیں") when no urgent items require attention.
 
-**Effect:** This page is **read-only summary** — reflects live data from Thekas + Attendance + Hisab.
+**3 Interactive Business Infographics:**
+1. **ٹھیکیدار بزنس ہیلتھ انڈیکس (Business Health Index):**
+   - Dynamic 0–100 score with animated circular SVG meter, letter grade (A+, A, B, C), and breakdown chips for Collection Efficiency (%), Cost Control (%), and Labor Settlement (%).
+2. **خیبر پختونخوا اضلاع وار پروجیکٹس (KPK Regional Footprint):**
+   - Geographic distribution across Peshawar, Mardan, Swat, Abbottabad, Nowshera, Swabi, etc. showing site counts and contract values per district.
+3. **کل بیلنس شیٹ فلو (Cashflow Waterfall):**
+   - 4-step financial pipeline: `[1. کل طے شدہ رقم] ➔ [2. وصول شدہ (+)] ➔ [3. ادا شدہ اخراجات (-)] ➔ [4. خالص نقد کیش ان ہینڈ (=)]`.
+
+**5 Interactive Visual Charts (مع 'ڈیٹا دیکھیں' View Data & CSV Export):**
+1. **ٹھیکہ جاتی فنانشل موازنہ (Theka Financial Comparison - Multi-Bar):** Compares Contract Value, Received, Total Spent, and Projected Profit for all sites.
+2. **تعمیراتی اخراجات کی تفصیلی تقسیم (Expense Category Distribution - Doughnut):** Visual split between Materials & Supplies, Paid Labor Wages, and Pending Labor Liabilities.
+3. **وصولی اور بجٹ استعمال کا تناسب % (Recovery vs Budget % - Horizontal Bar):** Side-by-side percentage of contract collected vs budget spent per project.
+4. **افرادی قوت کی درجہ بندی اور دیہاڑی بوجھ (Workforce Skill Distribution - Polar Area):** Mason, Shuttering, Steel Fixer, and Helper workforce share and daily wage pool.
+5. **حالیہ مزدور حاضری اور یومیہ لاگت کا رجحان (Attendance & Wage Trend - Dual Axis Area Line):** Daily on-site workers count on left axis and daily labor cost (PKR) on right axis over recent log dates.
+
+**'ڈیٹا دیکھیں' (View Data Modal) & CSV Download:**
+- Every chart card features a **"ڈیٹا دیکھیں"** button.
+- Clicking opens `#modal-chart-data` presenting the exact mathematical table, raw metrics, summary stat chips, and formulas that derived that specific visual chart.
+- Includes a **"CSV ڈاؤن لوڈ"** button that exports the data table as an Excel-compatible UTF-8 CSV file with BOM (`\uFEFF`) to preserve Urdu text formatting.
+
+**Live Operational Boards:**
+- **جاری اور پچھلے ٹھیکوں کا نفع و نقصان کارڈز:** Individual contract cards with live financial progress bars, cash-in, cash-out, and print shortcut.
+- **اعلیٰ واجب الادا مزدور (Top Unpaid Labor Board):** Interactive table showing top 5 workers with pending wages, role, site, earned, and a direct 1-click "ادائیگی" button that opens the Hisab modal pre-filled with that worker.
+- **حالیہ روزنامچہ و مالیاتی لین دین (Recent Activity Feed):** Chronological timeline of latest 6 cashflow receipts, material vouchers, and labor entries with visual color-coded badges and descriptions.
+
+**Quick Operations Hub (6 Shortcut Tiles):**
+- ➕ **نیا ٹھیکہ لکھیں** → Opens Theka Modal
+- 👤 **نیا مزدور / مستری** → Opens Mazdoor Modal
+- 📋 **اجتماعی حاضری شیٹ** → Opens Bulk Attendance Modal with cherry-pick checkboxes
+- 💵 **نیا خرچہ / وصولی** → Opens Hisab Modal
+- 🖨️ **مکمل رپورٹ پرنٹ** → Opens Print Preview Modal
+- ⚙️ **سیٹنگز و بیک اپ** → Navigates to `/settings`
+
+**Effect:** Real-time calculated dashboard reflecting live data from Thekas + Mazdoors + Attendance + Hisab without database alterations.
 
 ---
 
