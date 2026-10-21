@@ -2,6 +2,20 @@
 <html lang="ur" dir="rtl">
 <head>
     <meta charset="UTF-8">
+    <script>
+        (function() {
+            try {
+                var raw = localStorage.getItem("KPK_TEKEDAR_SESSION_V1");
+                if (raw) {
+                    var sess = JSON.parse(raw);
+                    var now = Date.now();
+                    if (sess && sess.userId && (now - sess.loginTime <= 28800000) && (now - sess.lastActive <= 2400000)) {
+                        document.documentElement.classList.add("has-session");
+                    }
+                }
+            } catch (e) {}
+        })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>پختونخوا ٹھیکیدار اینڈ مزدور حساب کتاب سسٹم | KPK Tekedar Management</title>
     <meta name="description" content="خیبر پختونخوا کے تعمیراتی ٹھیکیداروں کے لیے جاری اور مکمل ٹھیکوں، مزدوروں کی حاضری، دیہاڑی، ایڈوانس اور مکمل لین دین کے حساب کتاب کا جدید موبائل سسٹم۔">
@@ -70,6 +84,12 @@
         html {
             font-size: var(--app-font-size, 16px);
             overflow-x: hidden;
+        }
+        html.has-session #auth-view {
+            display: none !important;
+        }
+        html.has-session #app-shell {
+            display: flex !important;
         }
         body {
             font-family: var(--app-font-family, 'Calibri', 'Segoe UI', sans-serif);
@@ -1796,24 +1816,35 @@
             checkExistingSession() {
                 try {
                     const raw = localStorage.getItem(APP_CONFIG.sessionKey);
-                    if (!raw) return;
+                    if (!raw) {
+                        document.documentElement.classList.remove("has-session");
+                        return;
+                    }
                     const sess = JSON.parse(raw);
                     const now = Date.now();
                     if (now - sess.loginTime > APP_CONFIG.absoluteSessionLimitMs || now - sess.lastActive > APP_CONFIG.idleLimitMs) {
+                        document.documentElement.classList.remove("has-session");
                         localStorage.removeItem(APP_CONFIG.sessionKey);
                         this.toast("سیشن کا وقت ختم ہو گیا، دوبارہ لاگ ان کریں۔", "warning");
                         return;
                     }
                     const user = this.db.users.find(u => u.id === sess.userId);
-                    if (!user) return;
+                    if (!user) {
+                        document.documentElement.classList.remove("has-session");
+                        localStorage.removeItem(APP_CONFIG.sessionKey);
+                        return;
+                    }
                     sess.lastActive = now;
                     this.session = sess;
                     localStorage.setItem(APP_CONFIG.sessionKey, JSON.stringify(sess));
                     this.enterApp(user);
-                } catch (e) {}
+                } catch (e) {
+                    document.documentElement.classList.remove("has-session");
+                }
             },
 
             enterApp(user) {
+                document.documentElement.classList.add("has-session");
                 document.getElementById("auth-view").classList.add("hidden");
                 document.getElementById("app-shell").classList.remove("hidden");
                 document.getElementById("header-user-name").textContent = user.name;
@@ -1862,6 +1893,7 @@
             },
 
             logout(reasonMsg) {
+                document.documentElement.classList.remove("has-session");
                 localStorage.removeItem(APP_CONFIG.sessionKey);
                 this.session = null;
                 document.getElementById("app-shell").classList.add("hidden");
