@@ -357,11 +357,10 @@
             border-color: #059669 !important;
         }
         table.dataTable {
-            border-collapse: separate !important;
+            border-collapse: collapse !important;
             border-spacing: 0 !important;
             width: 100% !important;
             border-radius: 0.75rem;
-            overflow: hidden;
             border: 1px solid #e2e8f0;
         }
         table.dataTable thead th {
@@ -371,12 +370,14 @@
             padding: 12px 10px !important;
             border-bottom: 2px solid #cbd5e1 !important;
             text-align: right !important;
+            white-space: nowrap !important;
         }
         table.dataTable tbody td {
             padding: 12px 10px !important;
             border-bottom: 1px solid #f1f5f9 !important;
             vertical-align: middle !important;
             text-align: right !important;
+            white-space: nowrap !important;
         }
         table.dataTable tbody tr:hover {
             background-color: #ecfdf5 !important;
