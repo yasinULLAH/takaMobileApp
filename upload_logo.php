@@ -157,7 +157,7 @@ function generateInitialBrandedSource($destPath) {
 
 $dir = __DIR__;
 
-if (php_sapi_name() === 'cli') {
+if (php_sapi_name() === 'cli' && empty($_SERVER['REQUEST_METHOD'])) {
     $tempSrc = $dir . '/temp_source_logo.png';
     generateInitialBrandedSource($tempSrc);
     $res = processAndGenerateIcons($tempSrc, $dir);
