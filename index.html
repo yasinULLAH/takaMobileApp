@@ -1116,7 +1116,7 @@
 
                 <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-200">
                     <button type="button" onclick="App.closeModalWithConfirm('modal-theka')" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs touch-target">منسوخ کریں</button>
-                    <button type="submit" id="btn-save-theka" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow touch-target">
+                    <button type="submit" id="btn-save-theka" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow touch-target flex items-center justify-center gap-1.5">
                         <i class="fa-solid fa-check ml-1"></i> ٹھیکہ محفوظ کریں
                     </button>
                 </div>
@@ -1175,7 +1175,7 @@
 
                 <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-200">
                     <button type="button" onclick="App.closeModalWithConfirm('modal-mazdoor')" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs touch-target">منسوخ کریں</button>
-                    <button type="submit" id="btn-save-mazdoor" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow touch-target">
+                    <button type="submit" id="btn-save-mazdoor" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow touch-target flex items-center justify-center gap-1.5">
                         <i class="fa-solid fa-check ml-1"></i> مزدور محفوظ کریں
                     </button>
                 </div>
@@ -1226,7 +1226,7 @@
                 </div>
                 <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-200">
                     <button type="button" onclick="App.closeModalWithConfirm('modal-attendance')" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs touch-target">منسوخ کریں</button>
-                    <button type="submit" id="btn-save-att" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow touch-target">
+                    <button type="submit" id="btn-save-att" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow touch-target flex items-center justify-center gap-1.5">
                         <i class="fa-solid fa-check ml-1"></i> حاضری محفوظ کریں
                     </button>
                 </div>
@@ -1253,7 +1253,7 @@
                 <div id="bulk-attendance-list" class="space-y-2 max-h-80 overflow-y-auto pr-1"></div>
                 <div class="flex justify-end gap-2 pt-3 border-t border-slate-200">
                     <button type="button" onclick="App.closeModal('modal-bulk-attendance')" class="px-4 py-2.5 rounded-xl bg-slate-100 text-slate-700 font-bold text-xs touch-target">بند کریں</button>
-                    <button type="button" onclick="App.saveBulkAttendance()" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow touch-target">
+                    <button type="button" onclick="App.saveBulkAttendance()" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow touch-target flex items-center justify-center gap-1.5">
                         <i class="fa-solid fa-check-double ml-1"></i> تمام حاضری محفوظ کریں
                     </button>
                 </div>
@@ -1322,7 +1322,7 @@
 
                 <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-200">
                     <button type="button" onclick="App.closeModalWithConfirm('modal-hisab')" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs touch-target">منسوخ کریں</button>
-                    <button type="submit" id="btn-save-hisab" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow touch-target">
+                    <button type="submit" id="btn-save-hisab" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow touch-target flex items-center justify-center gap-1.5">
                         <i class="fa-solid fa-check ml-1"></i> کھاتہ میں درج کریں
                     </button>
                 </div>
@@ -1349,7 +1349,7 @@
                 </div>
                 <div class="flex justify-end gap-2 pt-2">
                     <button type="button" onclick="App.closeModal('modal-password')" class="px-4 py-2.5 rounded-xl bg-slate-100 text-slate-700 font-bold text-xs touch-target">بند کریں</button>
-                    <button type="submit" class="px-5 py-2.5 rounded-xl bg-emerald-600 text-white font-bold text-xs touch-target">پاس ورڈ اپڈیٹ کریں</button>
+                    <button type="submit" class="px-5 py-2.5 rounded-xl bg-emerald-600 text-white font-bold text-xs touch-target flex items-center justify-center">پاس ورڈ اپڈیٹ کریں</button>
                 </div>
             </form>
         </div>
@@ -1360,11 +1360,11 @@
             <div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-4 no-print">
                 <h3 class="font-extrabold text-base text-slate-900"><i class="fa-solid fa-print text-emerald-600 ml-1"></i> کھاتہ رسید / تفصیلی رپورٹ پرنٹ ویو</h3>
                 <div class="flex items-center gap-2">
-                    <button type="button" onclick="window.print()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 touch-target">
+                    <button type="button" onclick="window.print()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 touch-target">
                         <i class="fa-solid fa-print"></i>
                         <span>پرنٹ / PDF محفوظ کریں</span>
                     </button>
-                    <button type="button" onclick="App.closeModal('modal-print-preview')" class="bg-slate-100 hover:bg-rose-100 text-slate-700 hover:text-rose-600 px-3 py-2 rounded-xl text-xs font-bold touch-target">
+                    <button type="button" onclick="App.closeModal('modal-print-preview')" class="bg-slate-100 hover:bg-rose-100 text-slate-700 hover:text-rose-600 w-10 h-10 rounded-xl text-xs font-bold flex items-center justify-center touch-target">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                 </div>
