@@ -894,6 +894,23 @@
                                     <input type="file" id="restore-file-input" accept=".json" onchange="App.importEncryptedBackup(event)" class="hidden">
                                 </label>
                             </div>
+
+                            <div class="border-t border-slate-200 pt-3.5 space-y-2.5">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-bold text-slate-800"><i class="fa-solid fa-database text-amber-600 ml-1"></i> نمونہ ڈیٹا کنٹرول (Sample Data Control)</span>
+                                    <span class="text-[11px] text-slate-500">لاگ ان یوزر محفوظ رہیں گے</span>
+                                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                                    <button type="button" onclick="App.clearSampleData()" class="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-300 font-bold text-xs py-2.5 px-3 rounded-xl flex items-center justify-center gap-2 touch-target transition">
+                                        <i class="fa-solid fa-trash-can text-rose-600"></i>
+                                        <span>تمام ڈیٹا صاف کریں (لاگ ان کے علاوہ)</span>
+                                    </button>
+                                    <button type="button" onclick="App.loadSampleData()" class="bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 font-bold text-xs py-2.5 px-3 rounded-xl flex items-center justify-center gap-2 touch-target transition">
+                                        <i class="fa-solid fa-rotate text-amber-600"></i>
+                                        <span>نمونہ ڈیٹا لوڈ کریں (لاگ ان کے علاوہ)</span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -3308,6 +3325,53 @@
                     event.target.value = "";
                 };
                 reader.readAsText(file);
+            },
+
+            clearSampleData() {
+                Swal.fire({
+                    title: "کیا آپ تمام ڈیٹا صاف کرنا چاہتے ہیں؟",
+                    text: "اس عمل سے تمام ٹھیکے، مزدور، حاضری اور مالی کھاتہ خالی ہو جائے گا۔ آپ کا لاگ ان اور صارف اکاؤنٹ محفوظ رہے گا۔",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#dc2626",
+                    cancelButtonColor: "#475569",
+                    confirmButtonText: "ہاں، ڈیٹا صاف کریں",
+                    cancelButtonText: "منسوخ کریں"
+                }).then((res) => {
+                    if (res.isConfirmed) {
+                        this.db.thekas = [];
+                        this.db.mazdoors = [];
+                        this.db.attendance = [];
+                        this.db.hisab = [];
+                        this.saveDatabase();
+                        this.refreshAllViews();
+                        this.toast("تمام ڈیٹا صاف کر دیا گیا، لاگ ان اکاؤنٹ برقرار ہے۔", "success");
+                    }
+                });
+            },
+
+            loadSampleData() {
+                Swal.fire({
+                    title: "کیا آپ نمونہ ڈیٹا لوڈ کرنا چاہتے ہیں؟",
+                    text: "نمونہ ٹھیکے، مزدور، حاضری اور مالی کھاتہ دوبارہ شامل ہو جائیں گے۔ آپ کے موجودہ لاگ ان اکاؤنٹس محفوظ رہیں گے۔",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#059669",
+                    cancelButtonColor: "#475569",
+                    confirmButtonText: "ہاں، نمونہ ڈیٹا لوڈ کریں",
+                    cancelButtonText: "منسوخ کریں"
+                }).then((res) => {
+                    if (res.isConfirmed) {
+                        const seed = this.getSeedDatabase();
+                        this.db.thekas = JSON.parse(JSON.stringify(seed.thekas));
+                        this.db.mazdoors = JSON.parse(JSON.stringify(seed.mazdoors));
+                        this.db.attendance = JSON.parse(JSON.stringify(seed.attendance));
+                        this.db.hisab = JSON.parse(JSON.stringify(seed.hisab));
+                        this.saveDatabase();
+                        this.refreshAllViews();
+                        this.toast("نمونہ ڈیٹا کامیابی سے لوڈ ہو گیا، لاگ ان اکاؤنٹ برقرار ہے۔", "success");
+                    }
+                });
             },
 
             printSingleThekaReport(thekaId) {
