@@ -148,7 +148,7 @@ The app uses **hash-based routing** (`#/route`). Actual URL pattern: `https://yo
 - 👤 **نیا مزدور / مستری** → Opens Mazdoor Modal
 - 📋 **اجتماعی حاضری شیٹ** → Opens Bulk Attendance Modal with cherry-pick checkboxes
 - 💵 **نیا خرچہ / وصولی** → Opens Hisab Modal
-- 🖨️ **مکمل رپورٹ پرنٹ** → Opens Print Preview Modal
+- 🖨️ **مکمل رپورٹ پرنٹ** → Opens Print Preview Modal (with direct Print, PDF download, and PNG Image download options)
 - ⚙️ **سیٹنگز و بیک اپ** → Navigates to `/settings`
 
 **Effect:** Real-time calculated dashboard reflecting live data from Thekas + Mazdoors + Attendance + Hisab without database alterations.
@@ -206,7 +206,7 @@ The app uses **hash-based routing** (`#/route`). Actual URL pattern: `https://yo
 - 🔴 **Red** = `Earned − Paid < 0` → "ایڈوانس زیادہ" (worker owes you)
 
 **Row Actions:**
-- 🧾 **Print Khata Slip** — full attendance + payment history for that worker
+- 🧾 **Print Khata Slip** — full attendance + payment history for that worker with direct Print, PDF file, and PNG Image download options
 - ✏️ **Edit**
 - 🗑️ **Delete** (Admin only)
 

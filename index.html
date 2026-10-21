@@ -62,6 +62,8 @@
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
     <style id="dynamic-theme-vars">
         :root {
@@ -246,6 +248,15 @@
                 max-height: 92vh;
                 overflow-y: auto;
             }
+        }
+        html.modal-open,
+        body.modal-open {
+            overflow: hidden !important;
+            height: 100% !important;
+            overscroll-behavior: none !important;
+        }
+        .fixed.inset-0 {
+            overscroll-behavior: contain !important;
         }
         select {
             width: 100%;
@@ -1988,16 +1999,32 @@
         </div>
     </div>
 
-    <div id="modal-print-preview" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 overflow-y-auto">
-        <div class="bg-white rounded-2xl max-w-3xl w-full p-5 shadow-2xl border border-slate-200 my-auto">
-            <div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-4 no-print">
-                <h3 class="font-extrabold text-base text-slate-900"><i class="fa-solid fa-print text-emerald-600 ml-1"></i> کھاتہ رسید / تفصیلی رپورٹ پرنٹ ویو</h3>
-                <div class="flex items-center gap-2">
-                    <button type="button" onclick="window.print()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 touch-target">
-                        <i class="fa-solid fa-print"></i>
-                        <span>پرنٹ / PDF محفوظ کریں</span>
+    <div id="modal-print-preview" onclick="if(event.target === this) App.closeModal('modal-print-preview')" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-3xl w-full p-4 sm:p-6 shadow-2xl border border-slate-200 my-auto">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-200 pb-3 mb-4 gap-2.5 no-print">
+                <div class="flex items-center gap-2.5">
+                    <span class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-base sm:text-lg shrink-0">
+                        <i class="fa-solid fa-receipt"></i>
+                    </span>
+                    <div>
+                        <h3 class="font-extrabold text-sm sm:text-base text-slate-900 leading-tight">کھاتہ رسید / تفصیلی رپورٹ</h3>
+                        <p class="text-[11px] text-slate-500">پرنٹ کریں، پی ڈی ایف محفوظ کریں یا تصویر ڈاؤن لوڈ کریں</p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                    <button type="button" onclick="App.exportPrintableAsPdf()" class="bg-rose-600 hover:bg-rose-500 text-white px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm touch-target" title="پی ڈی ایف فائل ڈاؤن لوڈ کریں">
+                        <i class="fa-solid fa-file-pdf"></i>
+                        <span>PDF فائل</span>
                     </button>
-                    <button type="button" onclick="App.closeModal('modal-print-preview')" class="bg-slate-100 hover:bg-rose-100 text-slate-700 hover:text-rose-600 w-10 h-10 rounded-xl text-xs font-bold flex items-center justify-center touch-target">
+                    <button type="button" onclick="App.exportPrintableAsImage()" class="bg-sky-600 hover:bg-sky-500 text-white px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm touch-target" title="رسید بطور تصویر ڈاؤن لوڈ کریں">
+                        <i class="fa-solid fa-file-image"></i>
+                        <span>تصویر (PNG)</span>
+                    </button>
+                    <button type="button" onclick="window.print()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm touch-target" title="پرنٹر سے پرنٹ کریں">
+                        <i class="fa-solid fa-print"></i>
+                        <span>پرنٹ کریں</span>
+                    </button>
+                    <button type="button" onclick="App.closeModal('modal-print-preview')" class="bg-slate-100 hover:bg-rose-100 text-slate-700 hover:text-rose-600 w-9 h-9 sm:w-10 sm:h-10 rounded-xl text-xs font-bold flex items-center justify-center touch-target" title="بند کریں">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                 </div>
@@ -2024,6 +2051,23 @@
                     <div class="font-bold">Created by: <a href="https://www.linkedin.com/in/yasin-ullah-029229232/" target="_blank" rel="noopener noreferrer" class="underline">Yasin Ullah</a></div>
                     <div>Linkedin: https://www.linkedin.com/in/yasin-ullah-029229232/</div>
                     <div class="num-ltr font-bold">WhatsApp: 03361593533</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2 no-print text-xs">
+                <span class="text-slate-500">رسید کو براہ راست PDF یا PNG تصویر کے طور پر محفوظ کیا جا سکتا ہے۔</span>
+                <div class="flex items-center gap-2">
+                    <button type="button" onclick="App.exportPrintableAsPdf()" class="bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5 touch-target">
+                        <i class="fa-solid fa-file-pdf"></i>
+                        <span>PDF محفوظ کریں</span>
+                    </button>
+                    <button type="button" onclick="App.exportPrintableAsImage()" class="bg-sky-50 text-sky-700 hover:bg-sky-100 border border-sky-200 px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5 touch-target">
+                        <i class="fa-solid fa-file-image"></i>
+                        <span>تصویر (PNG)</span>
+                    </button>
+                    <button type="button" onclick="App.closeModal('modal-print-preview')" class="bg-slate-800 hover:bg-slate-700 text-white px-4 py-1.5 rounded-xl font-bold touch-target">
+                        بند کریں
+                    </button>
                 </div>
             </div>
         </div>
@@ -2723,6 +2767,21 @@
                     }
                     this.lastScrollY = currentY;
                 }, { passive: true });
+
+                window.addEventListener("keydown", (e) => {
+                    if (e.key === "Escape") {
+                        const preview = document.getElementById("modal-print-preview");
+                        if (preview && !preview.classList.contains("hidden")) {
+                            this.closeModal("modal-print-preview");
+                            return;
+                        }
+                        const chartModal = document.getElementById("modal-chart-data");
+                        if (chartModal && !chartModal.classList.contains("hidden")) {
+                            this.closeModal("modal-chart-data");
+                            return;
+                        }
+                    }
+                });
             },
 
             setupFormDirtyTracking() {
@@ -4495,6 +4554,8 @@
                 const m = document.getElementById(modalId);
                 if (m) {
                     m.classList.remove("hidden");
+                    document.documentElement.classList.add("modal-open");
+                    document.body.classList.add("modal-open");
                     if (firstInputId) {
                         setTimeout(() => {
                             const inp = document.getElementById(firstInputId);
@@ -4508,6 +4569,11 @@
                 const m = document.getElementById(modalId);
                 if (m) m.classList.add("hidden");
                 this.formDirty = false;
+                const anyOpen = Array.from(document.querySelectorAll(".fixed.inset-0")).some(el => !el.classList.contains("hidden"));
+                if (!anyOpen) {
+                    document.documentElement.classList.remove("modal-open");
+                    document.body.classList.remove("modal-open");
+                }
             },
 
             closeModalWithConfirm(modalId) {
@@ -5791,6 +5857,66 @@
                 if (this.db.thekas.length > 0) {
                     this.printSingleThekaReport(this.db.thekas[0].id);
                 }
+            },
+
+            exportPrintableAsPdf() {
+                const el = document.getElementById("printable-area");
+                if (!el) return;
+                const titleText = (document.getElementById("print-doc-title")?.textContent || "khata-report").trim();
+                const cleanTitle = titleText.replace(/[\/\\?%*:|"<>]/g, "-").replace(/\s+/g, "_");
+                const filename = `${cleanTitle}-${new Date().toISOString().slice(0, 10)}.pdf`;
+
+                if (typeof html2pdf === "undefined") {
+                    this.toast("براہ راست پرنٹ ونڈو سے 'Save as PDF' منتخب کریں۔", "info");
+                    window.print();
+                    return;
+                }
+
+                this.toast("پی ڈی ایف فائل تیار ہو رہی ہے...", "info");
+                const opt = {
+                    margin: [8, 8, 8, 8],
+                    filename: filename,
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff', scrollY: 0 },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
+
+                html2pdf().set(opt).from(el).save().then(() => {
+                    this.toast("کھاتہ رسید پی ڈی ایف فائل کامیابی سے محفوظ ہو گئی۔", "success");
+                }).catch(() => {
+                    window.print();
+                });
+            },
+
+            exportPrintableAsImage() {
+                const el = document.getElementById("printable-area");
+                if (!el) return;
+                if (typeof html2canvas === "undefined") {
+                    this.toast("تصویر بنانے کی سہولت لوڈ ہو رہی ہے، ایک لمحہ بعد دوبارہ کلک کریں۔", "info");
+                    return;
+                }
+                const titleText = (document.getElementById("print-doc-title")?.textContent || "khata-report").trim();
+                const cleanTitle = titleText.replace(/[\/\\?%*:|"<>]/g, "-").replace(/\s+/g, "_");
+                const filename = `${cleanTitle}-${new Date().toISOString().slice(0, 10)}.png`;
+
+                this.toast("کھاتہ رسید کی تصویر تیار ہو رہی ہے...", "info");
+                html2canvas(el, {
+                    scale: 2,
+                    useCORS: true,
+                    backgroundColor: "#ffffff",
+                    scrollY: 0,
+                    logging: false
+                }).then(canvas => {
+                    const link = document.createElement("a");
+                    link.download = filename;
+                    link.href = canvas.toDataURL("image/png");
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    this.toast("کھاتہ رسید تصویر (PNG) کامیابی سے محفوظ ہو گئی۔", "success");
+                }).catch(() => {
+                    this.toast("تصویر تیار کرنے میں خرابی واقع ہوئی۔", "error");
+                });
             },
 
             uploadNewLogo() {
