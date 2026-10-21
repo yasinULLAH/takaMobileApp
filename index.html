@@ -4396,11 +4396,62 @@
                 if (this.db.thekas.length > 0) {
                     this.printSingleThekaReport(this.db.thekas[0].id);
                 }
+            },
+
+            uploadNewLogo() {
+                if (!this.isAdmin()) {
+                    this.toast("صرف ایڈمن کو ایپ لوگو تبدیل کرنے کی اجازت ہے۔", "error");
+                    return;
+                }
+                const input = document.getElementById("logo-upload-input");
+                if (!input || !input.files || !input.files[0]) {
+                    this.toast("براہ کرم پہلے کوئی تصویری فائل منتخب کریں۔", "error");
+                    return;
+                }
+                const file = input.files[0];
+                const btn = document.getElementById("btn-upload-logo");
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin ml-1"></i> لوگو تیار ہو رہا ہے...';
+
+                const formData = new FormData();
+                formData.append("logo_file", file);
+
+                fetch("upload_logo.php", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(r => r.json())
+                .then(res => {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up ml-1"></i> نیا لوگو اپلوڈ اور محفوظ کریں';
+                    if (res && res.success) {
+                        const ts = res.timestamp || Date.now();
+                        document.querySelectorAll(".app-logo-img").forEach(img => {
+                            img.src = `logo.png?v=${ts}`;
+                        });
+                        const fav = document.querySelector('link[rel="icon"]');
+                        if (fav) fav.href = `favicon.ico?v=${ts}`;
+                        this.toast(res.message || "لوگو اور تمام آئیکونز کامیابی سے اپڈیٹ ہو گئے۔", "success");
+                        input.value = "";
+                    } else {
+                        this.toast((res && res.error) || "لوگو اپلوڈ کرنے میں خرابی واقع ہوئی۔", "error");
+                    }
+                })
+                .catch(() => {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up ml-1"></i> نیا لوگو اپلوڈ اور محفوظ کریں';
+                    this.toast("سرور سے رابطہ نہ ہو سکا یا پی ایچ پی اسکرپٹ دستیاب نہیں۔", "error");
+                });
             }
         };
 
         document.addEventListener("DOMContentLoaded", () => {
             App.init();
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('./sw.js').catch(() => {});
+                });
+            }
         });
     </script>
 </body>
