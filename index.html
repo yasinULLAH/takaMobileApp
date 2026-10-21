@@ -48,7 +48,7 @@
 
     <style id="dynamic-theme-vars">
         :root {
-            --app-font-family: 'Noto Sans Arabic', 'Segoe UI', Tahoma, sans-serif;
+            --app-font-family: 'Calibri', 'Segoe UI', sans-serif;
             --app-font-size: 16px;
             --header-bg: #0f172a;
             --header-text: #f8fafc;
@@ -72,7 +72,7 @@
             overflow-x: hidden;
         }
         body {
-            font-family: var(--app-font-family, 'Noto Sans Arabic', 'Segoe UI', Tahoma, sans-serif);
+            font-family: var(--app-font-family, 'Calibri', 'Segoe UI', sans-serif);
             background-color: var(--main-bg, #f1f5f9);
             color: var(--main-text, #0f172a);
             line-height: 1.7;
@@ -788,6 +788,7 @@
                                     <div>
                                         <label for="theme-font-family" class="block text-xs font-bold text-slate-700 mb-1">اردو فونٹ سٹائل</label>
                                         <select id="theme-font-family" class="w-full">
+                                            <option value="'Calibri', 'Segoe UI', sans-serif">کیلیبری فونٹ (Calibri)</option>
                                             <option value="'Noto Sans Arabic', sans-serif">جدید صاف اردو (Noto Sans)</option>
                                             <option value="'Noto Nastaliq Urdu', serif">خوبصورت نستعلیق (Nastaliq Urdu)</option>
                                             <option value="'Readex Pro', sans-serif">موٹا واضح فونٹ (Readex Pro)</option>
@@ -1367,7 +1368,7 @@
 
             getDefaultTheme() {
                 return {
-                    fontFamily: "'Noto Sans Arabic', sans-serif",
+                    fontFamily: "'Calibri', 'Segoe UI', sans-serif",
                     fontSize: "16px",
                     headerBg: "#0f172a",
                     headerText: "#f8fafc",
