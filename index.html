@@ -1387,6 +1387,10 @@
 <i class="fa-solid fa-rotate text-amber-600"></i>
 <span>نمونہ ڈیٹا لوڈ کریں (لاگ ان کے علاوہ)</span>
 </button>
+<button class="bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-300 font-bold text-xs py-2.5 px-3 rounded-xl flex items-center justify-center gap-2 touch-target transition col-span-1 sm:col-span-2" onclick="App.runDataIntegrityFix()" type="button">
+<i class="fa-solid fa-wrench text-teal-600"></i>
+<span>ڈیٹا کی صفائی و ڈپلیکیٹ حاضری ریکارڈز درست کریں (Data Repair)</span>
+</button>
 </div>
 </div>
 </div>
@@ -1633,14 +1637,15 @@
 </div>
 <form class="space-y-3.5" id="form-attendance" novalidate="">
 <input id="att-id" type="hidden"/>
+<div class="hidden" id="att-duplicate-alert"></div>
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
 <div>
 <label class="block text-xs font-bold text-slate-700 mb-1" for="att-date">تاریخ <span class="text-red-500">*</span></label>
-<input class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm touch-target" id="att-date" type="date"/>
+<input class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm touch-target" id="att-date" onchange="App.checkAttendanceDuplicate()" type="date"/>
 </div>
 <div>
 <label class="block text-xs font-bold text-slate-700 mb-1" for="att-mazdoor">مزدور / مستری منتخب کریں <span class="text-red-500">*</span></label>
-<select class="w-full" id="att-mazdoor" onchange="App.syncMazdoorWageInAtt()"></select>
+<select class="w-full" id="att-mazdoor" onchange="App.syncMazdoorWageInAtt(); App.checkAttendanceDuplicate()"></select>
 </div>
 <div class="sm:col-span-2">
 <label class="block text-xs font-bold text-slate-700 mb-1" for="att-theka">کس ٹھیکہ سائٹ پر کام کیا؟ <span class="text-red-500">*</span></label>
@@ -1693,15 +1698,18 @@
 </div>
 <div>
 <label class="block text-xs font-bold text-slate-700 mb-1" for="bulk-att-date">حاضری کی تاریخ:</label>
-<input class="w-full border border-slate-300 rounded-xl px-3 py-1.5 text-sm bg-white touch-target" id="bulk-att-date" type="date"/>
+<input class="w-full border border-slate-300 rounded-xl px-3 py-1.5 text-sm bg-white touch-target" id="bulk-att-date" onchange="App.filterBulkAttendanceByTheka()" type="date"/>
 </div>
 </div>
-<div class="flex items-center justify-between bg-emerald-50 border border-emerald-200 px-3 py-2 rounded-xl text-xs">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between bg-emerald-50 border border-emerald-200 px-3 py-2 rounded-xl text-xs gap-1.5">
 <label class="flex items-center gap-2 cursor-pointer font-bold text-emerald-900">
 <input checked="" class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500" id="bulk-select-all" onchange="App.toggleBulkSelectAll(this)" type="checkbox"/>
 <span>تمام منتخب کریں / غیر منتخب کریں</span>
 </label>
+<div class="flex items-center gap-2 flex-wrap">
 <span class="font-extrabold text-emerald-700" id="bulk-selected-counter">0 مزدور منتخب شدہ</span>
+<span class="text-[11px] text-slate-600 bg-white/80 px-2 py-0.5 rounded-md border border-emerald-200" id="bulk-already-marked-info"></span>
+</div>
 </div>
 <div class="space-y-2 max-h-80 overflow-y-auto pr-1" id="bulk-attendance-list"></div>
 <div class="flex justify-end gap-2 pt-3 border-t border-slate-200">
@@ -2339,6 +2347,7 @@
                     this.db.roles = seed.roles;
                     this.saveDatabase();
                 }
+                this.sanitizeAndDeduplicateDatabase();
             },
 
             saveDatabase() {
@@ -2798,7 +2807,7 @@
                     .reduce((sum, h) => sum + Number(h.amount || 0), 0);
 
                 const netPayable = earned - paid;
-                const daysWorked = this.db.attendance.filter(a => a.mazdoorId === mazdoorId && a.multiplier > 0).length;
+                const daysWorked = new Set(this.db.attendance.filter(a => a.mazdoorId === mazdoorId && Number(a.multiplier) > 0).map(a => a.date)).size;
                 return { earned, paid, netPayable, daysWorked };
             },
 
@@ -3502,7 +3511,7 @@
                     attendanceList.forEach(a => {
                         const d = a.date || "غیر معین";
                         if (!dateMap[d]) dateMap[d] = { workers: 0, totalEarned: 0 };
-                        dateMap[d].workers += 1;
+                        if (Number(a.multiplier) > 0) dateMap[d].workers += 1;
                         dateMap[d].totalEarned += Number(a.totalEarned || 0);
                     });
 
@@ -3723,9 +3732,11 @@
                     attendanceList.forEach(a => {
                         const d = a.date || "غیر معین";
                         if (!dateMap[d]) dateMap[d] = { count: 0, full: 0, half: 0, earned: 0 };
-                        dateMap[d].count += 1;
-                        if (String(a.status).includes("Full") || String(a.status).includes("پورا")) dateMap[d].full += 1;
-                        else dateMap[d].half += 1;
+                        if (Number(a.multiplier) > 0) {
+                            dateMap[d].count += 1;
+                            if (String(a.status).includes("Full") || String(a.status).includes("پورا")) dateMap[d].full += 1;
+                            else dateMap[d].half += 1;
+                        }
                         dateMap[d].earned += Number(a.totalEarned || 0);
                     });
 
@@ -4517,6 +4528,18 @@
             },
 
             saveThekaRecord() {
+                const title = document.getElementById("theka-title").value.trim();
+                const contractAmount = Number(document.getElementById("theka-amount").value);
+
+                if (!title) {
+                    this.toast("ٹھیکہ سائٹ کا نام لکھنا لازمی ہے۔", "error");
+                    return;
+                }
+                if (contractAmount < 0 || isNaN(contractAmount)) {
+                    this.toast("ٹھیکہ کی رقم منفی نہیں ہو سکتی۔", "error");
+                    return;
+                }
+
                 const btn = document.getElementById("btn-save-theka");
                 btn.disabled = true;
                 btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin ml-1"></i> محفوظ ہو رہا ہے...';
@@ -4529,13 +4552,13 @@
                     }
                     const payload = {
                         id: id || "THK-" + Date.now(),
-                        title: document.getElementById("theka-title").value.trim(),
+                        title,
                         client: document.getElementById("theka-client").value.trim(),
                         phone: document.getElementById("theka-phone").value.trim(),
                         city: cityVal,
                         type: document.getElementById("theka-type").value,
                         status: document.getElementById("theka-status").value,
-                        contractAmount: Number(document.getElementById("theka-amount").value) || 0,
+                        contractAmount: Math.max(0, Math.round(contractAmount) || 0),
                         startDate: document.getElementById("theka-start").value,
                         sqft: document.getElementById("theka-sqft").value.trim(),
                         notes: document.getElementById("theka-notes").value.trim()
@@ -4559,9 +4582,17 @@
 
             deleteTheka(id) {
                 if (!this.isAdmin()) return;
+                const t = this.db.thekas.find(x => x.id === id);
+                if (!t) return;
+                const attCount = this.db.attendance.filter(a => a.thekaId === id).length;
+                const hisabCount = this.db.hisab.filter(h => h.thekaId === id).length;
+                let warnText = "اس عمل سے ٹھیکہ کا ریکارڈ مستقل طور پر ہٹا دیا جائے گا۔";
+                if (attCount > 0 || hisabCount > 0) {
+                    warnText = `توجہ: اس ٹھیکے کے ساتھ ${attCount} حاضری اور ${hisabCount} کھاتہ اندراجات منسلک ہیں۔ ٹھیکہ حذف کرنے پر یہ تمام منسلک ریکارڈز بھی صاف ہو جائیں گے تاکہ مجموعی کھاتہ خراب نہ ہو۔`;
+                }
                 Swal.fire({
-                    title: "کیا آپ واقعی یہ ٹھیکہ حذف کرنا چاہتے ہیں؟",
-                    text: "اس عمل سے ٹھیکہ کا ریکارڈ فہرست سے ہٹا دیا جائے گا۔",
+                    title: `کیا آپ "${t.title}" کو حذف کرنا چاہتے ہیں؟`,
+                    text: warnText,
                     icon: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#dc2626",
@@ -4570,10 +4601,12 @@
                     cancelButtonText: "منسوخ کریں"
                 }).then((res) => {
                     if (res.isConfirmed) {
-                        this.db.thekas = this.db.thekas.filter(t => t.id !== id);
+                        this.db.thekas = this.db.thekas.filter(x => x.id !== id);
+                        this.db.attendance = this.db.attendance.filter(a => a.thekaId !== id);
+                        this.db.hisab = this.db.hisab.filter(h => h.thekaId !== id);
                         this.saveDatabase();
                         this.refreshAllViews();
-                        this.toast("ٹھیکہ کامیابی سے حذف کر دیا گیا۔", "success");
+                        this.toast("ٹھیکہ اور منسلک ریکارڈز کامیابی سے حذف کر دیے گئے۔", "success");
                     }
                 });
             },
@@ -4613,24 +4646,46 @@
             },
 
             saveMazdoorRecord() {
+                const id = document.getElementById("mazdoor-id").value;
+                const name = document.getElementById("mazdoor-name").value.trim();
+                const dailyWage = Number(document.getElementById("mazdoor-wage").value);
+                const phone = document.getElementById("mazdoor-phone").value.trim();
+                const cnic = document.getElementById("mazdoor-cnic").value.trim();
+                const roleVal = document.getElementById("mazdoor-role").value.trim();
+                const thekaId = document.getElementById("mazdoor-theka").value;
+
+                if (!name) {
+                    this.toast("مزدور کا نام لکھنا لازمی ہے۔", "error");
+                    return;
+                }
+                if (!dailyWage || dailyWage <= 0 || isNaN(dailyWage)) {
+                    this.toast("روزانہ دیہاڑی ریٹ صفر سے زیادہ ہونا چاہیے۔", "error");
+                    return;
+                }
+                if (phone && this.db.mazdoors.some(m => m.phone === phone && m.id !== id)) {
+                    this.toast("یہ موبائل نمبر پہلے سے کسی اور مزدور کے پاس رجسٹرڈ ہے۔", "warning");
+                }
+                if (cnic && this.db.mazdoors.some(m => m.cnic === cnic && m.id !== id)) {
+                    this.toast("یہ شناختی کارڈ نمبر پہلے سے کسی اور مزدور کا درج ہے۔", "error");
+                    return;
+                }
+
                 const btn = document.getElementById("btn-save-mazdoor");
                 btn.disabled = true;
                 btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin ml-1"></i> محفوظ ہو رہا ہے...';
 
                 setTimeout(() => {
-                    const id = document.getElementById("mazdoor-id").value;
-                    const roleVal = document.getElementById("mazdoor-role").value.trim();
                     if (roleVal && !this.db.roles.includes(roleVal)) {
                         this.db.roles.push(roleVal);
                     }
                     const payload = {
                         id: id || "MZD-" + Date.now(),
-                        name: document.getElementById("mazdoor-name").value.trim(),
+                        name,
                         role: roleVal,
-                        dailyWage: Number(document.getElementById("mazdoor-wage").value) || 0,
-                        phone: document.getElementById("mazdoor-phone").value.trim(),
-                        thekaId: document.getElementById("mazdoor-theka").value,
-                        cnic: document.getElementById("mazdoor-cnic").value.trim(),
+                        dailyWage: Math.max(0, Math.round(dailyWage)),
+                        phone,
+                        thekaId,
+                        cnic,
                         photo: document.getElementById("mazdoor-photo-data").value || ""
                     };
 
@@ -4652,9 +4707,17 @@
 
             deleteMazdoor(id) {
                 if (!this.isAdmin()) return;
+                const m = this.db.mazdoors.find(x => x.id === id);
+                if (!m) return;
+                const attCount = this.db.attendance.filter(a => a.mazdoorId === id).length;
+                const hisabCount = this.db.hisab.filter(h => h.mazdoorId === id).length;
+                let warnText = "کیا آپ واقعی اس مزدور کو فہرست سے ہٹانا چاہتے ہیں؟";
+                if (attCount > 0 || hisabCount > 0) {
+                    warnText = `توجہ: اس مزدور کے کھاتے میں ${attCount} حاضری اور ${hisabCount} ادائیگی کے ریکارڈز موجود ہیں۔ مزدور حذف کرنے پر یہ منسلک ریکارڈز بھی صاف ہو جائیں گے تاکہ بقایا جات کا حساب خراب نہ ہو۔`;
+                }
                 Swal.fire({
-                    title: "مزدور کا ریکارڈ حذف کریں؟",
-                    text: "کیا آپ واقعی اس مزدور کو فہرست سے ہٹانا چاہتے ہیں؟",
+                    title: `کیا آپ "${m.name}" کو حذف کرنا چاہتے ہیں؟`,
+                    text: warnText,
                     icon: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#dc2626",
@@ -4663,10 +4726,12 @@
                     cancelButtonText: "منسوخ کریں"
                 }).then((res) => {
                     if (res.isConfirmed) {
-                        this.db.mazdoors = this.db.mazdoors.filter(m => m.id !== id);
+                        this.db.mazdoors = this.db.mazdoors.filter(x => x.id !== id);
+                        this.db.attendance = this.db.attendance.filter(a => a.mazdoorId !== id);
+                        this.db.hisab = this.db.hisab.filter(h => h.mazdoorId !== id);
                         this.saveDatabase();
                         this.refreshAllViews();
-                        this.toast("مزدور کا ریکارڈ حذف کر دیا گیا۔", "success");
+                        this.toast("مزدور اور اس کا منسلک کھاتہ حذف کر دیا گیا۔", "success");
                     }
                 });
             },
@@ -4680,11 +4745,24 @@
             },
 
             openAttendanceModal(editId = "") {
+                if (!this.db.mazdoors || this.db.mazdoors.length === 0) {
+                    this.toast("حاضری لگانے کے لیے پہلے کم از کم ایک مزدور شامل کریں۔", "error");
+                    this.navigate("/mazdoors");
+                    return;
+                }
+                if (!this.db.thekas || this.db.thekas.length === 0) {
+                    this.toast("حاضری لگانے کے لیے پہلے کم از کم ایک ٹھیکہ شامل کریں۔", "error");
+                    this.navigate("/thekas");
+                    return;
+                }
                 this.populateDropdowns();
                 document.getElementById("form-attendance").reset();
                 document.getElementById("att-id").value = "";
                 document.getElementById("att-date").value = new Date().toISOString().slice(0, 10);
                 document.getElementById("att-overtime").value = "0";
+
+                const alertEl = document.getElementById("att-duplicate-alert");
+                if (alertEl) alertEl.classList.add("hidden");
 
                 if (editId) {
                     const a = this.db.attendance.find(x => x.id === editId);
@@ -4696,11 +4774,80 @@
                         $("#att-status").val(a.status).trigger("change");
                         document.getElementById("att-overtime").value = a.overtime || 0;
                         document.getElementById("att-note").value = a.note || "";
+                        document.getElementById("modal-attendance-title").textContent = "حاضری اور دیہاڑی ریکارڈ میں ترمیم";
                     }
                 } else {
+                    document.getElementById("modal-attendance-title").textContent = "مزدور کی روزانہ حاضری اور دیہاڑی";
                     this.syncMazdoorWageInAtt();
+                    this.checkAttendanceDuplicate();
                 }
                 this.openModal("modal-attendance", "att-date");
+            },
+
+            checkAttendanceDuplicate() {
+                const dateEl = document.getElementById("att-date");
+                const mazdoorEl = document.getElementById("att-mazdoor");
+                const idEl = document.getElementById("att-id");
+                const alertEl = document.getElementById("att-duplicate-alert");
+                const btnSave = document.getElementById("btn-save-att");
+                if (!dateEl || !mazdoorEl || !alertEl) return;
+
+                const date = dateEl.value;
+                const mazdoorId = mazdoorEl.value;
+                const currentId = idEl ? idEl.value : "";
+
+                if (!date || !mazdoorId) {
+                    alertEl.classList.add("hidden");
+                    if (btnSave) btnSave.innerHTML = '<i class="fa-solid fa-check ml-1"></i> حاضری محفوظ کریں';
+                    return;
+                }
+
+                const existing = this.db.attendance.find(a => a.mazdoorId === mazdoorId && a.date === date && a.id !== currentId);
+                if (existing) {
+                    alertEl.classList.remove("hidden");
+                    alertEl.innerHTML = `
+                        <div class="p-3 bg-amber-50 border border-amber-300 rounded-xl text-amber-950 text-xs flex items-center justify-between gap-2 shadow-sm">
+                            <div class="flex items-start gap-2">
+                                <i class="fa-solid fa-triangle-exclamation text-amber-600 text-sm mt-0.5 shrink-0"></i>
+                                <div>
+                                    <div class="font-bold">اس مزدور کی اس تاریخ (${this.escapeHtml(date)}) پر حاضری پہلے سے درج ہے!</div>
+                                    <div class="text-[11px] text-amber-800">حالت: <strong>${this.escapeHtml(existing.status)}</strong> • دیہاڑی: <strong>Rs ${this.formatPKR(existing.totalEarned)}</strong> • اوور ٹائم: Rs ${this.formatPKR(existing.overtime)}</div>
+                                </div>
+                            </div>
+                            <button type="button" onclick="App.loadExistingAttendanceForEdit('${this.escapeHtml(existing.id)}')" class="px-2.5 py-1.5 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-bold shrink-0 touch-target shadow-sm">
+                                ترمیم لوڈ کریں
+                            </button>
+                        </div>
+                    `;
+                    if (btnSave) btnSave.innerHTML = '<i class="fa-solid fa-rotate ml-1"></i> موجودہ حاضری اپڈیٹ کریں';
+                } else {
+                    alertEl.classList.add("hidden");
+                    if (btnSave) btnSave.innerHTML = currentId ? '<i class="fa-solid fa-check ml-1"></i> ترمیم محفوظ کریں' : '<i class="fa-solid fa-check ml-1"></i> حاضری محفوظ کریں';
+                }
+            },
+
+            loadExistingAttendanceForEdit(existingId) {
+                const a = this.db.attendance.find(x => x.id === existingId);
+                if (!a) return;
+                document.getElementById("att-id").value = a.id;
+                document.getElementById("att-date").value = a.date;
+                $("#att-mazdoor").val(a.mazdoorId).trigger("change");
+                $("#att-theka").val(a.thekaId).trigger("change");
+                $("#att-status").val(a.status).trigger("change");
+                document.getElementById("att-overtime").value = a.overtime || 0;
+                document.getElementById("att-note").value = a.note || "";
+                document.getElementById("modal-attendance-title").textContent = "حاضری اور دیہاڑی ریکارڈ میں ترمیم";
+                const alertEl = document.getElementById("att-duplicate-alert");
+                if (alertEl) {
+                    alertEl.innerHTML = `
+                        <div class="p-2 bg-emerald-50 border border-emerald-300 rounded-xl text-emerald-950 text-xs flex items-center gap-2">
+                            <i class="fa-solid fa-circle-check text-emerald-600"></i>
+                            <span>موجودہ ریکارڈ لوڈ ہو گیا۔ تبدیلی کر کے محفوظ کریں۔</span>
+                        </div>
+                    `;
+                }
+                const btnSave = document.getElementById("btn-save-att");
+                if (btnSave) btnSave.innerHTML = '<i class="fa-solid fa-check ml-1"></i> ترمیم محفوظ کریں';
             },
 
             saveAttendanceRecord() {
@@ -4709,11 +4856,28 @@
                 const mazdoorId = document.getElementById("att-mazdoor").value;
                 const thekaId = document.getElementById("att-theka").value;
                 const status = document.getElementById("att-status").value;
-                const overtime = Number(document.getElementById("att-overtime").value) || 0;
+                const overtime = Math.max(0, Number(document.getElementById("att-overtime").value) || 0);
                 const note = document.getElementById("att-note").value.trim();
 
+                if (!date) {
+                    this.toast("حاضری کی تاریخ منتخب کرنا لازمی ہے۔", "error");
+                    return;
+                }
+                if (!mazdoorId) {
+                    this.toast("براہ کرم مزدور منتخب کریں۔", "error");
+                    return;
+                }
+                if (!thekaId) {
+                    this.toast("براہ کرم ٹھیکہ سائٹ منتخب کریں۔", "error");
+                    return;
+                }
+
                 const m = this.db.mazdoors.find(x => x.id === mazdoorId);
-                const baseWage = m ? Number(m.dailyWage) : 2000;
+                if (!m) {
+                    this.toast("منتخب مزدور کا ریکارڈ نہیں ملا۔", "error");
+                    return;
+                }
+                const baseWage = Number(m.dailyWage) || 2000;
 
                 const multMap = {
                     "پورا دن (Full)": 1,
@@ -4724,30 +4888,61 @@
                 const multiplier = multMap[status] !== undefined ? multMap[status] : 1;
                 const totalEarned = Math.round((baseWage * multiplier) + overtime);
 
-                const payload = {
-                    id: id || "ATT-" + Date.now(),
-                    date,
-                    mazdoorId,
-                    thekaId,
-                    status,
-                    multiplier,
-                    baseWage,
-                    overtime,
-                    totalEarned,
-                    note
-                };
+                const existingAnother = this.db.attendance.find(a => a.mazdoorId === mazdoorId && a.date === date && a.id !== id);
 
                 if (id) {
+                    if (existingAnother) {
+                        this.toast(`مزدور "${m.name}" کی تاریخ (${date}) پر ایک اور حاضری پہلے سے موجود ہے۔ ڈپلیکیٹ اندراج کی اجازت نہیں!`, "error");
+                        return;
+                    }
                     const idx = this.db.attendance.findIndex(x => x.id === id);
-                    if (idx > -1) this.db.attendance[idx] = payload;
+                    if (idx > -1) {
+                        this.db.attendance[idx] = {
+                            id,
+                            date,
+                            mazdoorId,
+                            thekaId,
+                            status,
+                            multiplier,
+                            baseWage,
+                            overtime,
+                            totalEarned,
+                            note
+                        };
+                    }
                 } else {
-                    this.db.attendance.unshift(payload);
+                    if (existingAnother) {
+                        existingAnother.thekaId = thekaId;
+                        existingAnother.status = status;
+                        existingAnother.multiplier = multiplier;
+                        existingAnother.baseWage = baseWage;
+                        existingAnother.overtime = overtime;
+                        existingAnother.totalEarned = totalEarned;
+                        existingAnother.note = note || existingAnother.note;
+                        this.saveDatabase();
+                        this.refreshAllViews();
+                        this.closeModal("modal-attendance");
+                        this.toast(`موجودہ حاضری اپڈیٹ ہو گئی (ڈپلیکیٹ سے محفوظ)! دیہاڑی: Rs ${totalEarned}`, "success");
+                        return;
+                    }
+                    this.db.attendance.unshift({
+                        id: "ATT-" + Date.now(),
+                        date,
+                        mazdoorId,
+                        thekaId,
+                        status,
+                        multiplier,
+                        baseWage,
+                        overtime,
+                        totalEarned,
+                        note
+                    });
                 }
 
                 this.saveDatabase();
                 this.refreshAllViews();
                 this.closeModal("modal-attendance");
-                this.toast(`حاضری درج ہو گئی! دیہاڑی: Rs ${totalEarned}`, "success");
+                this.toast(`حاضری محفوظ ہو گئی! دیہاڑی: Rs ${totalEarned}`, "success");
             },
 
             deleteAttendance(id) {
@@ -4772,6 +4967,16 @@
             },
 
             openBulkAttendanceModal() {
+                if (!this.db.mazdoors || this.db.mazdoors.length === 0) {
+                    this.toast("کوئی مزدور موجود نہیں ہے۔ پہلے مزدور رجسٹر کریں۔", "error");
+                    this.navigate("/mazdoors");
+                    return;
+                }
+                if (!this.db.thekas || this.db.thekas.length === 0) {
+                    this.toast("کوئی ٹھیکہ موجود نہیں ہے۔ پہلے ٹھیکہ رجسٹر کریں۔", "error");
+                    this.navigate("/thekas");
+                    return;
+                }
                 document.getElementById("bulk-att-date").value = new Date().toISOString().slice(0, 10);
                 const thekaSelect = document.getElementById("bulk-att-theka");
                 let thekaOptions = '<option value="all">تمام ٹھیکے (All Sites)</option>';
@@ -4791,6 +4996,10 @@
             },
 
             renderBulkAttendanceList(thekaFilter = "all") {
+                const dateInput = document.getElementById("bulk-att-date");
+                const selectedDate = (dateInput && dateInput.value) ? dateInput.value : new Date().toISOString().slice(0, 10);
+                if (dateInput && !dateInput.value) dateInput.value = selectedDate;
+
                 const filteredMazdoors = thekaFilter === "all"
                     ? this.db.mazdoors
                     : this.db.mazdoors.filter(m => m.thekaId === thekaFilter || (!m.thekaId && thekaFilter === "all"));
@@ -4802,23 +5011,38 @@
                         </div>
                     `;
                     document.getElementById("bulk-select-all").checked = false;
+                    const infoEl = document.getElementById("bulk-already-marked-info");
+                    if (infoEl) infoEl.textContent = "کوئی مزدور نہیں";
                     this.updateBulkSelectedCount();
                     return;
                 }
 
+                let alreadyMarkedCount = 0;
                 const listHtml = filteredMazdoors.map(m => {
+                    const existingAtt = this.db.attendance.find(a => a.mazdoorId === m.id && a.date === selectedDate);
+                    if (existingAtt) alreadyMarkedCount++;
+
                     const assignedTheka = this.db.thekas.find(x => x.id === m.thekaId);
+                    const selectedThekaId = existingAtt ? existingAtt.thekaId : ((thekaFilter !== "all") ? thekaFilter : (m.thekaId || (this.db.thekas[0] ? this.db.thekas[0].id : "")));
+
                     const thekaOptions = this.db.thekas.map(t => {
-                        const isSel = (thekaFilter !== "all" && t.id === thekaFilter) || (thekaFilter === "all" && t.id === m.thekaId);
+                        const isSel = t.id === selectedThekaId;
                         return `<option value="${this.escapeHtml(t.id)}" ${isSel ? 'selected' : ''}>${this.escapeHtml(t.title)}</option>`;
                     }).join("");
 
+                    const currentStatus = existingAtt ? existingAtt.status : "پورا دن (Full)";
+                    const currentOvertime = existingAtt ? (existingAtt.overtime || 0) : 0;
+
                     return `
-                        <div class="bulk-mazdoor-row bg-slate-50 border border-slate-200 rounded-xl p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 hover:bg-emerald-50/40 transition">
+                        <div class="bulk-mazdoor-row ${existingAtt ? 'bg-emerald-50/50 border-emerald-300' : 'bg-slate-50 border-slate-200'} border rounded-xl p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 hover:bg-emerald-50/70 transition">
                             <div class="flex items-center gap-3">
-                                <input type="checkbox" data-mazdoor-id="${this.escapeHtml(m.id)}" onchange="App.updateBulkSelectedCount()" checked class="bulk-mazdoor-check w-5 h-5 rounded text-emerald-600 focus:ring-emerald-500 touch-target shrink-0 cursor-pointer">
+                                <input type="checkbox" data-mazdoor-id="${this.escapeHtml(m.id)}" onchange="App.updateBulkSelectedCount()" ${existingAtt ? '' : 'checked'} class="bulk-mazdoor-check w-5 h-5 rounded text-emerald-600 focus:ring-emerald-500 touch-target shrink-0 cursor-pointer">
                                 <div>
-                                    <div class="font-extrabold text-sm text-slate-900">${this.escapeHtml(m.name)} <span class="text-xs text-emerald-700 font-bold num-ltr">(Rs ${this.formatPKR(m.dailyWage)})</span></div>
+                                    <div class="font-extrabold text-sm text-slate-900 flex items-center gap-2 flex-wrap">
+                                        <span>${this.escapeHtml(m.name)}</span>
+                                        <span class="text-xs text-emerald-700 font-bold num-ltr">(Rs ${this.formatPKR(m.dailyWage)})</span>
+                                        ${existingAtt ? `<span class="px-2 py-0.5 rounded text-[10px] bg-emerald-100 text-emerald-800 font-extrabold border border-emerald-300"><i class="fa-solid fa-check"></i> پہلے سے درج (${this.escapeHtml(existingAtt.status)})</span>` : `<span class="px-2 py-0.5 rounded text-[10px] bg-amber-100 text-amber-800 font-semibold border border-amber-200">باقی</span>`}
+                                    </div>
                                     <div class="text-xs text-slate-500">${this.escapeHtml(m.role)} ${assignedTheka ? '• سائٹ: ' + this.escapeHtml(assignedTheka.title) : ''}</div>
                                 </div>
                             </div>
@@ -4827,19 +5051,26 @@
                                     ${thekaOptions}
                                 </select>
                                 <select data-bulk-mazdoor="${this.escapeHtml(m.id)}" class="bulk-status-select border border-slate-300 rounded-xl px-2.5 py-1.5 text-xs font-bold bg-white touch-target">
-                                    <option value="پورا دن (Full)">پورا دن (1.0)</option>
-                                    <option value="آدھا دن (Half)">آدھا دن (0.5)</option>
-                                    <option value="ڈبل شفٹ (Double)">ڈبل شفٹ (2.0)</option>
-                                    <option value="غیر حاضر (Absent)">غیر حاضر (0)</option>
+                                    <option value="پورا دن (Full)" ${currentStatus === "پورا دن (Full)" ? "selected" : ""}>پورا دن (1.0)</option>
+                                    <option value="آدھا دن (Half)" ${currentStatus === "آدھا دن (Half)" ? "selected" : ""}>آدھا دن (0.5)</option>
+                                    <option value="ڈبل شفٹ (Double)" ${currentStatus === "ڈبل شفٹ (Double)" ? "selected" : ""}>ڈبل شفٹ (2.0)</option>
+                                    <option value="غیر حاضر (Absent)" ${currentStatus === "غیر حاضر (Absent)" ? "selected" : ""}>غیر حاضر (0)</option>
                                 </select>
-                                <input type="number" data-mazdoor-overtime="${this.escapeHtml(m.id)}" min="0" placeholder="بونس/OT" value="0" class="bulk-overtime-input w-20 border border-slate-300 rounded-xl px-2 py-1.5 text-xs num-ltr text-right bg-white touch-target" title="اضافی رقم / بونس">
+                                <input type="number" data-mazdoor-overtime="${this.escapeHtml(m.id)}" min="0" placeholder="بونس/OT" value="${currentOvertime}" class="bulk-overtime-input w-20 border border-slate-300 rounded-xl px-2 py-1.5 text-xs num-ltr text-right bg-white touch-target" title="اضافی رقم / بونس">
                             </div>
                         </div>
                     `;
                 }).join("");
 
                 document.getElementById("bulk-attendance-list").innerHTML = listHtml;
-                document.getElementById("bulk-select-all").checked = true;
+                const infoEl = document.getElementById("bulk-already-marked-info");
+                if (infoEl) {
+                    infoEl.textContent = `${alreadyMarkedCount} مزدور پہلے سے درج`;
+                }
+                const master = document.getElementById("bulk-select-all");
+                if (master) {
+                    master.checked = (alreadyMarkedCount === 0 && filteredMazdoors.length > 0);
+                }
                 this.updateBulkSelectedCount();
             },
 
@@ -4878,7 +5109,8 @@
                     "غیر حاضر (Absent)": 0
                 };
 
-                let savedCount = 0;
+                let newCount = 0;
+                let updatedCount = 0;
                 checkedBoxes.forEach((cb, index) => {
                     const mId = cb.getAttribute("data-mazdoor-id");
                     const m = this.db.mazdoors.find(x => x.id === mId);
@@ -4890,29 +5122,49 @@
 
                     const status = statusSelect ? statusSelect.value : "پورا دن (Full)";
                     const thekaId = thekaSelect ? thekaSelect.value : (m.thekaId || (this.db.thekas[0] ? this.db.thekas[0].id : ""));
-                    const overtime = overtimeInput ? (Number(overtimeInput.value) || 0) : 0;
+                    const overtime = Math.max(0, overtimeInput ? (Number(overtimeInput.value) || 0) : 0);
                     const mult = multMap[status] !== undefined ? multMap[status] : 1;
                     const totalEarned = Math.round(Number(m.dailyWage) * mult) + overtime;
 
-                    this.db.attendance.unshift({
-                        id: "ATT-" + Date.now() + "-" + index,
-                        date,
-                        mazdoorId: m.id,
-                        thekaId,
-                        status,
-                        multiplier: mult,
-                        baseWage: Number(m.dailyWage),
-                        overtime,
-                        totalEarned,
-                        note: "اجتماعی ٹھیکہ حاضری"
-                    });
-                    savedCount++;
+                    const existingIdx = this.db.attendance.findIndex(a => a.mazdoorId === m.id && a.date === date);
+                    if (existingIdx > -1) {
+                        this.db.attendance[existingIdx].thekaId = thekaId;
+                        this.db.attendance[existingIdx].status = status;
+                        this.db.attendance[existingIdx].multiplier = mult;
+                        this.db.attendance[existingIdx].baseWage = Number(m.dailyWage);
+                        this.db.attendance[existingIdx].overtime = overtime;
+                        this.db.attendance[existingIdx].totalEarned = totalEarned;
+                        this.db.attendance[existingIdx].note = this.db.attendance[existingIdx].note || "اجتماعی ٹھیکہ حاضری";
+                        updatedCount++;
+                    } else {
+                        this.db.attendance.unshift({
+                            id: "ATT-" + Date.now() + "-" + index,
+                            date,
+                            mazdoorId: m.id,
+                            thekaId,
+                            status,
+                            multiplier: mult,
+                            baseWage: Number(m.dailyWage),
+                            overtime,
+                            totalEarned,
+                            note: "اجتماعی ٹھیکہ حاضری"
+                        });
+                        newCount++;
+                    }
                 });
 
                 this.saveDatabase();
                 this.refreshAllViews();
                 this.closeModal("modal-bulk-attendance");
-                this.toast(`${savedCount} منتخب مزدوروں کی حاضری کامیابی سے درج ہو گئی!`, "success");
+                let msg = "";
+                if (newCount > 0 && updatedCount > 0) {
+                    msg = `${newCount} نئی حاضری درج اور ${updatedCount} پرانی کامیابی سے اپڈیٹ ہو گئیں!`;
+                } else if (newCount > 0) {
+                    msg = `${newCount} منتخب مزدوروں کی حاضری کامیابی سے درج ہو گئی!`;
+                } else {
+                    msg = `${updatedCount} مزدوروں کی حاضری اپڈیٹ ہو گئی (ڈپلیکیٹ نہیں بنا)!`;
+                }
+                this.toast(msg, "success");
             },
 
             toggleHisabMazdoorField() {
@@ -4969,15 +5221,39 @@
             saveHisabRecord() {
                 const id = document.getElementById("hisab-id").value;
                 const type = document.getElementById("hisab-type").value;
+                const date = document.getElementById("hisab-date").value;
+                const thekaId = document.getElementById("hisab-theka").value;
+                const mazdoorId = type === "مزدور ادائیگی / ایڈوانس" ? document.getElementById("hisab-mazdoor").value : "";
+                const amount = Number(document.getElementById("hisab-amount").value);
+                const method = document.getElementById("hisab-method").value;
+                const desc = document.getElementById("hisab-desc").value.trim();
+
+                if (!date) {
+                    this.toast("تاریخ منتخب کرنا لازمی ہے۔", "error");
+                    return;
+                }
+                if (!thekaId) {
+                    this.toast("ٹھیکہ سائٹ منتخب کرنا لازمی ہے۔", "error");
+                    return;
+                }
+                if (type === "مزدور ادائیگی / ایڈوانس" && !mazdoorId) {
+                    this.toast("مزدور ادائیگی کے لیے مزدور / مستری منتخب کرنا لازمی ہے۔", "error");
+                    return;
+                }
+                if (!amount || amount <= 0 || isNaN(amount)) {
+                    this.toast("رقم صفر سے زیادہ ہونی چاہیے۔", "error");
+                    return;
+                }
+
                 const payload = {
                     id: id || "HSB-" + Date.now(),
-                    date: document.getElementById("hisab-date").value,
+                    date,
                     type,
-                    thekaId: document.getElementById("hisab-theka").value,
-                    mazdoorId: type === "مزدور ادائیگی / ایڈوانس" ? document.getElementById("hisab-mazdoor").value : "",
-                    amount: Number(document.getElementById("hisab-amount").value) || 0,
-                    method: document.getElementById("hisab-method").value,
-                    desc: document.getElementById("hisab-desc").value.trim(),
+                    thekaId,
+                    mazdoorId,
+                    amount: Math.round(amount),
+                    method,
+                    desc,
                     receiptImg: document.getElementById("hisab-receipt-data").value || ""
                 };
 
@@ -5277,10 +5553,23 @@
                                     incomingArr.forEach(item => map.set(item.id, item));
                                     return Array.from(map.values());
                                 };
+                                const mergeAttendance = (existingArr, incomingArr) => {
+                                    const map = new Map();
+                                    existingArr.forEach(item => {
+                                        const key = `${item.mazdoorId}_${item.date}`;
+                                        map.set(key, item);
+                                    });
+                                    incomingArr.forEach(item => {
+                                        const key = `${item.mazdoorId}_${item.date}`;
+                                        map.set(key, item);
+                                    });
+                                    return Array.from(map.values());
+                                };
                                 this.db.thekas = mergeById(this.db.thekas, parsedDb.thekas || []);
                                 this.db.mazdoors = mergeById(this.db.mazdoors, parsedDb.mazdoors || []);
-                                this.db.attendance = mergeById(this.db.attendance, parsedDb.attendance || []);
+                                this.db.attendance = mergeAttendance(this.db.attendance, parsedDb.attendance || []);
                                 this.db.hisab = mergeById(this.db.hisab, parsedDb.hisab || []);
+                                this.sanitizeAndDeduplicateDatabase();
                                 this.saveDatabase();
                                 this.refreshAllViews();
                                 this.toast("انکرپٹڈ بیک اپ کامیابی سے بحال کر دیا گیا!", "success");
@@ -5338,6 +5627,71 @@
                         this.refreshAllViews();
                         this.toast("نمونہ ڈیٹا کامیابی سے لوڈ ہو گیا، لاگ ان اکاؤنٹ برقرار ہے۔", "success");
                     }
+                });
+            },
+
+            sanitizeAndDeduplicateDatabase() {
+                if (!this.db) return 0;
+                if (!Array.isArray(this.db.attendance)) this.db.attendance = [];
+                if (!Array.isArray(this.db.hisab)) this.db.hisab = [];
+                if (!Array.isArray(this.db.thekas)) this.db.thekas = [];
+                if (!Array.isArray(this.db.mazdoors)) this.db.mazdoors = [];
+
+                let duplicatesRemoved = 0;
+                const attMap = new Map();
+
+                this.db.attendance.forEach(a => {
+                    if (!a || !a.mazdoorId || !a.date) {
+                        duplicatesRemoved++;
+                        return;
+                    }
+                    a.multiplier = (Number(a.multiplier) !== undefined && !isNaN(Number(a.multiplier))) ? Number(a.multiplier) : 1;
+                    a.baseWage = Number(a.baseWage) || 0;
+                    a.overtime = Math.max(0, Number(a.overtime) || 0);
+                    a.totalEarned = Math.round(Number(a.totalEarned) || (a.baseWage * a.multiplier + a.overtime));
+
+                    const key = `${a.mazdoorId}_${a.date}`;
+                    if (!attMap.has(key)) {
+                        attMap.set(key, a);
+                    } else {
+                        const existing = attMap.get(key);
+                        if ((a.totalEarned || 0) > (existing.totalEarned || 0) || (a.note && !existing.note)) {
+                            attMap.set(key, a);
+                        }
+                        duplicatesRemoved++;
+                    }
+                });
+
+                this.db.attendance = Array.from(attMap.values());
+
+                this.db.hisab.forEach(h => {
+                    h.amount = Math.max(0, Math.round(Number(h.amount) || 0));
+                });
+                this.db.thekas.forEach(t => {
+                    t.contractAmount = Math.max(0, Math.round(Number(t.contractAmount) || 0));
+                });
+                this.db.mazdoors.forEach(m => {
+                    m.dailyWage = Math.max(0, Math.round(Number(m.dailyWage) || 0));
+                });
+
+                if (duplicatesRemoved > 0) {
+                    this.saveDatabase();
+                }
+                return duplicatesRemoved;
+            },
+
+            runDataIntegrityFix() {
+                const removed = this.sanitizeAndDeduplicateDatabase();
+                this.saveDatabase();
+                this.refreshAllViews();
+                Swal.fire({
+                    title: "ڈیٹا کی تصدیق و اصلاح مکمل!",
+                    text: removed > 0 
+                        ? `سسٹم نے ${removed} ڈپلیکیٹ حاضری ریکارڈز کو کامیابی سے صاف اور درست کر دیا ہے۔ اب تمام دیہاڑیاں اور کھاتے بالکل درست ہیں۔`
+                        : "تمام حاضری ریکارڈز اور مالی کھاتے پہلے سے بالکل درست اور بغیر کسی ڈپلیکیٹ کے ہیں۔",
+                    icon: "success",
+                    confirmButtonColor: "#059669",
+                    confirmButtonText: "بہت اچھا"
                 });
             },
 
@@ -5432,7 +5786,14 @@
                 }).then((res) => {
                     if (res.isConfirmed && res.value) {
                         const newVal = res.value.trim();
+                        if (this.db.cities.includes(newVal) && newVal !== current) {
+                            this.toast("یہ نام پہلے سے موجود ہے۔", "error");
+                            return;
+                        }
                         this.db.cities[index] = newVal;
+                        this.db.thekas.forEach(t => {
+                            if (t.city === current) t.city = newVal;
+                        });
                         this.saveDatabase();
                         this.populateDropdowns();
                         this.renderSettingsLists();
@@ -5501,7 +5862,14 @@
                 }).then((res) => {
                     if (res.isConfirmed && res.value) {
                         const newVal = res.value.trim();
+                        if (this.db.roles.includes(newVal) && newVal !== current) {
+                            this.toast("یہ ہنر پہلے سے موجود ہے۔", "error");
+                            return;
+                        }
                         this.db.roles[index] = newVal;
+                        this.db.mazdoors.forEach(m => {
+                            if (m.role === current) m.role = newVal;
+                        });
                         this.saveDatabase();
                         this.populateDropdowns();
                         this.renderSettingsLists();
@@ -5742,8 +6110,10 @@
             },
 
             openQuickReceiptModal() {
-                if (this.db.thekas.length > 0) {
+                if (this.db.thekas && this.db.thekas.length > 0) {
                     this.printSingleThekaReport(this.db.thekas[0].id);
+                } else {
+                    this.toast("پرنٹ کے لیے کوئی ٹھیکہ موجود نہیں ہے۔", "warning");
                 }
             },
 
