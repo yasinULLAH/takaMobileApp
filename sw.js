@@ -49,16 +49,8 @@ if (workbox) {
         "revision": "9d91c126300d5d14bb65df7d0dc00e7a"
     },
     {
-        "url": ".gitattributes",
-        "revision": "05bdb783ee6514c8c072e47680af8ff7"
-    },
-    {
         "url": "apple-touch-icon.png",
         "revision": "94ab668818ea575b54c75d98b5dc84ab"
-    },
-    {
-        "url": "build pwa make html app offline and installable yasin best working re-run this for updates best for html only.pyw",
-        "revision": "4449fc5882586ffbadb95846a6138851"
     },
     {
         "url": "favicon-16x16.png",
@@ -89,24 +81,8 @@ if (workbox) {
         "revision": "3ec872e4f752840ad8f85922ff6cebe7"
     },
     {
-        "url": "readme.md",
-        "revision": "d15c649fb79333bc72a3200898dc689d"
-    },
-    {
         "url": "sw.js",
         "revision": "2508470a86d1bfb2dec7ebcd99913130"
-    },
-    {
-        "url": "upload_logo.php",
-        "revision": "1ee79203aa5f9ee17a93bf1a514d9759"
-    },
-    {
-        "url": "userguide urdu.md",
-        "revision": "dce35d3f6b1abd214f8d1c88680377c4"
-    },
-    {
-        "url": "userguide.md",
-        "revision": "8811a097c2bf89dd84de844d22095c71"
     }
 ]);
 

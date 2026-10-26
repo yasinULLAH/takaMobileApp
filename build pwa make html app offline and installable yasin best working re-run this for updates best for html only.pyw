@@ -77,6 +77,10 @@ def discover_assets(project_dir, generated_icons):
     existing_urls = {entry['url'] for entry in precache_list}
     html_files = []
     
+    # Files that must NOT be precached: hidden files, server-side scripts
+    # (PHP endpoints like upload_logo.php return 405 on GET and would break
+    # the service worker install), the build script itself, and version.json.
+    ignored_extensions = (".php", ".pyw", ".py", ".md")
     for root, _, files in os.walk(project_dir):
         if any(part.startswith('.') for part in root.split(os.sep)):
             continue
@@ -84,6 +88,10 @@ def discover_assets(project_dir, generated_icons):
             file_path = os.path.join(root, file)
             relative_path = os.path.relpath(file_path, project_dir).replace("\\", "/")
             if relative_path in existing_urls or file == "version.json":
+                continue
+            if file.startswith('.'):
+                continue
+            if file.lower().endswith(ignored_extensions):
                 continue
             if file.endswith(".html"):
                 html_files.append(file_path)
