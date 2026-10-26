@@ -11,6 +11,11 @@ if (workbox) {
       }
     });
 
+    self.addEventListener('activate', (event) => {
+      // Take control of open pages immediately so offline works without extra reloads.
+      event.waitUntil(self.clients.claim());
+    });
+
     workbox.precaching.precacheAndRoute([
     {
         "url": "icon-72.png",
