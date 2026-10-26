@@ -1137,16 +1137,110 @@
 <h2 class="font-extrabold text-base sm:text-lg text-slate-900"><i class="fa-solid fa-building-shield text-emerald-600 ml-1"></i> ٹھیکہ جات کا ریکارڈ (جاری اور مکمل شدہ)</h2>
 <p class="text-[11px] sm:text-xs text-slate-500">اپنے تمام چلنے والے اور پرانے مکمل شدہ ٹھیکوں کا مکمل حساب اور تفصیل</p>
 </div>
-<div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
-<button class="px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold bg-emerald-600 text-white touch-target" id="btn-filter-theka-all" onclick="App.filterThekas('ALL')" type="button">تمام ٹھیکے</button>
-<button class="px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 touch-target" id="btn-filter-theka-running" onclick="App.filterThekas('جاری ہے')" type="button">جاری ٹھیکے</button>
-<button class="px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 touch-target" id="btn-filter-theka-completed" onclick="App.filterThekas('مکمل شدہ')" type="button">پرانے مکمل ٹھیکے</button>
-<button class="w-full sm:w-auto px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold bg-emerald-700 hover:bg-emerald-600 text-white shadow flex items-center justify-center gap-1.5 touch-target" onclick="App.openThekaModal()" type="button">
+<button class="w-full sm:w-auto px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow flex items-center justify-center gap-1.5 touch-target" onclick="App.openThekaModal()" type="button">
 <i class="fa-solid fa-plus"></i>
 <span>نیا ٹھیکہ شامل کریں</span>
 </button>
 </div>
+
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5" id="thekas-summary-cards">
+<div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
+<div class="text-[10px] sm:text-xs font-bold text-slate-500 flex items-center justify-between">
+<span>فلٹر شدہ سائٹس</span>
+<i class="fa-solid fa-building text-slate-400"></i>
 </div>
+<div class="text-base sm:text-lg font-extrabold text-slate-900 mt-1" id="thk-kpi-count">0 پروجیکٹس</div>
+<div class="text-[10px] text-slate-500 mt-0.5 truncate" id="thk-kpi-status-sub">0 جاری • 0 مکمل</div>
+</div>
+<div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
+<div class="text-[10px] sm:text-xs font-bold text-slate-500 flex items-center justify-between">
+<span>کل طے شدہ مالیت</span>
+<i class="fa-solid fa-handshake text-sky-500"></i>
+</div>
+<div class="text-base sm:text-lg font-extrabold text-sky-800 num-ltr mt-1" id="thk-kpi-contract">Rs 0</div>
+<div class="text-[10px] text-sky-600 mt-0.5">کل ایگریمنٹ بجٹ</div>
+</div>
+<div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
+<div class="text-[10px] sm:text-xs font-bold text-slate-500 flex items-center justify-between">
+<span>کل وصول شدہ رقم</span>
+<i class="fa-solid fa-circle-arrow-down text-emerald-600"></i>
+</div>
+<div class="text-base sm:text-lg font-extrabold text-emerald-700 num-ltr mt-1" id="thk-kpi-received">Rs 0</div>
+<div class="text-[10px] text-emerald-700 font-bold mt-0.5" id="thk-kpi-recovery-rate">0% ریکوری</div>
+</div>
+<div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
+<div class="text-[10px] sm:text-xs font-bold text-slate-500 flex items-center justify-between">
+<span>کل سائٹ خرچہ</span>
+<i class="fa-solid fa-receipt text-rose-500"></i>
+</div>
+<div class="text-base sm:text-lg font-extrabold text-rose-600 num-ltr mt-1" id="thk-kpi-spent">Rs 0</div>
+<div class="text-[10px] text-rose-600 font-bold mt-0.5">لیبر + میٹریل خرچ</div>
+</div>
+<div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
+<div class="text-[10px] sm:text-xs font-bold text-slate-500 flex items-center justify-between">
+<span>مالکان ذمہ بقایا</span>
+<i class="fa-solid fa-clock-rotate-left text-amber-500"></i>
+</div>
+<div class="text-base sm:text-lg font-extrabold text-amber-700 num-ltr mt-1" id="thk-kpi-receivable">Rs 0</div>
+<div class="text-[10px] text-amber-800 mt-0.5">واجب الوصول رقم</div>
+</div>
+<div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
+<div class="text-[10px] sm:text-xs font-bold text-slate-500 flex items-center justify-between">
+<span>متوقع خالص منافع</span>
+<i class="fa-solid fa-chart-pie text-teal-600"></i>
+</div>
+<div class="text-base sm:text-lg font-extrabold text-teal-800 num-ltr mt-1" id="thk-kpi-profit">Rs 0</div>
+<div class="text-[10px] text-teal-700 font-bold mt-0.5" id="thk-kpi-margin">0% متوقع مارجن</div>
+</div>
+</div>
+
+<div class="bg-white rounded-2xl border border-slate-200 p-3 sm:p-4 shadow-sm space-y-3">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
+<div class="font-extrabold text-xs text-slate-800 flex items-center gap-1.5">
+<i class="fa-solid fa-filter text-emerald-600"></i>
+<span>ٹھیکہ فلٹرز اور تلاش:</span>
+</div>
+<button type="button" onclick="App.resetThekasFilters()" class="text-slate-500 hover:text-rose-600 text-[11px] font-bold flex items-center gap-1 self-start sm:self-auto touch-target">
+<i class="fa-solid fa-rotate-left"></i>
+<span>فلٹرز صاف کریں</span>
+</button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+<div>
+<label class="block text-[11px] font-bold text-slate-600 mb-1" for="filter-theka-search">تلاش کریں (نام، کلائنٹ، فون):</label>
+<div class="relative">
+<input class="w-full border border-slate-300 rounded-xl pl-3 pr-8 py-2 text-xs bg-slate-50/50 focus:bg-white touch-target" id="filter-theka-search" oninput="App.onThekasFilterChange()" placeholder="ٹھیکہ سائٹ کا نام یا مالک..." type="text"/>
+<i class="fa-solid fa-magnifying-glass absolute right-2.5 top-2.5 text-slate-400 text-xs pointer-events-none"></i>
+</div>
+</div>
+<div>
+<label class="block text-[11px] font-bold text-slate-600 mb-1" for="filter-theka-status">حیثیت ٹھیکہ:</label>
+<select class="w-full border border-slate-300 rounded-xl px-2.5 py-2 text-xs font-bold bg-white touch-target no-select2" id="filter-theka-status" onchange="App.onThekasFilterChange()">
+<option value="ALL">تمام پروجیکٹس (All)</option>
+<option value="جاری ہے">جاری ٹھیکے (Running)</option>
+<option value="مکمل شدہ">مکمل شدہ (Completed)</option>
+<option value="زیر التواء">زیر التواء (Pending)</option>
+</select>
+</div>
+<div>
+<label class="block text-[11px] font-bold text-slate-600 mb-1" for="filter-theka-city">شہر / علاقہ:</label>
+<select class="w-full border border-slate-300 rounded-xl px-2.5 py-2 text-xs font-bold bg-white touch-target no-select2" id="filter-theka-city" onchange="App.onThekasFilterChange()">
+<option value="ALL">تمام شہر / علاقے</option>
+</select>
+</div>
+<div>
+<label class="block text-[11px] font-bold text-slate-600 mb-1" for="filter-theka-type">ٹھیکہ کی قسم:</label>
+<select class="w-full border border-slate-300 rounded-xl px-2.5 py-2 text-xs font-bold bg-white touch-target no-select2" id="filter-theka-type" onchange="App.onThekasFilterChange()">
+<option value="ALL">تمام اقسام</option>
+<option value="گرے اسٹرکچر بم مع میٹریل">گرے اسٹرکچر بم مع میٹریل</option>
+<option value="مکمل فنشنگ (A+ کیٹیگری)">مکمل فنشنگ (A+ کیٹیگری)</option>
+<option value="صرف لیبر ریٹ (مزدوری)">صرف لیبر ریٹ (مزدوری)</option>
+<option value="کمرشل پلازہ فریم اسٹرکچر">کمرشل پلازہ فریم اسٹرکچر</option>
+</select>
+</div>
+</div>
+</div>
+
 <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm overflow-x-auto">
 <table class="dt-table display w-full text-sm" id="table-thekas">
 <thead>
@@ -1177,6 +1271,101 @@
 <span>نیا مزدور / مستری شامل کریں</span>
 </button>
 </div>
+
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5" id="mazdoors-summary-cards">
+<div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
+<div class="text-[10px] sm:text-xs font-bold text-slate-500 flex items-center justify-between">
+<span>کل مزدور</span>
+<i class="fa-solid fa-users text-slate-400"></i>
+</div>
+<div class="text-base sm:text-lg font-extrabold text-slate-900 mt-1" id="mzd-kpi-count">0 ورکرز</div>
+<div class="text-[10px] text-slate-500 mt-0.5 truncate" id="mzd-kpi-assigned-sub">0 سائٹس پر تعینات</div>
+</div>
+<div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
+<div class="text-[10px] sm:text-xs font-bold text-slate-500 flex items-center justify-between">
+<span>کل کمائی گئی دیہاڑی</span>
+<i class="fa-solid fa-hand-holding-dollar text-emerald-600"></i>
+</div>
+<div class="text-base sm:text-lg font-extrabold text-emerald-700 num-ltr mt-1" id="mzd-kpi-earned">Rs 0</div>
+<div class="text-[10px] text-emerald-700 font-bold mt-0.5">کل حاضری آمدن</div>
+</div>
+<div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
+<div class="text-[10px] sm:text-xs font-bold text-slate-500 flex items-center justify-between">
+<span>ادا شدہ ایڈوانس/رقم</span>
+<i class="fa-solid fa-money-bill-transfer text-rose-500"></i>
+</div>
+<div class="text-base sm:text-lg font-extrabold text-rose-600 num-ltr mt-1" id="mzd-kpi-paid">Rs 0</div>
+<div class="text-[10px] text-rose-600 mt-0.5">کل نقد ادائیگیاں</div>
+</div>
+<div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
+<div class="text-[10px] sm:text-xs font-bold text-slate-500 flex items-center justify-between">
+<span>خالص واجب الادا بقایا</span>
+<i class="fa-solid fa-scale-unbalanced-flip text-amber-500"></i>
+</div>
+<div class="text-base sm:text-lg font-extrabold text-amber-800 num-ltr mt-1" id="mzd-kpi-due">Rs 0</div>
+<div class="text-[10px] text-amber-700 font-bold mt-0.5">بقایا دیہاڑی فنڈ</div>
+</div>
+<div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
+<div class="text-[10px] sm:text-xs font-bold text-slate-500 flex items-center justify-between">
+<span>بقایا دار ورکرز</span>
+<i class="fa-solid fa-user-clock text-sky-600"></i>
+</div>
+<div class="text-base sm:text-lg font-extrabold text-sky-800 mt-1" id="mzd-kpi-unpaid-count">0 ورکرز</div>
+<div class="text-[10px] text-sky-600 font-bold mt-0.5">جن کا بقایا رہتا ہے</div>
+</div>
+<div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
+<div class="text-[10px] sm:text-xs font-bold text-slate-500 flex items-center justify-between">
+<span>مجموعی ورک ڈیز</span>
+<i class="fa-solid fa-calendar-days text-teal-600"></i>
+</div>
+<div class="text-base sm:text-lg font-extrabold text-teal-800 num-ltr mt-1" id="mzd-kpi-days">0 ایام</div>
+<div class="text-[10px] text-teal-700 font-bold mt-0.5">کل کام شدہ دیہاڑیاں</div>
+</div>
+</div>
+
+<div class="bg-white rounded-2xl border border-slate-200 p-3 sm:p-4 shadow-sm space-y-3">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
+<div class="font-extrabold text-xs text-slate-800 flex items-center gap-1.5">
+<i class="fa-solid fa-filter text-emerald-600"></i>
+<span>مزدور کھاتہ فلٹرز اور تلاش:</span>
+</div>
+<button type="button" onclick="App.resetMazdoorsFilters()" class="text-slate-500 hover:text-rose-600 text-[11px] font-bold flex items-center gap-1 self-start sm:self-auto touch-target">
+<i class="fa-solid fa-rotate-left"></i>
+<span>فلٹرز صاف کریں</span>
+</button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+<div>
+<label class="block text-[11px] font-bold text-slate-600 mb-1" for="filter-mazdoor-search">تلاش کریں (نام، فون، CNIC):</label>
+<div class="relative">
+<input class="w-full border border-slate-300 rounded-xl pl-3 pr-8 py-2 text-xs bg-slate-50/50 focus:bg-white touch-target" id="filter-mazdoor-search" oninput="App.onMazdoorsFilterChange()" placeholder="مزدور یا مستری کا نام یا نمبر..." type="text"/>
+<i class="fa-solid fa-magnifying-glass absolute right-2.5 top-2.5 text-slate-400 text-xs pointer-events-none"></i>
+</div>
+</div>
+<div>
+<label class="block text-[11px] font-bold text-slate-600 mb-1" for="filter-mazdoor-role">ہنر / کام کی قسم:</label>
+<select class="w-full border border-slate-300 rounded-xl px-2.5 py-2 text-xs font-bold bg-white touch-target no-select2" id="filter-mazdoor-role" onchange="App.onMazdoorsFilterChange()">
+<option value="ALL">تمام ہنر و کیٹیگریز</option>
+</select>
+</div>
+<div>
+<label class="block text-[11px] font-bold text-slate-600 mb-1" for="filter-mazdoor-theka">متعلقہ ٹھیکہ سائٹ:</label>
+<select class="w-full border border-slate-300 rounded-xl px-2.5 py-2 text-xs font-bold bg-white touch-target no-select2" id="filter-mazdoor-theka" onchange="App.onMazdoorsFilterChange()">
+<option value="ALL">تمام ٹھیکہ سائٹس</option>
+</select>
+</div>
+<div>
+<label class="block text-[11px] font-bold text-slate-600 mb-1" for="filter-mazdoor-balance">کھاتہ بقایا کیفیت:</label>
+<select class="w-full border border-slate-300 rounded-xl px-2.5 py-2 text-xs font-bold bg-white touch-target no-select2" id="filter-mazdoor-balance" onchange="App.onMazdoorsFilterChange()">
+<option value="ALL">تمام کھاتے (All Balances)</option>
+<option value="DUE">واجب الادا بقایا جات (> 0)</option>
+<option value="ZERO">بے باق شدہ کھاتے (0 Balance)</option>
+<option value="ADVANCE">ایڈوانس زیادہ دیا گیا (< 0)</option>
+</select>
+</div>
+</div>
+</div>
+
 <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm overflow-x-auto">
 <table class="dt-table display w-full text-sm" id="table-mazdoors">
 <thead>
@@ -1213,6 +1402,121 @@
 </button>
 </div>
 </div>
+
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5" id="attendance-summary-cards">
+<div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
+<div class="text-[10px] sm:text-xs font-bold text-slate-500 flex items-center justify-between">
+<span>کل حاضری ریکارڈز</span>
+<i class="fa-solid fa-clipboard-check text-slate-400"></i>
+</div>
+<div class="text-base sm:text-lg font-extrabold text-slate-900 mt-1" id="att-kpi-records">0 اندراجات</div>
+<div class="text-[10px] text-slate-500 mt-0.5 truncate" id="att-kpi-workers-sub">0 مزدور شامل</div>
+</div>
+<div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
+<div class="text-[10px] sm:text-xs font-bold text-slate-500 flex items-center justify-between">
+<span>کل حاضر ورکرز</span>
+<i class="fa-solid fa-user-check text-emerald-600"></i>
+</div>
+<div class="text-base sm:text-lg font-extrabold text-emerald-700 mt-1" id="att-kpi-present">0 حاضر</div>
+<div class="text-[10px] text-emerald-700 font-bold mt-0.5 truncate" id="att-kpi-shifts-sub">مکمل: 0 • ہاف: 0 • ڈبل: 0</div>
+</div>
+<div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
+<div class="text-[10px] sm:text-xs font-bold text-slate-500 flex items-center justify-between">
+<span>غیر حاضر (چھٹی)</span>
+<i class="fa-solid fa-user-xmark text-rose-500"></i>
+</div>
+<div class="text-base sm:text-lg font-extrabold text-rose-600 mt-1" id="att-kpi-absent">0 ورکرز</div>
+<div class="text-[10px] text-rose-500 mt-0.5">غیر حاضر اندراج</div>
+</div>
+<div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
+<div class="text-[10px] sm:text-xs font-bold text-slate-500 flex items-center justify-between">
+<span>بنیادی دیہاڑی لاگت</span>
+<i class="fa-solid fa-wallet text-sky-500"></i>
+</div>
+<div class="text-base sm:text-lg font-extrabold text-sky-800 num-ltr mt-1" id="att-kpi-base">Rs 0</div>
+<div class="text-[10px] text-sky-600 mt-0.5">بغیر اوورٹائم رقم</div>
+</div>
+<div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
+<div class="text-[10px] sm:text-xs font-bold text-slate-500 flex items-center justify-between">
+<span>اوور ٹائم و اضافی انعام</span>
+<i class="fa-solid fa-stopwatch-20 text-amber-500"></i>
+</div>
+<div class="text-base sm:text-lg font-extrabold text-amber-700 num-ltr mt-1" id="att-kpi-overtime">Rs 0</div>
+<div class="text-[10px] text-amber-800 mt-0.5">بونس و اوور ٹائم فنڈ</div>
+</div>
+<div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
+<div class="text-[10px] sm:text-xs font-bold text-slate-500 flex items-center justify-between">
+<span>مجموعی کمائی گئی دیہاڑی</span>
+<i class="fa-solid fa-coins text-emerald-600"></i>
+</div>
+<div class="text-base sm:text-lg font-extrabold text-emerald-800 num-ltr mt-1" id="att-kpi-total">Rs 0</div>
+<div class="text-[10px] text-emerald-700 font-bold mt-0.5">خالص یومیہ لاگت پول</div>
+</div>
+</div>
+
+<div class="bg-white rounded-2xl border border-slate-200 p-3 sm:p-4 shadow-sm space-y-3">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="font-extrabold text-xs text-slate-800 flex items-center gap-1.5">
+<i class="fa-solid fa-filter text-emerald-600"></i>
+<span>حاضری فلٹرز:</span>
+</span>
+<div class="flex items-center gap-1 flex-wrap">
+<button type="button" id="att-quick-ALL" onclick="App.setAttendanceQuickDate('ALL')" class="att-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-emerald-600 text-white shadow-sm touch-target">سب ریکارڈز</button>
+<button type="button" id="att-quick-TODAY" onclick="App.setAttendanceQuickDate('TODAY')" class="att-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 touch-target">آج</button>
+<button type="button" id="att-quick-YESTERDAY" onclick="App.setAttendanceQuickDate('YESTERDAY')" class="att-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 touch-target">گزشتہ کل</button>
+<button type="button" id="att-quick-THIS_WEEK" onclick="App.setAttendanceQuickDate('THIS_WEEK')" class="att-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 touch-target">اس ہفتے</button>
+<button type="button" id="att-quick-THIS_MONTH" onclick="App.setAttendanceQuickDate('THIS_MONTH')" class="att-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 touch-target">اس مہینے</button>
+</div>
+</div>
+<button type="button" onclick="App.resetAttendanceFilters()" class="text-slate-500 hover:text-rose-600 text-[11px] font-bold flex items-center gap-1 self-start sm:self-auto touch-target">
+<i class="fa-solid fa-rotate-left"></i>
+<span>تمام فلٹرز صاف کریں</span>
+</button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-2.5">
+<div class="lg:col-span-2">
+<label class="block text-[11px] font-bold text-slate-600 mb-1" for="filter-att-search">مزدور یا نوٹ تلاش کریں:</label>
+<div class="relative">
+<input class="w-full border border-slate-300 rounded-xl pl-3 pr-8 py-2 text-xs bg-slate-50/50 focus:bg-white touch-target" id="filter-att-search" oninput="App.onAttendanceFilterChange()" placeholder="مزدور، ٹھیکہ یا کام کی تفصیل..." type="text"/>
+<i class="fa-solid fa-magnifying-glass absolute right-2.5 top-2.5 text-slate-400 text-xs pointer-events-none"></i>
+</div>
+</div>
+<div>
+<label class="block text-[11px] font-bold text-slate-600 mb-1" for="filter-att-theka">ٹھیکہ سائٹ:</label>
+<select class="w-full border border-slate-300 rounded-xl px-2.5 py-2 text-xs font-bold bg-white touch-target no-select2" id="filter-att-theka" onchange="App.onAttendanceFilterChange()">
+<option value="ALL">تمام سائٹس (All Sites)</option>
+</select>
+</div>
+<div>
+<label class="block text-[11px] font-bold text-slate-600 mb-1" for="filter-att-mazdoor">مزدور / مستری:</label>
+<select class="w-full border border-slate-300 rounded-xl px-2.5 py-2 text-xs font-bold bg-white touch-target no-select2" id="filter-att-mazdoor" onchange="App.onAttendanceFilterChange()">
+<option value="ALL">تمام مزدور (All)</option>
+</select>
+</div>
+<div>
+<label class="block text-[11px] font-bold text-slate-600 mb-1" for="filter-att-status">حاضری کی قسم:</label>
+<select class="w-full border border-slate-300 rounded-xl px-2.5 py-2 text-xs font-bold bg-white touch-target no-select2" id="filter-att-status" onchange="App.onAttendanceFilterChange()">
+<option value="ALL">تمام اقسام (All)</option>
+<option value="پورا دن (Full)">پورا دن (Full)</option>
+<option value="آدھا دن (Half)">آدھا دن (Half)</option>
+<option value="ڈبل شفٹ (Double)">ڈبل شفٹ (Double)</option>
+<option value="غیر حاضر (Absent)">غیر حاضر (Absent)</option>
+</select>
+</div>
+<div class="grid grid-cols-2 gap-1.5">
+<div>
+<label class="block text-[11px] font-bold text-slate-600 mb-1" for="filter-att-date-from">تاریخ سے:</label>
+<input class="w-full border border-slate-300 rounded-xl px-2 py-2 text-[11px] bg-white touch-target" id="filter-att-date-from" onchange="App.onAttendanceDateInputChange()" type="date"/>
+</div>
+<div>
+<label class="block text-[11px] font-bold text-slate-600 mb-1" for="filter-att-date-to">تاریخ تک:</label>
+<input class="w-full border border-slate-300 rounded-xl px-2 py-2 text-[11px] bg-white touch-target" id="filter-att-date-to" onchange="App.onAttendanceDateInputChange()" type="date"/>
+</div>
+</div>
+</div>
+</div>
+
 <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm overflow-x-auto">
 <table class="dt-table display w-full text-sm" id="table-attendance">
 <thead>
@@ -1243,6 +1547,130 @@
 <span>نیا لین دین درج کریں</span>
 </button>
 </div>
+
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5" id="hisab-summary-cards">
+<div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
+<div class="text-[10px] sm:text-xs font-bold text-slate-500 flex items-center justify-between">
+<span>مالکان سے وصولی (+)</span>
+<i class="fa-solid fa-circle-arrow-down text-emerald-600"></i>
+</div>
+<div class="text-base sm:text-lg font-extrabold text-emerald-700 num-ltr mt-1" id="hisab-kpi-in">+ Rs 0</div>
+<div class="text-[10px] text-emerald-700 font-bold mt-0.5">کل آمدن و قسطیں</div>
+</div>
+<div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
+<div class="text-[10px] sm:text-xs font-bold text-slate-500 flex items-center justify-between">
+<span>مجموعی اخراجات (-)</span>
+<i class="fa-solid fa-circle-arrow-up text-rose-500"></i>
+</div>
+<div class="text-base sm:text-lg font-extrabold text-rose-600 num-ltr mt-1" id="hisab-kpi-out">- Rs 0</div>
+<div class="text-[10px] text-rose-600 font-bold mt-0.5">مزدور + میٹریل خرچہ</div>
+</div>
+<div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
+<div class="text-[10px] sm:text-xs font-bold text-slate-500 flex items-center justify-between">
+<span>خالص کیش فلو (بیلنس)</span>
+<i class="fa-solid fa-scale-balanced text-teal-600"></i>
+</div>
+<div class="text-base sm:text-lg font-extrabold text-teal-800 num-ltr mt-1" id="hisab-kpi-net">Rs 0</div>
+<div class="text-[10px] text-teal-700 font-bold mt-0.5" id="hisab-kpi-net-status">مثبت کیش بیلنس</div>
+</div>
+<div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
+<div class="text-[10px] sm:text-xs font-bold text-slate-500 flex items-center justify-between">
+<span>ادا شدہ مزدور دیہاڑی</span>
+<i class="fa-solid fa-users text-sky-500"></i>
+</div>
+<div class="text-base sm:text-lg font-extrabold text-sky-800 num-ltr mt-1" id="hisab-kpi-labor">Rs 0</div>
+<div class="text-[10px] text-sky-600 mt-0.5">مزدور ایڈوانس / تنخواہ</div>
+</div>
+<div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
+<div class="text-[10px] sm:text-xs font-bold text-slate-500 flex items-center justify-between">
+<span>میٹریل و سائٹ خرچہ</span>
+<i class="fa-solid fa-truck-ramp-box text-amber-500"></i>
+</div>
+<div class="text-base sm:text-lg font-extrabold text-amber-800 num-ltr mt-1" id="hisab-kpi-material">Rs 0</div>
+<div class="text-[10px] text-amber-800 mt-0.5">سیمنٹ، ریت، بجری، کھانا</div>
+</div>
+<div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
+<div class="text-[10px] sm:text-xs font-bold text-slate-500 flex items-center justify-between">
+<span>کل لین دین ریکارڈز</span>
+<i class="fa-solid fa-list-ol text-slate-400"></i>
+</div>
+<div class="text-base sm:text-lg font-extrabold text-slate-900 mt-1" id="hisab-kpi-count">0 ریکارڈز</div>
+<div class="text-[10px] text-slate-500 mt-0.5">فلٹر شدہ ٹرانزیکشنز</div>
+</div>
+</div>
+
+<div class="bg-white rounded-2xl border border-slate-200 p-3 sm:p-4 shadow-sm space-y-3">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="font-extrabold text-xs text-slate-800 flex items-center gap-1.5">
+<i class="fa-solid fa-filter text-emerald-600"></i>
+<span>کھاتہ فلٹرز:</span>
+</span>
+<div class="flex items-center gap-1 flex-wrap">
+<button type="button" id="hisab-quick-ALL" onclick="App.setHisabQuickDate('ALL')" class="hisab-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-emerald-600 text-white shadow-sm touch-target">سب ریکارڈز</button>
+<button type="button" id="hisab-quick-TODAY" onclick="App.setHisabQuickDate('TODAY')" class="hisab-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 touch-target">آج</button>
+<button type="button" id="hisab-quick-YESTERDAY" onclick="App.setHisabQuickDate('YESTERDAY')" class="hisab-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 touch-target">گزشتہ کل</button>
+<button type="button" id="hisab-quick-THIS_WEEK" onclick="App.setHisabQuickDate('THIS_WEEK')" class="hisab-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 touch-target">اس ہفتے</button>
+<button type="button" id="hisab-quick-THIS_MONTH" onclick="App.setHisabQuickDate('THIS_MONTH')" class="hisab-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 touch-target">اس مہینے</button>
+</div>
+</div>
+<button type="button" onclick="App.resetHisabFilters()" class="text-slate-500 hover:text-rose-600 text-[11px] font-bold flex items-center gap-1 self-start sm:self-auto touch-target">
+<i class="fa-solid fa-rotate-left"></i>
+<span>تمام فلٹرز صاف کریں</span>
+</button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-2.5">
+<div class="lg:col-span-2">
+<label class="block text-[11px] font-bold text-slate-600 mb-1" for="filter-hisab-search">تلاش کریں (تفصیل، رقم):</label>
+<div class="relative">
+<input class="w-full border border-slate-300 rounded-xl pl-3 pr-8 py-2 text-xs bg-slate-50/50 focus:bg-white touch-target" id="filter-hisab-search" oninput="App.onHisabFilterChange()" placeholder="تفصیل، مزدور، ٹھیکہ یا رقم..." type="text"/>
+<i class="fa-solid fa-magnifying-glass absolute right-2.5 top-2.5 text-slate-400 text-xs pointer-events-none"></i>
+</div>
+</div>
+<div>
+<label class="block text-[11px] font-bold text-slate-600 mb-1" for="filter-hisab-type">لین دین کی قسم:</label>
+<select class="w-full border border-slate-300 rounded-xl px-2.5 py-2 text-xs font-bold bg-white touch-target no-select2" id="filter-hisab-type" onchange="App.onHisabFilterChange()">
+<option value="ALL">تمام اقسام (All)</option>
+<option value="مالک سے قسط وصولی">مالک سے قسط وصولی (+)</option>
+<option value="مزدور ادائیگی / ایڈوانس">مزدور ادائیگی / ایڈوانس (-)</option>
+<option value="میٹریل اور سائٹ خرچہ">میٹریل اور سائٹ خرچہ (-)</option>
+</select>
+</div>
+<div>
+<label class="block text-[11px] font-bold text-slate-600 mb-1" for="filter-hisab-theka">ٹھیکہ سائٹ:</label>
+<select class="w-full border border-slate-300 rounded-xl px-2.5 py-2 text-xs font-bold bg-white touch-target no-select2" id="filter-hisab-theka" onchange="App.onHisabFilterChange()">
+<option value="ALL">تمام سائٹس (All)</option>
+</select>
+</div>
+<div>
+<label class="block text-[11px] font-bold text-slate-600 mb-1" for="filter-hisab-mazdoor">مزدور / سائٹ مد:</label>
+<select class="w-full border border-slate-300 rounded-xl px-2.5 py-2 text-xs font-bold bg-white touch-target no-select2" id="filter-hisab-mazdoor" onchange="App.onHisabFilterChange()">
+<option value="ALL">تمام مدات (All)</option>
+</select>
+</div>
+<div>
+<label class="block text-[11px] font-bold text-slate-600 mb-1" for="filter-hisab-method">طریقہ ادائیگی:</label>
+<select class="w-full border border-slate-300 rounded-xl px-2.5 py-2 text-xs font-bold bg-white touch-target no-select2" id="filter-hisab-method" onchange="App.onHisabFilterChange()">
+<option value="ALL">تمام طریقے (All)</option>
+<option value="نقد (Cash)">نقد (Cash)</option>
+<option value="بینک چیک / ٹرانسفر">بینک چیک / ٹرانسفر</option>
+<option value="ایزی پیسہ (Easypaisa)">ایزی پیسہ (Easypaisa)</option>
+<option value="جاز کیش (JazzCash)">جاز کیش (JazzCash)</option>
+</select>
+</div>
+<div class="grid grid-cols-2 gap-1.5">
+<div>
+<label class="block text-[11px] font-bold text-slate-600 mb-1" for="filter-hisab-date-from">تاریخ سے:</label>
+<input class="w-full border border-slate-300 rounded-xl px-2 py-2 text-[11px] bg-white touch-target" id="filter-hisab-date-from" onchange="App.onHisabDateInputChange()" type="date"/>
+</div>
+<div>
+<label class="block text-[11px] font-bold text-slate-600 mb-1" for="filter-hisab-date-to">تاریخ تک:</label>
+<input class="w-full border border-slate-300 rounded-xl px-2 py-2 text-[11px] bg-white touch-target" id="filter-hisab-date-to" onchange="App.onHisabDateInputChange()" type="date"/>
+</div>
+</div>
+</div>
+</div>
+
 <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm overflow-x-auto">
 <table class="dt-table display w-full text-sm" id="table-hisab">
 <thead>
@@ -1997,6 +2425,12 @@
             formDirty: false,
             currentThekaFilter: "ALL",
             dashboardThekaFilter: "ALL",
+            filters: {
+                thekas: { search: "", status: "ALL", city: "ALL", type: "ALL" },
+                mazdoors: { search: "", role: "ALL", thekaId: "ALL", balanceStatus: "ALL" },
+                attendance: { search: "", thekaId: "ALL", mazdoorId: "ALL", status: "ALL", dateFrom: "", dateTo: "", quickDate: "ALL" },
+                hisab: { search: "", type: "ALL", thekaId: "ALL", mazdoorId: "ALL", method: "ALL", dateFrom: "", dateTo: "", quickDate: "ALL" }
+            },
             charts: {},
             currentChartModalData: null,
             idleTimer: null,
@@ -2764,6 +3198,49 @@
                         $(el).trigger("change");
                     }
                 });
+
+                const filterAttTheka = document.getElementById("filter-att-theka");
+                if (filterAttTheka) {
+                    const cur = filterAttTheka.value;
+                    filterAttTheka.innerHTML = '<option value="ALL">تمام سائٹس (All Sites)</option>' + thekaOptions;
+                    if (cur) filterAttTheka.value = cur;
+                }
+                const filterAttMazdoor = document.getElementById("filter-att-mazdoor");
+                if (filterAttMazdoor) {
+                    const cur = filterAttMazdoor.value;
+                    filterAttMazdoor.innerHTML = '<option value="ALL">تمام مزدور (All)</option>' + mazdoorOptions;
+                    if (cur) filterAttMazdoor.value = cur;
+                }
+                const filterHisabTheka = document.getElementById("filter-hisab-theka");
+                if (filterHisabTheka) {
+                    const cur = filterHisabTheka.value;
+                    filterHisabTheka.innerHTML = '<option value="ALL">تمام سائٹس (All)</option>' + thekaOptions;
+                    if (cur) filterHisabTheka.value = cur;
+                }
+                const filterHisabMazdoor = document.getElementById("filter-hisab-mazdoor");
+                if (filterHisabMazdoor) {
+                    const cur = filterHisabMazdoor.value;
+                    filterHisabMazdoor.innerHTML = '<option value="ALL">تمام مدات (All)</option><option value="GENERAL">سائٹ / جنرل خرچہ</option>' + mazdoorOptions;
+                    if (cur) filterHisabMazdoor.value = cur;
+                }
+                const filterMazdoorRole = document.getElementById("filter-mazdoor-role");
+                if (filterMazdoorRole) {
+                    const cur = filterMazdoorRole.value;
+                    filterMazdoorRole.innerHTML = '<option value="ALL">تمام ہنر و کیٹیگریز</option>' + roleOptions;
+                    if (cur) filterMazdoorRole.value = cur;
+                }
+                const filterMazdoorTheka = document.getElementById("filter-mazdoor-theka");
+                if (filterMazdoorTheka) {
+                    const cur = filterMazdoorTheka.value;
+                    filterMazdoorTheka.innerHTML = '<option value="ALL">تمام ٹھیکہ سائٹس</option><option value="UNASSIGNED">غیر متعین سائٹ</option>' + thekaOptions;
+                    if (cur) filterMazdoorTheka.value = cur;
+                }
+                const filterThekaCity = document.getElementById("filter-theka-city");
+                if (filterThekaCity) {
+                    const cur = filterThekaCity.value;
+                    filterThekaCity.innerHTML = '<option value="ALL">تمام شہر / علاقے</option>' + cityOptions;
+                    if (cur) filterThekaCity.value = cur;
+                }
 
                 this.initSelect2();
             },
@@ -3847,15 +4324,57 @@
                 };
             },
 
+            getDateRangeForQuickFilter(type) {
+                const today = new Date();
+                const yyyy = today.getFullYear();
+                const mm = String(today.getMonth() + 1).padStart(2, "0");
+                const dd = String(today.getDate()).padStart(2, "0");
+                const todayStr = `${yyyy}-${mm}-${dd}`;
+
+                if (type === "TODAY") {
+                    return { from: todayStr, to: todayStr };
+                }
+                if (type === "YESTERDAY") {
+                    const yest = new Date(today);
+                    yest.setDate(yest.getDate() - 1);
+                    const yStr = yest.toISOString().slice(0, 10);
+                    return { from: yStr, to: yStr };
+                }
+                if (type === "THIS_WEEK") {
+                    const d = new Date(today);
+                    const day = d.getDay();
+                    const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+                    d.setDate(diff);
+                    const monStr = d.toISOString().slice(0, 10);
+                    return { from: monStr, to: todayStr };
+                }
+                if (type === "THIS_MONTH") {
+                    return { from: `${yyyy}-${mm}-01`, to: todayStr };
+                }
+                return { from: "", to: "" };
+            },
+
             filterThekas(status) {
-                this.currentThekaFilter = status;
-                ["all", "running", "completed"].forEach(k => {
-                    const btn = document.getElementById(`btn-filter-theka-${k}`);
-                    if (btn) btn.className = "px-3 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 touch-target";
-                });
-                const activeMap = { "ALL": "all", "جاری ہے": "running", "مکمل شدہ": "completed" };
-                const activeBtn = document.getElementById(`btn-filter-theka-${activeMap[status]}`);
-                if (activeBtn) activeBtn.className = "px-3 py-2 rounded-xl text-xs font-bold bg-emerald-600 text-white touch-target";
+                this.filters.thekas.status = status;
+                const statusSelect = document.getElementById("filter-theka-status");
+                if (statusSelect) statusSelect.value = status;
+                this.renderThekasTable();
+            },
+
+            onThekasFilterChange() {
+                this.filters.thekas.search = (document.getElementById("filter-theka-search")?.value || "").toLowerCase().trim();
+                this.filters.thekas.status = document.getElementById("filter-theka-status")?.value || "ALL";
+                this.filters.thekas.city = document.getElementById("filter-theka-city")?.value || "ALL";
+                this.filters.thekas.type = document.getElementById("filter-theka-type")?.value || "ALL";
+                this.renderThekasTable();
+            },
+
+            resetThekasFilters() {
+                this.filters.thekas = { search: "", status: "ALL", city: "ALL", type: "ALL" };
+                const s = document.getElementById("filter-theka-search"); if (s) s.value = "";
+                const st = document.getElementById("filter-theka-status"); if (st) st.value = "ALL";
+                const c = document.getElementById("filter-theka-city"); if (c) c.value = "ALL";
+                const tp = document.getElementById("filter-theka-type"); if (tp) tp.value = "ALL";
                 this.renderThekasTable();
             },
 
@@ -3863,9 +4382,48 @@
                 if (this.dataTables.thekas) {
                     this.dataTables.thekas.destroy();
                 }
-                const list = this.currentThekaFilter === "ALL"
-                    ? this.db.thekas
-                    : this.db.thekas.filter(t => t.status === this.currentThekaFilter);
+                const f = this.filters.thekas;
+                let list = [...this.db.thekas];
+
+                if (f.status && f.status !== "ALL") list = list.filter(t => t.status === f.status);
+                if (f.city && f.city !== "ALL") list = list.filter(t => t.city === f.city);
+                if (f.type && f.type !== "ALL") list = list.filter(t => t.type === f.type);
+                if (f.search) {
+                    list = list.filter(t => {
+                        const title = (t.title || "").toLowerCase();
+                        const client = (t.client || "").toLowerCase();
+                        const phone = (t.phone || "").toLowerCase();
+                        const city = (t.city || "").toLowerCase();
+                        const type = (t.type || "").toLowerCase();
+                        const notes = (t.notes || "").toLowerCase();
+                        return title.includes(f.search) || client.includes(f.search) || phone.includes(f.search) || city.includes(f.search) || type.includes(f.search) || notes.includes(f.search);
+                    });
+                }
+
+                const totalThekas = list.length;
+                const runningCount = list.filter(t => t.status === "جاری ہے").length;
+                const completedCount = list.filter(t => t.status === "مکمل شدہ").length;
+                const totalContract = list.reduce((s, t) => s + Number(t.contractAmount || 0), 0);
+                const totalReceived = list.reduce((s, t) => s + this.getThekaFinancials(t.id).received, 0);
+                const totalSpent = list.reduce((s, t) => s + this.getThekaFinancials(t.id).totalSpent, 0);
+                const totalReceivable = list.reduce((s, t) => s + this.getThekaFinancials(t.id).balanceReceivable, 0);
+                const projectedProfit = list.reduce((s, t) => s + this.getThekaFinancials(t.id).projectedProfit, 0);
+                const recoveryRate = totalContract > 0 ? Math.min(100, Math.round((totalReceived / totalContract) * 100)) : 0;
+                const profitMargin = totalContract > 0 ? ((projectedProfit / totalContract) * 100).toFixed(1) : "0.0";
+
+                const elCnt = document.getElementById("thk-kpi-count"); if (elCnt) elCnt.textContent = `${totalThekas} پروجیکٹس`;
+                const elSub = document.getElementById("thk-kpi-status-sub"); if (elSub) elSub.textContent = `${runningCount} جاری • ${completedCount} مکمل`;
+                const elContract = document.getElementById("thk-kpi-contract"); if (elContract) elContract.textContent = this.formatPKR(totalContract);
+                const elReceived = document.getElementById("thk-kpi-received"); if (elReceived) elReceived.textContent = this.formatPKR(totalReceived);
+                const elRecRate = document.getElementById("thk-kpi-recovery-rate"); if (elRecRate) elRecRate.textContent = `${recoveryRate}% ریکوری`;
+                const elSpent = document.getElementById("thk-kpi-spent"); if (elSpent) elSpent.textContent = this.formatPKR(totalSpent);
+                const elRecv = document.getElementById("thk-kpi-receivable"); if (elRecv) elRecv.textContent = this.formatPKR(totalReceivable);
+                const elProfit = document.getElementById("thk-kpi-profit");
+                if (elProfit) {
+                    elProfit.textContent = this.formatPKR(projectedProfit);
+                    elProfit.className = `text-base sm:text-lg font-extrabold num-ltr mt-1 ${projectedProfit >= 0 ? 'text-teal-800' : 'text-rose-600'}`;
+                }
+                const elMargin = document.getElementById("thk-kpi-margin"); if (elMargin) elMargin.textContent = `${profitMargin}% متوقع مارجن`;
 
                 const rows = list.map(t => {
                     const fin = this.getThekaFinancials(t.id);
@@ -3916,11 +4474,74 @@
                 this.dataTables.thekas = $("#table-thekas").DataTable(this.buildDataTableConfig());
             },
 
+            onMazdoorsFilterChange() {
+                this.filters.mazdoors.search = (document.getElementById("filter-mazdoor-search")?.value || "").toLowerCase().trim();
+                this.filters.mazdoors.role = document.getElementById("filter-mazdoor-role")?.value || "ALL";
+                this.filters.mazdoors.thekaId = document.getElementById("filter-mazdoor-theka")?.value || "ALL";
+                this.filters.mazdoors.balanceStatus = document.getElementById("filter-mazdoor-balance")?.value || "ALL";
+                this.renderMazdoorsTable();
+            },
+
+            resetMazdoorsFilters() {
+                this.filters.mazdoors = { search: "", role: "ALL", thekaId: "ALL", balanceStatus: "ALL" };
+                const s = document.getElementById("filter-mazdoor-search"); if (s) s.value = "";
+                const r = document.getElementById("filter-mazdoor-role"); if (r) r.value = "ALL";
+                const t = document.getElementById("filter-mazdoor-theka"); if (t) t.value = "ALL";
+                const b = document.getElementById("filter-mazdoor-balance"); if (b) b.value = "ALL";
+                this.renderMazdoorsTable();
+            },
+
             renderMazdoorsTable() {
                 if (this.dataTables.mazdoors) {
                     this.dataTables.mazdoors.destroy();
                 }
-                const rows = this.db.mazdoors.map(m => {
+                const f = this.filters.mazdoors;
+                let list = [...this.db.mazdoors];
+
+                if (f.role && f.role !== "ALL") list = list.filter(m => m.role === f.role);
+                if (f.thekaId === "UNASSIGNED") list = list.filter(m => !m.thekaId);
+                else if (f.thekaId && f.thekaId !== "ALL") list = list.filter(m => m.thekaId === f.thekaId);
+                if (f.balanceStatus && f.balanceStatus !== "ALL") {
+                    list = list.filter(m => {
+                        const fin = this.getMazdoorFinancials(m.id);
+                        if (f.balanceStatus === "DUE") return fin.netPayable > 0;
+                        if (f.balanceStatus === "ZERO") return fin.netPayable === 0;
+                        if (f.balanceStatus === "ADVANCE") return fin.netPayable < 0;
+                        return true;
+                    });
+                }
+                if (f.search) {
+                    list = list.filter(m => {
+                        const theka = this.db.thekas.find(t => t.id === m.thekaId);
+                        const name = (m.name || "").toLowerCase();
+                        const phone = (m.phone || "").toLowerCase();
+                        const role = (m.role || "").toLowerCase();
+                        const cnic = (m.cnic || "").toLowerCase();
+                        const thekaTitle = theka ? theka.title.toLowerCase() : "";
+                        return name.includes(f.search) || phone.includes(f.search) || role.includes(f.search) || cnic.includes(f.search) || thekaTitle.includes(f.search);
+                    });
+                }
+
+                const totalMazdoors = list.length;
+                const assignedCount = list.filter(m => !!m.thekaId).length;
+                const totalEarned = list.reduce((s, m) => s + this.getMazdoorFinancials(m.id).earned, 0);
+                const totalPaid = list.reduce((s, m) => s + this.getMazdoorFinancials(m.id).paid, 0);
+                const totalDue = list.reduce((s, m) => {
+                    const np = this.getMazdoorFinancials(m.id).netPayable;
+                    return s + (np > 0 ? np : 0);
+                }, 0);
+                const unpaidWorkersCount = list.filter(m => this.getMazdoorFinancials(m.id).netPayable > 0).length;
+                const totalWorkDays = list.reduce((s, m) => s + this.getMazdoorFinancials(m.id).daysWorked, 0);
+
+                const elCnt = document.getElementById("mzd-kpi-count"); if (elCnt) elCnt.textContent = `${totalMazdoors} ورکرز`;
+                const elAssigned = document.getElementById("mzd-kpi-assigned-sub"); if (elAssigned) elAssigned.textContent = `${assignedCount} سائٹس پر تعینات`;
+                const elEarned = document.getElementById("mzd-kpi-earned"); if (elEarned) elEarned.textContent = this.formatPKR(totalEarned);
+                const elPaid = document.getElementById("mzd-kpi-paid"); if (elPaid) elPaid.textContent = this.formatPKR(totalPaid);
+                const elDue = document.getElementById("mzd-kpi-due"); if (elDue) elDue.textContent = this.formatPKR(totalDue);
+                const elUnpaid = document.getElementById("mzd-kpi-unpaid-count"); if (elUnpaid) elUnpaid.textContent = `${unpaidWorkersCount} ورکرز`;
+                const elDays = document.getElementById("mzd-kpi-days"); if (elDays) elDays.textContent = `${totalWorkDays} ایام`;
+
+                const rows = list.map(m => {
                     const fin = this.getMazdoorFinancials(m.id);
                     const theka = this.db.thekas.find(t => t.id === m.thekaId);
                     const avatar = m.photo
@@ -3970,11 +4591,99 @@
                 this.dataTables.mazdoors = $("#table-mazdoors").DataTable(this.buildDataTableConfig());
             },
 
+            setAttendanceQuickDate(period) {
+                this.filters.attendance.quickDate = period;
+                const range = this.getDateRangeForQuickFilter(period);
+                const fromEl = document.getElementById("filter-att-date-from");
+                const toEl = document.getElementById("filter-att-date-to");
+                if (fromEl) fromEl.value = range.from;
+                if (toEl) toEl.value = range.to;
+                this.filters.attendance.dateFrom = range.from;
+                this.filters.attendance.dateTo = range.to;
+
+                document.querySelectorAll(".att-quick-btn").forEach(b => {
+                    b.className = "att-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 touch-target";
+                });
+                const active = document.getElementById(`att-quick-${period}`);
+                if (active) active.className = "att-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-emerald-600 text-white shadow-sm touch-target";
+                this.renderAttendanceTable();
+            },
+
+            onAttendanceDateInputChange() {
+                this.filters.attendance.quickDate = "CUSTOM";
+                document.querySelectorAll(".att-quick-btn").forEach(b => {
+                    b.className = "att-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 touch-target";
+                });
+                this.onAttendanceFilterChange();
+            },
+
+            onAttendanceFilterChange() {
+                this.filters.attendance.search = (document.getElementById("filter-att-search")?.value || "").toLowerCase().trim();
+                this.filters.attendance.thekaId = document.getElementById("filter-att-theka")?.value || "ALL";
+                this.filters.attendance.mazdoorId = document.getElementById("filter-att-mazdoor")?.value || "ALL";
+                this.filters.attendance.status = document.getElementById("filter-att-status")?.value || "ALL";
+                this.filters.attendance.dateFrom = document.getElementById("filter-att-date-from")?.value || "";
+                this.filters.attendance.dateTo = document.getElementById("filter-att-date-to")?.value || "";
+                this.renderAttendanceTable();
+            },
+
+            resetAttendanceFilters() {
+                this.filters.attendance = { search: "", thekaId: "ALL", mazdoorId: "ALL", status: "ALL", dateFrom: "", dateTo: "", quickDate: "ALL" };
+                const s = document.getElementById("filter-att-search"); if (s) s.value = "";
+                const t = document.getElementById("filter-att-theka"); if (t) t.value = "ALL";
+                const m = document.getElementById("filter-att-mazdoor"); if (m) m.value = "ALL";
+                const st = document.getElementById("filter-att-status"); if (st) st.value = "ALL";
+                const df = document.getElementById("filter-att-date-from"); if (df) df.value = "";
+                const dt = document.getElementById("filter-att-date-to"); if (dt) dt.value = "";
+                this.setAttendanceQuickDate("ALL");
+            },
+
             renderAttendanceTable() {
                 if (this.dataTables.attendance) {
                     this.dataTables.attendance.destroy();
                 }
-                const rows = this.db.attendance.map(a => {
+                const f = this.filters.attendance;
+                let list = [...this.db.attendance];
+
+                if (f.thekaId && f.thekaId !== "ALL") list = list.filter(a => a.thekaId === f.thekaId);
+                if (f.mazdoorId && f.mazdoorId !== "ALL") list = list.filter(a => a.mazdoorId === f.mazdoorId);
+                if (f.status && f.status !== "ALL") list = list.filter(a => a.status === f.status);
+                if (f.dateFrom) list = list.filter(a => a.date >= f.dateFrom);
+                if (f.dateTo) list = list.filter(a => a.date <= f.dateTo);
+                if (f.search) {
+                    list = list.filter(a => {
+                        const m = this.db.mazdoors.find(x => x.id === a.mazdoorId);
+                        const t = this.db.thekas.find(x => x.id === a.thekaId);
+                        const mName = m ? m.name.toLowerCase() : "";
+                        const tTitle = t ? t.title.toLowerCase() : "";
+                        const note = (a.note || "").toLowerCase();
+                        const status = (a.status || "").toLowerCase();
+                        const date = (a.date || "").toLowerCase();
+                        return mName.includes(f.search) || tTitle.includes(f.search) || note.includes(f.search) || status.includes(f.search) || date.includes(f.search);
+                    });
+                }
+
+                const totalRecords = list.length;
+                const fullCount = list.filter(a => String(a.status).includes("Full") || String(a.status).includes("پورا")).length;
+                const halfCount = list.filter(a => String(a.status).includes("Half") || String(a.status).includes("آدھا")).length;
+                const doubleCount = list.filter(a => String(a.status).includes("Double") || String(a.status).includes("ڈبل")).length;
+                const presentCount = list.filter(a => Number(a.multiplier) > 0).length;
+                const absentCount = list.filter(a => Number(a.multiplier) === 0).length;
+                const uniqueWorkers = new Set(list.map(a => a.mazdoorId)).size;
+                const totalBase = list.reduce((s, a) => s + (Number(a.baseWage || 0) * Number(a.multiplier || 0)), 0);
+                const totalOvertime = list.reduce((s, a) => s + Number(a.overtime || 0), 0);
+                const totalEarned = list.reduce((s, a) => s + Number(a.totalEarned || 0), 0);
+
+                const elRec = document.getElementById("att-kpi-records"); if (elRec) elRec.textContent = `${totalRecords} اندراجات`;
+                const elWrk = document.getElementById("att-kpi-workers-sub"); if (elWrk) elWrk.textContent = `${uniqueWorkers} مزدور شامل`;
+                const elPres = document.getElementById("att-kpi-present"); if (elPres) elPres.textContent = `${presentCount} حاضر`;
+                const elShifts = document.getElementById("att-kpi-shifts-sub"); if (elShifts) elShifts.textContent = `مکمل: ${fullCount} • ہاف: ${halfCount} • ڈبل: ${doubleCount}`;
+                const elAbs = document.getElementById("att-kpi-absent"); if (elAbs) elAbs.textContent = `${absentCount} ورکرز`;
+                const elBase = document.getElementById("att-kpi-base"); if (elBase) elBase.textContent = this.formatPKR(totalBase);
+                const elOt = document.getElementById("att-kpi-overtime"); if (elOt) elOt.textContent = this.formatPKR(totalOvertime);
+                const elTot = document.getElementById("att-kpi-total"); if (elTot) elTot.textContent = this.formatPKR(totalEarned);
+
+                const rows = list.map(a => {
                     const m = this.db.mazdoors.find(x => x.id === a.mazdoorId);
                     const t = this.db.thekas.find(x => x.id === a.thekaId);
                     return `
@@ -4008,11 +4717,108 @@
                 this.dataTables.attendance = $("#table-attendance").DataTable(this.buildDataTableConfig());
             },
 
+            setHisabQuickDate(period) {
+                this.filters.hisab.quickDate = period;
+                const range = this.getDateRangeForQuickFilter(period);
+                const fromEl = document.getElementById("filter-hisab-date-from");
+                const toEl = document.getElementById("filter-hisab-date-to");
+                if (fromEl) fromEl.value = range.from;
+                if (toEl) toEl.value = range.to;
+                this.filters.hisab.dateFrom = range.from;
+                this.filters.hisab.dateTo = range.to;
+
+                document.querySelectorAll(".hisab-quick-btn").forEach(b => {
+                    b.className = "hisab-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 touch-target";
+                });
+                const active = document.getElementById(`hisab-quick-${period}`);
+                if (active) active.className = "hisab-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-emerald-600 text-white shadow-sm touch-target";
+                this.renderHisabTable();
+            },
+
+            onHisabDateInputChange() {
+                this.filters.hisab.quickDate = "CUSTOM";
+                document.querySelectorAll(".hisab-quick-btn").forEach(b => {
+                    b.className = "hisab-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 touch-target";
+                });
+                this.onHisabFilterChange();
+            },
+
+            onHisabFilterChange() {
+                this.filters.hisab.search = (document.getElementById("filter-hisab-search")?.value || "").toLowerCase().trim();
+                this.filters.hisab.type = document.getElementById("filter-hisab-type")?.value || "ALL";
+                this.filters.hisab.thekaId = document.getElementById("filter-hisab-theka")?.value || "ALL";
+                this.filters.hisab.mazdoorId = document.getElementById("filter-hisab-mazdoor")?.value || "ALL";
+                this.filters.hisab.method = document.getElementById("filter-hisab-method")?.value || "ALL";
+                this.filters.hisab.dateFrom = document.getElementById("filter-hisab-date-from")?.value || "";
+                this.filters.hisab.dateTo = document.getElementById("filter-hisab-date-to")?.value || "";
+                this.renderHisabTable();
+            },
+
+            resetHisabFilters() {
+                this.filters.hisab = { search: "", type: "ALL", thekaId: "ALL", mazdoorId: "ALL", method: "ALL", dateFrom: "", dateTo: "", quickDate: "ALL" };
+                const s = document.getElementById("filter-hisab-search"); if (s) s.value = "";
+                const tp = document.getElementById("filter-hisab-type"); if (tp) tp.value = "ALL";
+                const t = document.getElementById("filter-hisab-theka"); if (t) t.value = "ALL";
+                const m = document.getElementById("filter-hisab-mazdoor"); if (m) m.value = "ALL";
+                const mt = document.getElementById("filter-hisab-method"); if (mt) mt.value = "ALL";
+                const df = document.getElementById("filter-hisab-date-from"); if (df) df.value = "";
+                const dt = document.getElementById("filter-hisab-date-to"); if (dt) dt.value = "";
+                this.setHisabQuickDate("ALL");
+            },
+
             renderHisabTable() {
                 if (this.dataTables.hisab) {
                     this.dataTables.hisab.destroy();
                 }
-                const rows = this.db.hisab.map(h => {
+                const f = this.filters.hisab;
+                let list = [...this.db.hisab];
+
+                if (f.type && f.type !== "ALL") list = list.filter(h => h.type === f.type);
+                if (f.thekaId && f.thekaId !== "ALL") list = list.filter(h => h.thekaId === f.thekaId);
+                if (f.mazdoorId === "GENERAL") list = list.filter(h => !h.mazdoorId);
+                else if (f.mazdoorId && f.mazdoorId !== "ALL") list = list.filter(h => h.mazdoorId === f.mazdoorId);
+                if (f.method && f.method !== "ALL") list = list.filter(h => h.method === f.method);
+                if (f.dateFrom) list = list.filter(h => h.date >= f.dateFrom);
+                if (f.dateTo) list = list.filter(h => h.date <= f.dateTo);
+                if (f.search) {
+                    list = list.filter(h => {
+                        const m = this.db.mazdoors.find(x => x.id === h.mazdoorId);
+                        const t = this.db.thekas.find(x => x.id === h.thekaId);
+                        const mName = m ? m.name.toLowerCase() : "";
+                        const tTitle = t ? t.title.toLowerCase() : "";
+                        const desc = (h.desc || "").toLowerCase();
+                        const type = (h.type || "").toLowerCase();
+                        const method = (h.method || "").toLowerCase();
+                        const amount = String(h.amount || "");
+                        const date = (h.date || "").toLowerCase();
+                        return desc.includes(f.search) || mName.includes(f.search) || tTitle.includes(f.search) || type.includes(f.search) || method.includes(f.search) || amount.includes(f.search) || date.includes(f.search);
+                    });
+                }
+
+                const totalIn = list.filter(h => h.type === "مالک سے قسط وصولی").reduce((s, h) => s + Number(h.amount || 0), 0);
+                const laborPaid = list.filter(h => h.type === "مزدور ادائیگی / ایڈوانس").reduce((s, h) => s + Number(h.amount || 0), 0);
+                const materialSpent = list.filter(h => h.type === "میٹریل اور سائٹ خرچہ").reduce((s, h) => s + Number(h.amount || 0), 0);
+                const totalOut = laborPaid + materialSpent;
+                const netFlow = totalIn - totalOut;
+                const recordsCount = list.length;
+
+                const elIn = document.getElementById("hisab-kpi-in"); if (elIn) elIn.textContent = `+ ${this.formatPKR(totalIn)}`;
+                const elOut = document.getElementById("hisab-kpi-out"); if (elOut) elOut.textContent = `- ${this.formatPKR(totalOut)}`;
+                const elNet = document.getElementById("hisab-kpi-net");
+                if (elNet) {
+                    elNet.textContent = `${netFlow >= 0 ? '+' : '-'} ${this.formatPKR(Math.abs(netFlow))}`;
+                    elNet.className = `text-base sm:text-lg font-extrabold num-ltr mt-1 ${netFlow >= 0 ? 'text-teal-800' : 'text-rose-600'}`;
+                }
+                const elNetStatus = document.getElementById("hisab-kpi-net-status");
+                if (elNetStatus) {
+                    elNetStatus.textContent = netFlow >= 0 ? "مثبت کیش بیلنس" : "منفی کیش فلو (خسارہ)";
+                    elNetStatus.className = `text-[10px] font-bold mt-0.5 ${netFlow >= 0 ? 'text-teal-700' : 'text-rose-600'}`;
+                }
+                const elLabor = document.getElementById("hisab-kpi-labor"); if (elLabor) elLabor.textContent = this.formatPKR(laborPaid);
+                const elMat = document.getElementById("hisab-kpi-material"); if (elMat) elMat.textContent = this.formatPKR(materialSpent);
+                const elCnt = document.getElementById("hisab-kpi-count"); if (elCnt) elCnt.textContent = `${recordsCount} ریکارڈز`;
+
+                const rows = list.map(h => {
                     const t = this.db.thekas.find(x => x.id === h.thekaId);
                     const m = this.db.mazdoors.find(x => x.id === h.mazdoorId);
                     const isCashIn = h.type === "مالک سے قسط وصولی";
@@ -4030,7 +4836,7 @@
                             <td class="num-ltr font-extrabold ${isCashIn ? 'text-emerald-700' : 'text-rose-600'}">${isCashIn ? '+' : '-'} ${this.formatPKR(h.amount)}</td>
                             <td>
                                 <div class="text-xs text-slate-700">${this.escapeHtml(h.desc)}</div>
-                                ${h.receiptImg ? `<span class="text-[10px] text-emerald-600 font-bold"><i class="fa-solid fa-image"></i> رسید منسلک ہے</span>` : ""}
+                                ${h.receiptImg ? '<span class="text-[10px] text-emerald-600 font-bold"><i class="fa-solid fa-image"></i> رسید منسلک ہے</span>' : ""}
                             </td>
                             <td>
                                 <div class="flex items-center gap-1">
