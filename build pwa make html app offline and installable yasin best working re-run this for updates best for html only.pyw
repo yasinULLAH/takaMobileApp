@@ -79,15 +79,18 @@ def discover_assets(project_dir, generated_icons):
     
     # Files that must NOT be precached: hidden files, server-side scripts
     # (PHP endpoints like upload_logo.php return 405 on GET and would break
-    # the service worker install), the build script itself, and version.json.
+    # the service worker install), the build script itself, the service worker
+    # and its registrar (precaching sw.js causes self-update issues), and
+    # version.json.
     ignored_extensions = (".php", ".pyw", ".py", ".md")
+    ignored_names = {"sw.js", "pwa-register.js", "version.json"}
     for root, _, files in os.walk(project_dir):
         if any(part.startswith('.') for part in root.split(os.sep)):
             continue
         for file in files:
             file_path = os.path.join(root, file)
             relative_path = os.path.relpath(file_path, project_dir).replace("\\", "/")
-            if relative_path in existing_urls or file == "version.json":
+            if relative_path in existing_urls or file in ignored_names:
                 continue
             if file.startswith('.'):
                 continue
@@ -192,13 +195,13 @@ def create_pwa_register(output_dir):
     """Create the external pwa-register.js file."""
     print("\n--- 5A. Creating pwa-register.js ---")
     register_content = """\
-// PWA Service Worker Registration — loop-safe (single registration).
-// Do not register the worker from anywhere else (no duplicate register() calls).
+// PWA Service Worker Registration — bulletproof (no auto-reload, so no reload loops).
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js')
             .then((registration) => {
-                // When a newer worker finishes installing, activate it immediately.
+                // Promptly activate a newly-installed worker. We intentionally
+                // do NOT reload the page here — that was causing reload loops.
                 registration.addEventListener('updatefound', () => {
                     const newWorker = registration.installing;
                     if (!newWorker) return;
@@ -210,14 +213,6 @@ if ('serviceWorker' in navigator) {
                 });
             })
             .catch(() => {});
-    });
-
-    // Reload at most once per tab session after a new worker takes control,
-    // so updates apply without ever looping.
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-        if (sessionStorage.getItem('sw-reloaded')) return;
-        sessionStorage.setItem('sw-reloaded', '1');
-        window.location.reload();
     });
 }
 """

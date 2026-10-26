@@ -80,14 +80,6 @@ if (workbox) {
     {
         "url": "offline.html",
         "revision": "e44c2a14d302044a1563011533ecb34c"
-    },
-    {
-        "url": "pwa-register.js",
-        "revision": "3ec872e4f752840ad8f85922ff6cebe7"
-    },
-    {
-        "url": "sw.js",
-        "revision": "2508470a86d1bfb2dec7ebcd99913130"
     }
 ]);
 

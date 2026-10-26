@@ -1,10 +1,10 @@
-// PWA Service Worker Registration — loop-safe (single registration).
-// Do not register the worker from anywhere else (no duplicate register() calls).
+// PWA Service Worker Registration — bulletproof (no auto-reload, so no reload loops).
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js')
             .then((registration) => {
-                // When a newer worker finishes installing, activate it immediately.
+                // Promptly activate a newly-installed worker. We intentionally
+                // do NOT reload the page here — that was causing reload loops.
                 registration.addEventListener('updatefound', () => {
                     const newWorker = registration.installing;
                     if (!newWorker) return;
@@ -16,13 +16,5 @@ if ('serviceWorker' in navigator) {
                 });
             })
             .catch(() => {});
-    });
-
-    // Reload at most once per tab session after a new worker takes control,
-    // so updates apply without ever looping.
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-        if (sessionStorage.getItem('sw-reloaded')) return;
-        sessionStorage.setItem('sw-reloaded', '1');
-        window.location.reload();
     });
 }
