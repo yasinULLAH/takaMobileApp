@@ -6310,14 +6310,25 @@
                 document.getElementById("theme-footer-text").value = t.footerText;
 
                 if (this.db.meta) {
-                    $("#auto-backup-schedule").val(this.db.meta.backupSchedule || "daily").trigger("change");
-                    document.getElementById("auto-backup-days").value = this.db.meta.backupCustomDays || 3;
-                    document.getElementById("last-backup-status").textContent = `آخری محفوظ بیک اپ: ${this.db.meta.lastBackupAt || "ابھی تک نہیں"}`;
+                    const backupSchedEl = document.getElementById("auto-backup-schedule");
+                    if (backupSchedEl) {
+                        backupSchedEl.value = this.db.meta.backupSchedule || "daily";
+                    }
+                    const backupDaysEl = document.getElementById("auto-backup-days");
+                    if (backupDaysEl) {
+                        backupDaysEl.value = this.db.meta.backupCustomDays || 3;
+                    }
+                    const backupStatusEl = document.getElementById("last-backup-status");
+                    if (backupStatusEl) {
+                        backupStatusEl.textContent = `آخری محفوظ بیک اپ: ${this.db.meta.lastBackupAt || "ابھی تک نہیں"}`;
+                    }
                     const wrap = document.getElementById("custom-backup-days-wrap");
-                    if (this.db.meta.backupSchedule === "custom") {
-                        wrap.classList.remove("hidden");
-                    } else {
-                        wrap.classList.add("hidden");
+                    if (wrap) {
+                        if (this.db.meta.backupSchedule === "custom") {
+                            wrap.classList.remove("hidden");
+                        } else {
+                            wrap.classList.add("hidden");
+                        }
                     }
                 }
             },

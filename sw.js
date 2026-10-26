@@ -67,7 +67,7 @@ if (workbox) {
     },
     {
         "url": "index.html",
-        "revision": "b693252d51311082c874f52c31f06558"
+        "revision": "36b4ea51c65c111ef47bdae7160d3d58"
     },
     {
         "url": "logo.png",
