@@ -380,10 +380,11 @@
             color: #ffffff !important;
             font-weight: 800 !important;
             font-size: 0.85rem !important;
-            padding: 12px 12px !important;
+            padding: 12px 10px !important;
             border: 1px solid #0f5132 !important;
             border-bottom: 2px solid #064e3b !important;
-            text-align: right !important;
+            text-align: center !important;
+            vertical-align: middle !important;
             white-space: nowrap !important;
             letter-spacing: 0.01em;
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
@@ -392,6 +393,8 @@
         table.dataTable thead th.sorting_asc,
         table.dataTable thead th.sorting_desc {
             color: #ffffff !important;
+            text-align: center !important;
+            vertical-align: middle !important;
         }
         table.dataTable tbody tr,
         .dt-table tbody tr {
@@ -411,13 +414,27 @@
         }
         table.dataTable tbody td,
         .dt-table tbody td {
-            padding: 11px 12px !important;
+            padding: 11px 10px !important;
             border: 1px solid #e2e8f0 !important;
             vertical-align: middle !important;
-            text-align: right !important;
+            text-align: center !important;
             white-space: nowrap !important;
             color: #1e293b !important;
             font-size: 0.84rem !important;
+        }
+        table.dataTable td > *,
+        .dt-table td > * {
+            vertical-align: middle;
+        }
+        table.dataTable td .flex,
+        .dt-table td .flex {
+            justify-content: center !important;
+            align-items: center !important;
+        }
+        table.dataTable td .inline-flex,
+        .dt-table td .inline-flex {
+            justify-content: center !important;
+            align-items: center !important;
         }
         #modal-chart-data-table,
         #modal-chart-data-table th,
@@ -427,6 +444,8 @@
         #printable-area table th,
         #printable-area table td {
             border: 1px solid #cbd5e1 !important;
+            text-align: center !important;
+            vertical-align: middle !important;
         }
         #modal-chart-data-table thead th {
             background: #0f766e !important;
@@ -434,12 +453,25 @@
             font-weight: 800 !important;
             padding: 10px !important;
             border: 1px solid #064e3b !important;
+            text-align: center !important;
+            vertical-align: middle !important;
         }
         #modal-chart-data-table tbody tr:nth-child(even) {
             background-color: #f8fafc !important;
         }
         #modal-chart-data-table tbody td {
             padding: 9px 10px !important;
+            text-align: center !important;
+            vertical-align: middle !important;
+        }
+        #dashboard-unpaid-labor-tbody tr td {
+            text-align: center !important;
+            vertical-align: middle !important;
+        }
+        #dashboard-unpaid-labor-tbody tr td .flex,
+        #dashboard-unpaid-labor-tbody tr td .inline-flex {
+            justify-content: center !important;
+            align-items: center !important;
         }
         .dataTables_wrapper {
             padding: 2px 0;
@@ -507,6 +539,8 @@
             th, td {
                 border: 1px solid #334155 !important;
                 padding: 8px !important;
+                text-align: center !important;
+                vertical-align: middle !important;
             }
         }
     </style>
