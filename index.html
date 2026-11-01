@@ -320,31 +320,61 @@
             border: 1px solid #94a3b8 !important;
             direction: rtl;
         }
-        .dataTables_wrapper {
-            padding: 0.5rem 0;
+                .dataTables_wrapper {
+            padding: 0 !important;
             direction: rtl;
+            width: 100% !important;
+            max-width: 100% !important;
+            clear: both !important;
+            box-sizing: border-box !important;
         }
-        .dataTables_wrapper .dataTables_filter input {
-            border: 1px solid #cbd5e1 !important;
-            border-radius: 0.75rem !important;
-            padding: 0.5rem 0.85rem !important;
-            min-height: 44px;
-            background: #ffffff !important;
-            margin-right: 0.5rem !important;
-            outline: none;
-        }
-        .dataTables_wrapper .dataTables_length select {
-            border: 1px solid #cbd5e1 !important;
-            border-radius: 0.65rem !important;
-            padding: 0.4rem 0.6rem !important;
-            min-height: 44px;
-            background: #ffffff !important;
-        }
-        .dt-buttons {
+        .dt-top-controls {
             display: flex !important;
-            flex-wrap: wrap;
-            gap: 0.35rem;
-            margin-bottom: 0.75rem;
+            flex-direction: column !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            clear: both !important;
+            box-sizing: border-box !important;
+            margin-bottom: 0.875rem !important;
+            gap: 0.75rem !important;
+        }
+        @media (min-width: 640px) {
+            .dt-top-controls {
+                flex-direction: row !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+            }
+        }
+        @media (max-width: 639px) {
+            .dt-top-controls {
+                align-items: stretch !important;
+            }
+            .dataTables_wrapper .dataTables_filter {
+                width: 100% !important;
+            }
+            .dataTables_wrapper .dataTables_filter label {
+                width: 100% !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                gap: 0.5rem !important;
+            }
+            .dataTables_wrapper .dataTables_filter input {
+                flex: 1 1 auto !important;
+                width: 100% !important;
+            }
+            .dt-buttons {
+                width: 100% !important;
+                justify-content: flex-start !important;
+            }
+        }
+        .dt-top-controls div.dt-buttons,
+        .dataTables_wrapper div.dt-buttons {
+            float: none !important;
+            margin: 0 !important;
+            display: inline-flex !important;
+            flex-wrap: wrap !important;
+            gap: 0.35rem !important;
         }
         .dt-button {
             background: #f8fafc !important;
@@ -366,51 +396,54 @@
             color: #ffffff !important;
             border-color: #059669 !important;
         }
-        table.dataTable,
-        .dt-table {
-            border-collapse: separate !important;
-            border-spacing: 0 !important;
-            width: 100% !important;
-            table-layout: auto !important;
+        .dt-top-controls .dataTables_filter,
+        .dataTables_wrapper .dataTables_filter {
+            float: none !important;
+            margin: 0 !important;
+            text-align: right !important;
+        }
+        .dataTables_wrapper .dataTables_filter label {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 0.5rem !important;
+            margin: 0 !important;
+            font-size: 0.85rem !important;
+            font-weight: 700 !important;
+            color: #475569 !important;
+        }
+        .dataTables_wrapper .dataTables_filter input {
             border: 1px solid #cbd5e1 !important;
             border-radius: 0.75rem !important;
+            padding: 0.45rem 0.85rem !important;
+            min-height: 42px !important;
             background: #ffffff !important;
+            margin: 0 !important;
+            outline: none;
+            font-size: 0.85rem !important;
         }
-        #table-thekas {
-            min-width: 1050px !important;
-        }
-        #table-mazdoors {
-            min-width: 1050px !important;
-        }
-        #table-attendance {
-            min-width: 980px !important;
-        }
-        #table-hisab {
-            min-width: 950px !important;
-        }
-        #table-users {
-            min-width: 700px !important;
-        }
-        #modal-chart-data-table {
-            min-width: 650px !important;
-            width: 100% !important;
-            border-collapse: separate !important;
-            border-spacing: 0 !important;
-            table-layout: auto !important;
-        }
-        #table-dashboard-unpaid-labor {
-            min-width: 580px !important;
-            width: 100% !important;
-            border-collapse: separate !important;
-            border-spacing: 0 !important;
-            table-layout: auto !important;
+        .dataTables_wrapper .dataTables_length select {
+            border: 1px solid #cbd5e1 !important;
+            border-radius: 0.65rem !important;
+            padding: 0.4rem 0.6rem !important;
+            min-height: 44px;
+            background: #ffffff !important;
         }
         .dt-scroll-wrapper,
         .dt-table-container {
+            width: 100% !important;
+            max-width: 100% !important;
+            clear: both !important;
+            display: block !important;
             overflow-x: auto !important;
             -webkit-overflow-scrolling: touch !important;
             scrollbar-width: thin;
             scrollbar-color: #059669 #f1f5f9;
+            border-radius: 0.75rem !important;
+            border: 1px solid #cbd5e1 !important;
+            background: #ffffff !important;
+            box-sizing: border-box !important;
+            margin: 0 !important;
+            padding: 0 !important;
         }
         .dt-scroll-wrapper::-webkit-scrollbar,
         .dt-table-container::-webkit-scrollbar {
@@ -425,6 +458,61 @@
         .dt-table-container::-webkit-scrollbar-thumb {
             background-color: #059669;
             border-radius: 9999px;
+        }
+        table.dataTable,
+        .dt-table {
+            border-collapse: separate !important;
+            border-spacing: 0 !important;
+            width: 100% !important;
+            clear: both !important;
+            margin: 0 !important;
+            table-layout: auto !important;
+            background: #ffffff !important;
+            border: none !important;
+        }
+        @media (max-width: 1024px) {
+            #table-thekas {
+                min-width: 1050px !important;
+            }
+            #table-mazdoors {
+                min-width: 1050px !important;
+            }
+            #table-attendance {
+                min-width: 980px !important;
+            }
+            #table-hisab {
+                min-width: 950px !important;
+            }
+            #table-users {
+                min-width: 700px !important;
+            }
+        }
+        @media (min-width: 1025px) {
+            #table-thekas,
+            #table-mazdoors,
+            #table-attendance,
+            #table-hisab,
+            #table-users,
+            table.dataTable,
+            .dt-table {
+                width: 100% !important;
+                min-width: 100% !important;
+                table-layout: auto !important;
+            }
+        }
+        #modal-chart-data-table {
+            min-width: 650px !important;
+            width: 100% !important;
+            border-collapse: separate !important;
+            border-spacing: 0 !important;
+            table-layout: auto !important;
+        }
+        #table-dashboard-unpaid-labor {
+            min-width: 580px !important;
+            width: 100% !important;
+            border-collapse: separate !important;
+            border-spacing: 0 !important;
+            table-layout: auto !important;
         }
         table.dataTable thead th,
         .dt-table thead th {
@@ -446,6 +534,40 @@
         table.dataTable thead th:last-child,
         .dt-table thead th:last-child {
             border-left: none !important;
+        }
+        html[dir="rtl"] table.dataTable thead th,
+        html[dir="rtl"] .dt-table thead th {
+            text-align: right;
+        }
+        html[dir="rtl"] table.dataTable thead th.text-right,
+        html[dir="rtl"] table.dataTable tbody td.text-right,
+        html[dir="rtl"] .dt-table thead th.text-right,
+        html[dir="rtl"] .dt-table tbody td.text-right,
+        table.dataTable thead th.text-right,
+        table.dataTable tbody td.text-right,
+        .dt-table thead th.text-right,
+        .dt-table tbody td.text-right {
+            text-align: right !important;
+        }
+        html[dir="rtl"] table.dataTable thead th.text-center,
+        html[dir="rtl"] table.dataTable tbody td.text-center,
+        html[dir="rtl"] .dt-table thead th.text-center,
+        html[dir="rtl"] .dt-table tbody td.text-center,
+        table.dataTable thead th.text-center,
+        table.dataTable tbody td.text-center,
+        .dt-table thead th.text-center,
+        .dt-table tbody td.text-center {
+            text-align: center !important;
+        }
+        html[dir="rtl"] table.dataTable thead th.text-left,
+        html[dir="rtl"] table.dataTable tbody td.text-left,
+        html[dir="rtl"] .dt-table thead th.text-left,
+        html[dir="rtl"] .dt-table tbody td.text-left,
+        table.dataTable thead th.text-left,
+        table.dataTable tbody td.text-left,
+        .dt-table thead th.text-left,
+        .dt-table tbody td.text-left {
+            text-align: left !important;
         }
         html[dir="rtl"] table.dataTable thead th.sorting,
         html[dir="rtl"] table.dataTable thead th.sorting_asc,
@@ -542,14 +664,55 @@
         #dashboard-unpaid-labor-tbody tr td .inline-flex {
             align-items: center !important;
         }
-        .dataTables_wrapper {
-            padding: 2px 0;
+        .dt-bottom-controls {
+            display: flex !important;
+            flex-direction: column !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            clear: both !important;
+            box-sizing: border-box !important;
+            margin-top: 0.875rem !important;
+            gap: 0.75rem !important;
         }
+        @media (min-width: 640px) {
+            .dt-bottom-controls {
+                flex-direction: row !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+            }
+        }
+        @media (max-width: 639px) {
+            .dt-bottom-controls {
+                align-items: center !important;
+            }
+            .dt-bottom-controls .dataTables_info,
+            .dataTables_wrapper .dataTables_info {
+                text-align: center !important;
+                width: 100% !important;
+            }
+            .dt-bottom-controls .dataTables_paginate,
+            .dataTables_wrapper .dataTables_paginate {
+                justify-content: center !important;
+                width: 100% !important;
+            }
+        }
+        .dt-bottom-controls .dataTables_info,
         .dataTables_wrapper .dataTables_info {
+            float: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
             font-size: 0.82rem !important;
             color: #475569 !important;
             font-weight: 700 !important;
-            padding-top: 0.85rem !important;
+        }
+        .dt-bottom-controls .dataTables_paginate,
+        .dataTables_wrapper .dataTables_paginate {
+            float: none !important;
+            margin: 0 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            flex-wrap: wrap !important;
+            gap: 0.25rem !important;
         }
         .dataTables_wrapper .dataTables_paginate .paginate_button {
             min-width: 44px !important;
@@ -4502,7 +4665,7 @@
                     autoWidth: false,
                     order: [],
                     pageLength: 10,
-                    dom: '<"dt-top-controls flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mb-3.5"Bf><"dt-table-container overflow-x-auto rounded-xl border border-slate-200"rt><"dt-bottom-controls flex flex-col sm:flex-row items-center justify-between gap-3 mt-3.5"ip>',
+                    dom: '<"dt-top-controls"fB><"dt-table-container"rt><"dt-bottom-controls"ip>',
                     buttons: [
                         { extend: "pdfHtml5", text: '<i class="fa-solid fa-file-pdf text-rose-600"></i>', titleAttr: "PDF ڈاؤن لوڈ", exportOptions: { columns: ":not(:last-child)" } },
                         { extend: "excelHtml5", text: '<i class="fa-solid fa-file-excel text-emerald-600"></i>', titleAttr: "Excel ڈاؤن لوڈ", exportOptions: { columns: ":not(:last-child)" } },
