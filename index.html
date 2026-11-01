@@ -215,9 +215,11 @@
                 font-size: 0.8rem !important;
             }
             table.dataTable thead th,
-            table.dataTable tbody td {
-                padding: 8px 6px !important;
-                font-size: 0.78rem !important;
+            table.dataTable tbody td,
+            .dt-table thead th,
+            .dt-table tbody td {
+                padding: 9px 8px !important;
+                font-size: 0.8rem !important;
             }
             select {
                 height: 42px;
@@ -366,13 +368,63 @@
         }
         table.dataTable,
         .dt-table {
-            border-collapse: collapse !important;
+            border-collapse: separate !important;
             border-spacing: 0 !important;
             width: 100% !important;
-            border: 1.5px solid #cbd5e1 !important;
+            table-layout: auto !important;
+            border: 1px solid #cbd5e1 !important;
             border-radius: 0.75rem !important;
-            overflow: hidden !important;
             background: #ffffff !important;
+        }
+        #table-thekas {
+            min-width: 1050px !important;
+        }
+        #table-mazdoors {
+            min-width: 1050px !important;
+        }
+        #table-attendance {
+            min-width: 980px !important;
+        }
+        #table-hisab {
+            min-width: 950px !important;
+        }
+        #table-users {
+            min-width: 700px !important;
+        }
+        #modal-chart-data-table {
+            min-width: 650px !important;
+            width: 100% !important;
+            border-collapse: separate !important;
+            border-spacing: 0 !important;
+            table-layout: auto !important;
+        }
+        #table-dashboard-unpaid-labor {
+            min-width: 580px !important;
+            width: 100% !important;
+            border-collapse: separate !important;
+            border-spacing: 0 !important;
+            table-layout: auto !important;
+        }
+        .dt-scroll-wrapper,
+        .dt-table-container {
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+            scrollbar-width: thin;
+            scrollbar-color: #059669 #f1f5f9;
+        }
+        .dt-scroll-wrapper::-webkit-scrollbar,
+        .dt-table-container::-webkit-scrollbar {
+            height: 6px;
+        }
+        .dt-scroll-wrapper::-webkit-scrollbar-track,
+        .dt-table-container::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 9999px;
+        }
+        .dt-scroll-wrapper::-webkit-scrollbar-thumb,
+        .dt-table-container::-webkit-scrollbar-thumb {
+            background-color: #059669;
+            border-radius: 9999px;
         }
         table.dataTable thead th,
         .dt-table thead th {
@@ -381,19 +433,30 @@
             font-weight: 800 !important;
             font-size: 0.85rem !important;
             padding: 12px 10px !important;
-            border: 1px solid #0f5132 !important;
+            border-top: none !important;
+            border-left: 1px solid #0f5132 !important;
+            border-right: none !important;
             border-bottom: 2px solid #064e3b !important;
-            text-align: center !important;
             vertical-align: middle !important;
             white-space: nowrap !important;
             letter-spacing: 0.01em;
+            box-sizing: border-box !important;
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
         }
-        table.dataTable thead th.sorting,
-        table.dataTable thead th.sorting_asc,
-        table.dataTable thead th.sorting_desc {
+        table.dataTable thead th:last-child,
+        .dt-table thead th:last-child {
+            border-left: none !important;
+        }
+        html[dir="rtl"] table.dataTable thead th.sorting,
+        html[dir="rtl"] table.dataTable thead th.sorting_asc,
+        html[dir="rtl"] table.dataTable thead th.sorting_desc,
+        html[dir="rtl"] .dt-table thead th.sorting,
+        html[dir="rtl"] .dt-table thead th.sorting_asc,
+        html[dir="rtl"] .dt-table thead th.sorting_desc {
+            background-position: center left 8px !important;
+            padding-left: 26px !important;
+            padding-right: 12px !important;
             color: #ffffff !important;
-            text-align: center !important;
             vertical-align: middle !important;
         }
         table.dataTable tbody tr,
@@ -415,12 +478,19 @@
         table.dataTable tbody td,
         .dt-table tbody td {
             padding: 11px 10px !important;
-            border: 1px solid #e2e8f0 !important;
+            border-top: none !important;
+            border-left: 1px solid #e2e8f0 !important;
+            border-right: none !important;
+            border-bottom: 1px solid #e2e8f0 !important;
             vertical-align: middle !important;
-            text-align: center !important;
             white-space: nowrap !important;
             color: #1e293b !important;
             font-size: 0.84rem !important;
+            box-sizing: border-box !important;
+        }
+        table.dataTable tbody td:last-child,
+        .dt-table tbody td:last-child {
+            border-left: none !important;
         }
         table.dataTable td > *,
         .dt-table td > * {
@@ -428,24 +498,24 @@
         }
         table.dataTable td .flex,
         .dt-table td .flex {
-            justify-content: center !important;
             align-items: center !important;
         }
         table.dataTable td .inline-flex,
         .dt-table td .inline-flex {
-            justify-content: center !important;
             align-items: center !important;
         }
         #modal-chart-data-table,
         #modal-chart-data-table th,
         #modal-chart-data-table td,
+        #table-dashboard-unpaid-labor,
+        #table-dashboard-unpaid-labor th,
         #dashboard-unpaid-labor-tbody tr td,
         #printable-area table,
         #printable-area table th,
         #printable-area table td {
             border: 1px solid #cbd5e1 !important;
-            text-align: center !important;
             vertical-align: middle !important;
+            box-sizing: border-box !important;
         }
         #modal-chart-data-table thead th {
             background: #0f766e !important;
@@ -453,24 +523,23 @@
             font-weight: 800 !important;
             padding: 10px !important;
             border: 1px solid #064e3b !important;
-            text-align: center !important;
             vertical-align: middle !important;
+            white-space: nowrap !important;
         }
         #modal-chart-data-table tbody tr:nth-child(even) {
             background-color: #f8fafc !important;
         }
         #modal-chart-data-table tbody td {
             padding: 9px 10px !important;
-            text-align: center !important;
             vertical-align: middle !important;
+            white-space: nowrap !important;
         }
         #dashboard-unpaid-labor-tbody tr td {
-            text-align: center !important;
             vertical-align: middle !important;
+            white-space: nowrap !important;
         }
         #dashboard-unpaid-labor-tbody tr td .flex,
         #dashboard-unpaid-labor-tbody tr td .inline-flex {
-            justify-content: center !important;
             align-items: center !important;
         }
         .dataTables_wrapper {
@@ -1195,15 +1264,15 @@
 </div>
 <button class="text-xs font-bold text-emerald-700 hover:underline touch-target px-2" onclick="App.navigate('/mazdoors')" type="button">تمام ورکرز</button>
 </div>
-<div class="overflow-x-auto">
-<table class="w-full text-right text-xs">
-<thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
+<div class="overflow-x-auto rounded-xl border border-slate-200 dt-scroll-wrapper">
+<table class="w-full text-right text-xs" id="table-dashboard-unpaid-labor">
+<thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
 <tr>
-<th class="p-2">نام و عہدہ</th>
-<th class="p-2">سائٹ</th>
-<th class="p-2">کل کمائی</th>
-<th class="p-2">واجب الادا بقایا</th>
-<th class="p-2 text-center">ادائیگی</th>
+<th class="p-2.5 text-right font-bold">نام و عہدہ</th>
+<th class="p-2.5 text-right font-bold">سائٹ</th>
+<th class="p-2.5 text-center font-bold">کل کمائی</th>
+<th class="p-2.5 text-center font-bold">واجب الادا بقایا</th>
+<th class="p-2.5 text-center font-bold">ادائیگی</th>
 </tr>
 </thead>
 <tbody class="divide-y divide-slate-100" id="dashboard-unpaid-labor-tbody"></tbody>
@@ -1335,19 +1404,23 @@
 </div>
 </div>
 
-<div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm overflow-x-auto">
+<div class="bg-white rounded-2xl border border-slate-200 p-3 sm:p-4 shadow-sm">
+<div class="sm:hidden flex items-center justify-between text-[11px] text-slate-500 font-semibold mb-2 px-1">
+<span class="flex items-center gap-1.5"><i class="fa-solid fa-arrows-left-right text-emerald-600"></i> تمام کالم دیکھنے کے لیے دائیں بائیں اسکرول کریں</span>
+<span class="text-[10px] text-slate-400">9 کالمز</span>
+</div>
 <table class="dt-table display w-full text-sm" id="table-thekas">
 <thead>
 <tr>
-<th>ٹھیکہ سائٹ کا نام</th>
-<th>مالک مکان</th>
-<th>علاقہ / قسم</th>
-<th>کل طے شدہ رقم</th>
-<th>وصول شدہ</th>
-<th>کل خرچہ (مزدور+میٹریل)</th>
-<th>بقایا / بچت</th>
-<th>حیثیت</th>
-<th>کارروائی</th>
+<th class="text-right">ٹھیکہ سائٹ کا نام</th>
+<th class="text-right">مالک مکان</th>
+<th class="text-right">علاقہ / قسم</th>
+<th class="text-center">کل طے شدہ رقم</th>
+<th class="text-center">وصول شدہ</th>
+<th class="text-center">کل خرچہ (مزدور+میٹریل)</th>
+<th class="text-right">بقایا / بچت</th>
+<th class="text-center">حیثیت</th>
+<th class="text-center">کارروائی</th>
 </tr>
 </thead>
 <tbody></tbody>
@@ -1460,19 +1533,23 @@
 </div>
 </div>
 
-<div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm overflow-x-auto">
+<div class="bg-white rounded-2xl border border-slate-200 p-3 sm:p-4 shadow-sm">
+<div class="sm:hidden flex items-center justify-between text-[11px] text-slate-500 font-semibold mb-2 px-1">
+<span class="flex items-center gap-1.5"><i class="fa-solid fa-arrows-left-right text-emerald-600"></i> تمام کالم دیکھنے کے لیے دائیں بائیں اسکرول کریں</span>
+<span class="text-[10px] text-slate-400">9 کالمز</span>
+</div>
 <table class="dt-table display w-full text-sm" id="table-mazdoors">
 <thead>
 <tr>
-<th>تصویر و نام</th>
-<th>ہنر / کام</th>
-<th>موجودہ ٹھیکہ سائٹ</th>
-<th>روزانہ دیہاڑی</th>
-<th>کل حاضری کمائی</th>
-<th>وصول شدہ ایڈوانس/خرچہ</th>
-<th>خالص بقایا حساب</th>
-<th>موبائل نمبر</th>
-<th>کارروائی</th>
+<th class="text-right">تصویر و نام</th>
+<th class="text-center">ہنر / کام</th>
+<th class="text-right">موجودہ ٹھیکہ سائٹ</th>
+<th class="text-center">روزانہ دیہاڑی</th>
+<th class="text-center">کل حاضری کمائی</th>
+<th class="text-center">وصول شدہ ایڈوانس/خرچہ</th>
+<th class="text-center">خالص بقایا حساب</th>
+<th class="text-center">موبائل نمبر</th>
+<th class="text-center">کارروائی</th>
 </tr>
 </thead>
 <tbody></tbody>
@@ -1611,19 +1688,23 @@
 </div>
 </div>
 
-<div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm overflow-x-auto">
+<div class="bg-white rounded-2xl border border-slate-200 p-3 sm:p-4 shadow-sm">
+<div class="sm:hidden flex items-center justify-between text-[11px] text-slate-500 font-semibold mb-2 px-1">
+<span class="flex items-center gap-1.5"><i class="fa-solid fa-arrows-left-right text-emerald-600"></i> تمام کالم دیکھنے کے لیے دائیں بائیں اسکرول کریں</span>
+<span class="text-[10px] text-slate-400">9 کالمز</span>
+</div>
 <table class="dt-table display w-full text-sm" id="table-attendance">
 <thead>
 <tr>
-<th>تاریخ</th>
-<th>مزدور / مستری</th>
-<th>ٹھیکہ سائٹ</th>
-<th>حاضری کی قسم</th>
-<th>مقررہ دیہاڑی</th>
-<th>اوور ٹائم / بونس</th>
-<th>آج کی کل دیہاڑی</th>
-<th>کیفیت / نوٹ</th>
-<th>کارروائی</th>
+<th class="text-center">تاریخ</th>
+<th class="text-right">مزدور / مستری</th>
+<th class="text-right">ٹھیکہ سائٹ</th>
+<th class="text-center">حاضری کی قسم</th>
+<th class="text-center">مقررہ دیہاڑی</th>
+<th class="text-center">اوور ٹائم / بونس</th>
+<th class="text-center">آج کی کل دیہاڑی</th>
+<th class="text-right">کیفیت / نوٹ</th>
+<th class="text-center">کارروائی</th>
 </tr>
 </thead>
 <tbody></tbody>
@@ -1765,18 +1846,22 @@
 </div>
 </div>
 
-<div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm overflow-x-auto">
+<div class="bg-white rounded-2xl border border-slate-200 p-3 sm:p-4 shadow-sm">
+<div class="sm:hidden flex items-center justify-between text-[11px] text-slate-500 font-semibold mb-2 px-1">
+<span class="flex items-center gap-1.5"><i class="fa-solid fa-arrows-left-right text-emerald-600"></i> تمام کالم دیکھنے کے لیے دائیں بائیں اسکرول کریں</span>
+<span class="text-[10px] text-slate-400">8 کالمز</span>
+</div>
 <table class="dt-table display w-full text-sm" id="table-hisab">
 <thead>
 <tr>
-<th>تاریخ</th>
-<th>لین دین کی قسم</th>
-<th>ٹھیکہ سائٹ</th>
-<th>مزدور / مد</th>
-<th>طریقہ ادائیگی</th>
-<th>رقم (PKR)</th>
-<th>تفصیل / رسید</th>
-<th>کارروائی</th>
+<th class="text-center">تاریخ</th>
+<th class="text-center">لین دین کی قسم</th>
+<th class="text-right">ٹھیکہ سائٹ</th>
+<th class="text-right">مزدور / مد</th>
+<th class="text-center">طریقہ ادائیگی</th>
+<th class="text-center">رقم (PKR)</th>
+<th class="text-right">تفصیل / رسید</th>
+<th class="text-center">کارروائی</th>
 </tr>
 </thead>
 <tbody></tbody>
@@ -1987,15 +2072,19 @@
 <span>نیا صارف شامل کریں</span>
 </button>
 </div>
-<div class="overflow-x-auto">
+<div class="bg-white rounded-2xl border border-slate-200 p-3 sm:p-4 shadow-sm">
+<div class="sm:hidden flex items-center justify-between text-[11px] text-slate-500 font-semibold mb-2 px-1">
+<span class="flex items-center gap-1.5"><i class="fa-solid fa-arrows-left-right text-emerald-600"></i> تمام کالم دیکھنے کے لیے دائیں بائیں اسکرول کریں</span>
+<span class="text-[10px] text-slate-400">5 کالمز</span>
+</div>
 <table class="dt-table display w-full text-sm" id="table-users">
 <thead>
 <tr>
-<th>صارف کا نام</th>
-<th>موبائل / شناخت</th>
-<th>عہدہ (Role)</th>
-<th>ممبرشپ حیثیت</th>
-<th>کارروائی</th>
+<th class="text-right">صارف کا نام</th>
+<th class="text-center">موبائل / شناخت</th>
+<th class="text-center">عہدہ (Role)</th>
+<th class="text-center">ممبرشپ حیثیت</th>
+<th class="text-center">کارروائی</th>
 </tr>
 </thead>
 <tbody></tbody>
@@ -3207,6 +3296,17 @@
                         }
                     }
                 });
+
+                window.addEventListener("resize", () => {
+                    clearTimeout(this._resizeTimer);
+                    this._resizeTimer = setTimeout(() => {
+                        Object.values(this.dataTables).forEach(dt => {
+                            if (dt && dt.columns) {
+                                dt.columns.adjust();
+                            }
+                        });
+                    }, 120);
+                });
             },
 
             setupFormDirtyTracking() {
@@ -3832,17 +3932,17 @@
                     const thekaTitle = theka ? theka.title : "غیر معین";
                     return `
                         <tr class="hover:bg-slate-50">
-                            <td class="p-2">
+                            <td class="p-2.5 text-right">
                                 <div class="font-bold text-slate-900">${this.escapeHtml(x.m.name)}</div>
                                 <div class="text-[10px] text-slate-500">${this.escapeHtml(x.m.role)}</div>
                             </td>
-                            <td class="p-2 text-slate-700 max-w-[130px] truncate" title="${this.escapeHtml(thekaTitle)}">
+                            <td class="p-2.5 text-right text-slate-700 max-w-[140px] truncate" title="${this.escapeHtml(thekaTitle)}">
                                 ${this.escapeHtml(thekaTitle)}
                             </td>
-                            <td class="p-2 num-ltr font-bold text-emerald-700">${this.formatPKR(x.fin.earned)}</td>
-                            <td class="p-2 num-ltr font-extrabold text-amber-800">${this.formatPKR(x.fin.netPayable)}</td>
-                            <td class="p-2 text-center">
-                                <button type="button" onclick="App.openHisabModal('', 'مزدور ادائیگی / ایڈوانس', '${this.escapeHtml(x.m.id)}', '${this.escapeHtml(x.m.thekaId || '')}')" class="bg-amber-100 hover:bg-amber-200 text-amber-900 px-2 py-1 rounded-lg font-bold text-[10px] touch-target" title="ادائیگی درج کریں">
+                            <td class="p-2.5 text-center num-ltr font-bold text-emerald-700">${this.formatPKR(x.fin.earned)}</td>
+                            <td class="p-2.5 text-center num-ltr font-extrabold text-amber-800">${this.formatPKR(x.fin.netPayable)}</td>
+                            <td class="p-2.5 text-center">
+                                <button type="button" onclick="App.openHisabModal('', 'مزدور ادائیگی / ایڈوانس', '${this.escapeHtml(x.m.id)}', '${this.escapeHtml(x.m.thekaId || '')}')" class="bg-amber-100 hover:bg-amber-200 text-amber-900 px-2.5 py-1.5 rounded-lg font-bold text-[10px] touch-target" title="ادائیگی درج کریں">
                                     ادائیگی
                                 </button>
                             </td>
@@ -4342,7 +4442,10 @@
                 const tbody = document.querySelector("#modal-chart-data-table tbody");
 
                 if (thead) {
-                    thead.innerHTML = `<tr>${headers.map(h => `<th class="p-2.5 text-right font-bold">${this.escapeHtml(h)}</th>`).join("")}</tr>`;
+                    thead.innerHTML = `<tr>${headers.map((h, i) => {
+                        const isNumCol = rows[0] && (String(rows[0][i]).includes("Rs ") || String(rows[0][i]).includes("%") || String(rows[0][i]).includes(" ورکرز") || String(rows[0][i]).includes(" حاضر"));
+                        return `<th class="p-2.5 font-bold ${isNumCol ? 'text-center' : 'text-right'}">${this.escapeHtml(h)}</th>`;
+                    }).join("")}</tr>`;
                 }
                 if (tbody) {
                     if (rows.length === 0) {
@@ -4350,7 +4453,10 @@
                     } else {
                         tbody.innerHTML = rows.map(r => `
                             <tr class="hover:bg-slate-50">
-                                ${r.map((cell) => `<td class="p-2.5 ${String(cell).includes("Rs ") || String(cell).includes("%") ? 'num-ltr font-bold text-slate-800' : 'text-slate-700'}">${this.escapeHtml(cell)}</td>`).join("")}
+                                ${r.map((cell) => {
+                                    const isNum = String(cell).includes("Rs ") || String(cell).includes("%") || String(cell).includes(" ورکرز") || String(cell).includes(" حاضر");
+                                    return `<td class="p-2.5 ${isNum ? 'num-ltr font-bold text-slate-800 text-center' : 'text-slate-700 text-right'}">${this.escapeHtml(cell)}</td>`;
+                                }).join("")}
                             </tr>
                         `).join("");
                     }
@@ -4394,13 +4500,14 @@
                 return {
                     responsive: false,
                     autoWidth: false,
+                    order: [],
                     pageLength: 10,
-                    dom: "Bfrtip",
+                    dom: '<"dt-top-controls flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mb-3.5"Bf><"dt-table-container overflow-x-auto rounded-xl border border-slate-200"rt><"dt-bottom-controls flex flex-col sm:flex-row items-center justify-between gap-3 mt-3.5"ip>',
                     buttons: [
-                        { extend: "pdfHtml5", text: '<i class="fa-solid fa-file-pdf text-rose-600"></i>', titleAttr: "PDF ڈاؤن لوڈ" },
-                        { extend: "excelHtml5", text: '<i class="fa-solid fa-file-excel text-emerald-600"></i>', titleAttr: "Excel ڈاؤن لوڈ" },
-                        { extend: "csvHtml5", text: '<i class="fa-solid fa-file-csv text-sky-600"></i>', titleAttr: "CSV ڈاؤن لوڈ" },
-                        { extend: "print", text: '<i class="fa-solid fa-print text-slate-700"></i>', titleAttr: "پرنٹ ٹیبل" }
+                        { extend: "pdfHtml5", text: '<i class="fa-solid fa-file-pdf text-rose-600"></i>', titleAttr: "PDF ڈاؤن لوڈ", exportOptions: { columns: ":not(:last-child)" } },
+                        { extend: "excelHtml5", text: '<i class="fa-solid fa-file-excel text-emerald-600"></i>', titleAttr: "Excel ڈاؤن لوڈ", exportOptions: { columns: ":not(:last-child)" } },
+                        { extend: "csvHtml5", text: '<i class="fa-solid fa-file-csv text-sky-600"></i>', titleAttr: "CSV ڈاؤن لوڈ", exportOptions: { columns: ":not(:last-child)" } },
+                        { extend: "print", text: '<i class="fa-solid fa-print text-slate-700"></i>', titleAttr: "پرنٹ ٹیبل", exportOptions: { columns: ":not(:last-child)" } }
                     ],
                     language: {
                         search: "تلاش کریں:",
@@ -4524,30 +4631,30 @@
                     const isRunning = t.status === "جاری ہے";
                     return `
                         <tr>
-                            <td>
+                            <td class="text-right">
                                 <div class="font-extrabold text-slate-900">${this.escapeHtml(t.title)}</div>
                                 <div class="text-xs text-slate-500">${this.escapeHtml(t.sqft || "")}</div>
                             </td>
-                            <td>
+                            <td class="text-right">
                                 <div class="font-bold">${this.escapeHtml(t.client)}</div>
                                 <div class="text-xs text-slate-500 num-ltr">${this.escapeHtml(t.phone)}</div>
                             </td>
-                            <td>
+                            <td class="text-right">
                                 <div class="text-xs font-bold">${this.escapeHtml(t.city)}</div>
                                 <div class="text-[11px] text-emerald-700">${this.escapeHtml(t.type)}</div>
                             </td>
-                            <td class="num-ltr font-bold text-slate-900">${this.formatPKR(fin.contract)}</td>
-                            <td class="num-ltr font-bold text-sky-700">${this.formatPKR(fin.received)}</td>
-                            <td class="num-ltr font-bold text-rose-600">${this.formatPKR(fin.totalSpent)}</td>
-                            <td>
+                            <td class="num-ltr font-bold text-slate-900 text-center">${this.formatPKR(fin.contract)}</td>
+                            <td class="num-ltr font-bold text-sky-700 text-center">${this.formatPKR(fin.received)}</td>
+                            <td class="num-ltr font-bold text-rose-600 text-center">${this.formatPKR(fin.totalSpent)}</td>
+                            <td class="text-right">
                                 <div class="text-xs">مالک بقایا: <span class="num-ltr font-bold text-amber-700">${this.formatPKR(fin.balanceReceivable)}</span></div>
                                 <div class="text-xs">متوقع بچت: <span class="num-ltr font-bold text-emerald-700">${this.formatPKR(fin.projectedProfit)}</span></div>
                             </td>
-                            <td>
-                                <span class="px-2.5 py-1 rounded-full text-xs font-bold ${isRunning ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200 text-slate-800'}">${this.escapeHtml(t.status)}</span>
+                            <td class="text-center">
+                                <span class="px-2.5 py-1 rounded-full text-xs font-bold inline-block ${isRunning ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200 text-slate-800'}">${this.escapeHtml(t.status)}</span>
                             </td>
-                            <td>
-                                <div class="flex items-center gap-1">
+                            <td class="text-center">
+                                <div class="flex items-center justify-center gap-1">
                                     <button type="button" onclick="App.printSingleThekaReport('${this.escapeHtml(t.id)}')" class="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-600 hover:text-white flex items-center justify-center touch-target" title="کھاتہ پرنٹ">
                                         <i class="fa-solid fa-print"></i>
                                     </button>
@@ -4564,6 +4671,7 @@
                     `;
                 }).join("");
 
+                $("#table-thekas thead th").removeAttr("style");
                 document.querySelector("#table-thekas tbody").innerHTML = rows;
                 this.dataTables.thekas = $("#table-thekas").DataTable(this.buildDataTableConfig());
             },
@@ -4639,11 +4747,11 @@
                     const fin = this.getMazdoorFinancials(m.id);
                     const theka = this.db.thekas.find(t => t.id === m.thekaId);
                     const avatar = m.photo
-                        ? `<img src="${m.photo}" alt="Photo" class="w-10 h-10 rounded-full object-cover border border-emerald-500">`
-                        : `<div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center font-extrabold text-sm">${this.escapeHtml(m.name.charAt(0))}</div>`;
+                        ? `<img src="${m.photo}" alt="Photo" class="w-10 h-10 rounded-full object-cover border border-emerald-500 shrink-0">`
+                        : `<div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center font-extrabold text-sm shrink-0">${this.escapeHtml(m.name.charAt(0))}</div>`;
                     return `
                         <tr>
-                            <td>
+                            <td class="text-right">
                                 <div class="flex items-center gap-2.5">
                                     ${avatar}
                                     <div>
@@ -4652,19 +4760,19 @@
                                     </div>
                                 </div>
                             </td>
-                            <td><span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800 text-xs font-bold">${this.escapeHtml(m.role)}</span></td>
-                            <td class="text-xs font-bold text-slate-700">${theka ? this.escapeHtml(theka.title) : "غیر متعین"}</td>
-                            <td class="num-ltr font-bold text-slate-900">${this.formatPKR(m.dailyWage)}</td>
-                            <td class="num-ltr font-bold text-emerald-700">${this.formatPKR(fin.earned)}</td>
-                            <td class="num-ltr font-bold text-rose-600">${this.formatPKR(fin.paid)}</td>
-                            <td>
-                                <span class="px-2.5 py-1 rounded-lg text-xs font-extrabold num-ltr ${fin.netPayable >= 0 ? 'bg-amber-100 text-amber-900' : 'bg-rose-100 text-rose-800'}">
+                            <td class="text-center"><span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800 text-xs font-bold inline-block">${this.escapeHtml(m.role)}</span></td>
+                            <td class="text-xs font-bold text-slate-700 text-right">${theka ? this.escapeHtml(theka.title) : "غیر متعین"}</td>
+                            <td class="num-ltr font-bold text-slate-900 text-center">${this.formatPKR(m.dailyWage)}</td>
+                            <td class="num-ltr font-bold text-emerald-700 text-center">${this.formatPKR(fin.earned)}</td>
+                            <td class="num-ltr font-bold text-rose-600 text-center">${this.formatPKR(fin.paid)}</td>
+                            <td class="text-center">
+                                <span class="px-2.5 py-1 rounded-lg text-xs font-extrabold num-ltr inline-block ${fin.netPayable >= 0 ? 'bg-amber-100 text-amber-900' : 'bg-rose-100 text-rose-800'}">
                                     ${this.formatPKR(fin.netPayable)} ${fin.netPayable >= 0 ? '(واجب الادا)' : '(ایڈوانس زیادہ)'}
                                 </span>
                             </td>
-                            <td class="num-ltr text-xs font-bold">${this.escapeHtml(m.phone)}</td>
-                            <td>
-                                <div class="flex items-center gap-1">
+                            <td class="num-ltr text-xs font-bold text-center">${this.escapeHtml(m.phone)}</td>
+                            <td class="text-center">
+                                <div class="flex items-center justify-center gap-1">
                                     <button type="button" onclick="App.printMazdoorKhata('${this.escapeHtml(m.id)}')" class="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-600 hover:text-white flex items-center justify-center touch-target" title="مزدور کھاتہ سلپ">
                                         <i class="fa-solid fa-receipt"></i>
                                     </button>
@@ -4681,6 +4789,7 @@
                     `;
                 }).join("");
 
+                $("#table-mazdoors thead th").removeAttr("style");
                 document.querySelector("#table-mazdoors tbody").innerHTML = rows;
                 this.dataTables.mazdoors = $("#table-mazdoors").DataTable(this.buildDataTableConfig());
             },
@@ -4782,18 +4891,18 @@
                     const t = this.db.thekas.find(x => x.id === a.thekaId);
                     return `
                         <tr>
-                            <td class="num-ltr font-bold">${this.escapeHtml(a.date)}</td>
-                            <td class="font-extrabold text-slate-900">${m ? this.escapeHtml(m.name) : "نامعلوم"}</td>
-                            <td class="text-xs font-bold">${t ? this.escapeHtml(t.title) : "نامعلوم"}</td>
-                            <td>
-                                <span class="px-2.5 py-1 rounded-full text-xs font-bold ${a.multiplier > 0 ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">${this.escapeHtml(a.status)}</span>
+                            <td class="num-ltr font-bold text-center">${this.escapeHtml(a.date)}</td>
+                            <td class="font-extrabold text-slate-900 text-right">${m ? this.escapeHtml(m.name) : "نامعلوم"}</td>
+                            <td class="text-xs font-bold text-right">${t ? this.escapeHtml(t.title) : "نامعلوم"}</td>
+                            <td class="text-center">
+                                <span class="px-2.5 py-1 rounded-full text-xs font-bold inline-block ${a.multiplier > 0 ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">${this.escapeHtml(a.status)}</span>
                             </td>
-                            <td class="num-ltr">${this.formatPKR(a.baseWage)}</td>
-                            <td class="num-ltr text-sky-700 font-bold">${this.formatPKR(a.overtime)}</td>
-                            <td class="num-ltr font-extrabold text-emerald-700">${this.formatPKR(a.totalEarned)}</td>
-                            <td class="text-xs text-slate-600">${this.escapeHtml(a.note || "-")}</td>
-                            <td>
-                                <div class="flex items-center gap-1">
+                            <td class="num-ltr text-center">${this.formatPKR(a.baseWage)}</td>
+                            <td class="num-ltr text-sky-700 font-bold text-center">${this.formatPKR(a.overtime)}</td>
+                            <td class="num-ltr font-extrabold text-emerald-700 text-center">${this.formatPKR(a.totalEarned)}</td>
+                            <td class="text-xs text-slate-600 text-right">${this.escapeHtml(a.note || "-")}</td>
+                            <td class="text-center">
+                                <div class="flex items-center justify-center gap-1">
                                     <button type="button" onclick="App.openAttendanceModal('${this.escapeHtml(a.id)}')" class="w-9 h-9 rounded-lg bg-sky-50 text-sky-700 hover:bg-sky-600 hover:text-white flex items-center justify-center touch-target">
                                         <i class="fa-solid fa-pen"></i>
                                     </button>
@@ -4807,6 +4916,7 @@
                     `;
                 }).join("");
 
+                $("#table-attendance thead th").removeAttr("style");
                 document.querySelector("#table-attendance tbody").innerHTML = rows;
                 this.dataTables.attendance = $("#table-attendance").DataTable(this.buildDataTableConfig());
             },
@@ -4918,22 +5028,22 @@
                     const isCashIn = h.type === "مالک سے قسط وصولی";
                     return `
                         <tr>
-                            <td class="num-ltr font-bold">${this.escapeHtml(h.date)}</td>
-                            <td>
-                                <span class="px-2.5 py-1 rounded-full text-xs font-bold ${isCashIn ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">
+                            <td class="num-ltr font-bold text-center">${this.escapeHtml(h.date)}</td>
+                            <td class="text-center">
+                                <span class="px-2.5 py-1 rounded-full text-xs font-bold inline-block ${isCashIn ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">
                                     ${this.escapeHtml(h.type)}
                                 </span>
                             </td>
-                            <td class="text-xs font-bold">${t ? this.escapeHtml(t.title) : "-"}</td>
-                            <td class="text-xs font-bold">${m ? this.escapeHtml(m.name) : "سائٹ / جنرل"}</td>
-                            <td class="text-xs">${this.escapeHtml(h.method)}</td>
-                            <td class="num-ltr font-extrabold ${isCashIn ? 'text-emerald-700' : 'text-rose-600'}">${isCashIn ? '+' : '-'} ${this.formatPKR(h.amount)}</td>
-                            <td>
+                            <td class="text-xs font-bold text-right">${t ? this.escapeHtml(t.title) : "-"}</td>
+                            <td class="text-xs font-bold text-right">${m ? this.escapeHtml(m.name) : "سائٹ / جنرل"}</td>
+                            <td class="text-xs text-center">${this.escapeHtml(h.method)}</td>
+                            <td class="num-ltr font-extrabold text-center ${isCashIn ? 'text-emerald-700' : 'text-rose-600'}">${isCashIn ? '+' : '-'} ${this.formatPKR(h.amount)}</td>
+                            <td class="text-right">
                                 <div class="text-xs text-slate-700">${this.escapeHtml(h.desc)}</div>
                                 ${h.receiptImg ? '<span class="text-[10px] text-emerald-600 font-bold"><i class="fa-solid fa-image"></i> رسید منسلک ہے</span>' : ""}
                             </td>
-                            <td>
-                                <div class="flex items-center gap-1">
+                            <td class="text-center">
+                                <div class="flex items-center justify-center gap-1">
                                     <button type="button" onclick="App.printHisabVoucher('${this.escapeHtml(h.id)}')" class="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-600 hover:text-white flex items-center justify-center touch-target" title="واؤچر پرنٹ">
                                         <i class="fa-solid fa-print"></i>
                                     </button>
@@ -4950,6 +5060,7 @@
                     `;
                 }).join("");
 
+                $("#table-hisab thead th").removeAttr("style");
                 document.querySelector("#table-hisab tbody").innerHTML = rows;
                 this.dataTables.hisab = $("#table-hisab").DataTable(this.buildDataTableConfig());
             },
@@ -4964,21 +5075,21 @@
                     const isCurrentUser = currentUserId === u.id;
                     return `
                         <tr>
-                            <td class="font-extrabold text-slate-900">
+                            <td class="font-extrabold text-slate-900 text-right">
                                 <div>${this.escapeHtml(u.name)}</div>
                                 ${isCurrentUser ? '<span class="inline-block px-2 py-0.5 rounded text-[10px] bg-emerald-100 text-emerald-800 font-bold mt-0.5">موجودہ صارف (You)</span>' : ''}
                             </td>
-                            <td class="num-ltr font-bold">${this.escapeHtml(u.phone)}</td>
-                            <td>
-                                <span class="px-2.5 py-1 rounded-full text-xs font-bold ${u.role === 'Admin' ? 'bg-emerald-100 text-emerald-800' : 'bg-sky-100 text-sky-800'}">${this.escapeHtml(u.role)}</span>
+                            <td class="num-ltr font-bold text-center">${this.escapeHtml(u.phone)}</td>
+                            <td class="text-center">
+                                <span class="px-2.5 py-1 rounded-full text-xs font-bold inline-block ${u.role === 'Admin' ? 'bg-emerald-100 text-emerald-800' : 'bg-sky-100 text-sky-800'}">${this.escapeHtml(u.role)}</span>
                             </td>
-                            <td>
-                                <span class="px-2.5 py-1 rounded-full text-xs font-bold ${isExpired ? 'bg-rose-100 text-rose-800' : 'bg-emerald-100 text-emerald-800'}">
+                            <td class="text-center">
+                                <span class="px-2.5 py-1 rounded-full text-xs font-bold inline-block ${isExpired ? 'bg-rose-100 text-rose-800' : 'bg-emerald-100 text-emerald-800'}">
                                     ${isExpired ? 'مدت ختم (Expired)' : 'فعال (Active)'}
                                 </span>
                             </td>
-                            <td>
-                                <div class="flex items-center gap-1.5 flex-wrap">
+                            <td class="text-center">
+                                <div class="flex items-center justify-center gap-1.5 flex-wrap">
                                     <button type="button" onclick="App.openUserModal('${this.escapeHtml(u.id)}')" class="w-8 h-8 rounded-lg bg-sky-50 text-sky-700 hover:bg-sky-600 hover:text-white flex items-center justify-center touch-target" title="ترمیم">
                                         <i class="fa-solid fa-pen"></i>
                                     </button>
@@ -4998,6 +5109,7 @@
                     `;
                 }).join("");
 
+                $("#table-users thead th").removeAttr("style");
                 document.querySelector("#table-users tbody").innerHTML = rows;
                 this.dataTables.users = $("#table-users").DataTable(this.buildDataTableConfig());
             },
@@ -6849,21 +6961,21 @@
                     <table class="w-full text-xs border border-slate-300">
                         <thead>
                             <tr class="bg-slate-100">
-                                <th class="p-2 border">تاریخ</th>
-                                <th class="p-2 border">قسم</th>
-                                <th class="p-2 border">طریقہ</th>
-                                <th class="p-2 border">تفصیل</th>
-                                <th class="p-2 border">رقم</th>
+                                <th class="p-2 border text-center">تاریخ</th>
+                                <th class="p-2 border text-center">قسم</th>
+                                <th class="p-2 border text-center">طریقہ</th>
+                                <th class="p-2 border text-right">تفصیل</th>
+                                <th class="p-2 border text-center">رقم</th>
                             </tr>
                         </thead>
                         <tbody>
                             ${tHisab.map(h => `
                                 <tr>
-                                    <td class="p-2 border num-ltr">${this.escapeHtml(h.date)}</td>
-                                    <td class="p-2 border font-bold">${this.escapeHtml(h.type)}</td>
-                                    <td class="p-2 border">${this.escapeHtml(h.method)}</td>
-                                    <td class="p-2 border">${this.escapeHtml(h.desc)}</td>
-                                    <td class="p-2 border num-ltr font-bold">${this.formatPKR(h.amount)}</td>
+                                    <td class="p-2 border num-ltr text-center">${this.escapeHtml(h.date)}</td>
+                                    <td class="p-2 border font-bold text-center">${this.escapeHtml(h.type)}</td>
+                                    <td class="p-2 border text-center">${this.escapeHtml(h.method)}</td>
+                                    <td class="p-2 border text-right">${this.escapeHtml(h.desc)}</td>
+                                    <td class="p-2 border num-ltr font-bold text-center">${this.formatPKR(h.amount)}</td>
                                 </tr>
                             `).join("") || '<tr><td colspan="5" class="p-3 text-center">کوئی اندراج نہیں</td></tr>'}
                         </tbody>
@@ -6873,10 +6985,10 @@
                     <table class="w-full text-xs border border-slate-300">
                         <thead>
                             <tr class="bg-slate-100">
-                                <th class="p-2 border">تاریخ</th>
-                                <th class="p-2 border">مزدور / مستری</th>
-                                <th class="p-2 border">حاضری</th>
-                                <th class="p-2 border">کل دیہاڑی</th>
+                                <th class="p-2 border text-center">تاریخ</th>
+                                <th class="p-2 border text-right">مزدور / مستری</th>
+                                <th class="p-2 border text-center">حاضری</th>
+                                <th class="p-2 border text-center">کل دیہاڑی</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -6884,10 +6996,10 @@
                                 const m = this.db.mazdoors.find(x => x.id === a.mazdoorId);
                                 return `
                                     <tr>
-                                        <td class="p-2 border num-ltr">${this.escapeHtml(a.date)}</td>
-                                        <td class="p-2 border font-bold">${m ? this.escapeHtml(m.name) : "-"}</td>
-                                        <td class="p-2 border">${this.escapeHtml(a.status)}</td>
-                                        <td class="p-2 border num-ltr font-bold">${this.formatPKR(a.totalEarned)}</td>
+                                        <td class="p-2 border num-ltr text-center">${this.escapeHtml(a.date)}</td>
+                                        <td class="p-2 border font-bold text-right">${m ? this.escapeHtml(m.name) : "-"}</td>
+                                        <td class="p-2 border text-center">${this.escapeHtml(a.status)}</td>
+                                        <td class="p-2 border num-ltr font-bold text-center">${this.formatPKR(a.totalEarned)}</td>
                                     </tr>
                                 `;
                             }).join("") || '<tr><td colspan="4" class="p-3 text-center">کوئی حاضری نہیں</td></tr>'}
@@ -6932,21 +7044,21 @@
                     <table class="w-full text-xs border border-slate-300">
                         <thead>
                             <tr class="bg-slate-100">
-                                <th class="p-2 border">تاریخ</th>
-                                <th class="p-2 border">حاضری قسم</th>
-                                <th class="p-2 border">اوور ٹائم</th>
-                                <th class="p-2 border">کل دیہاڑی</th>
-                                <th class="p-2 border">تفصیل</th>
+                                <th class="p-2 border text-center">تاریخ</th>
+                                <th class="p-2 border text-center">حاضری قسم</th>
+                                <th class="p-2 border text-center">اوور ٹائم</th>
+                                <th class="p-2 border text-center">کل دیہاڑی</th>
+                                <th class="p-2 border text-right">تفصیل</th>
                             </tr>
                         </thead>
                         <tbody>
                             ${mAtt.map(a => `
                                 <tr>
-                                    <td class="p-2 border num-ltr">${this.escapeHtml(a.date)}</td>
-                                    <td class="p-2 border font-bold">${this.escapeHtml(a.status)}</td>
-                                    <td class="p-2 border num-ltr">${this.formatPKR(a.overtime)}</td>
-                                    <td class="p-2 border num-ltr font-bold">${this.formatPKR(a.totalEarned)}</td>
-                                    <td class="p-2 border">${this.escapeHtml(a.note || "-")}</td>
+                                    <td class="p-2 border num-ltr text-center">${this.escapeHtml(a.date)}</td>
+                                    <td class="p-2 border font-bold text-center">${this.escapeHtml(a.status)}</td>
+                                    <td class="p-2 border num-ltr text-center">${this.formatPKR(a.overtime)}</td>
+                                    <td class="p-2 border num-ltr font-bold text-center">${this.formatPKR(a.totalEarned)}</td>
+                                    <td class="p-2 border text-right">${this.escapeHtml(a.note || "-")}</td>
                                 </tr>
                             `).join("") || '<tr><td colspan="5" class="p-3 text-center">کوئی حاضری نہیں</td></tr>'}
                         </tbody>
@@ -6956,19 +7068,19 @@
                     <table class="w-full text-xs border border-slate-300">
                         <thead>
                             <tr class="bg-slate-100">
-                                <th class="p-2 border">تاریخ</th>
-                                <th class="p-2 border">طریقہ ادائیگی</th>
-                                <th class="p-2 border">تفصیل</th>
-                                <th class="p-2 border">ادا شدہ رقم</th>
+                                <th class="p-2 border text-center">تاریخ</th>
+                                <th class="p-2 border text-center">طریقہ ادائیگی</th>
+                                <th class="p-2 border text-right">تفصیل</th>
+                                <th class="p-2 border text-center">ادا شدہ رقم</th>
                             </tr>
                         </thead>
                         <tbody>
                             ${mPay.map(p => `
                                 <tr>
-                                    <td class="p-2 border num-ltr">${this.escapeHtml(p.date)}</td>
-                                    <td class="p-2 border">${this.escapeHtml(p.method)}</td>
-                                    <td class="p-2 border">${this.escapeHtml(p.desc)}</td>
-                                    <td class="p-2 border num-ltr font-bold">${this.formatPKR(p.amount)}</td>
+                                    <td class="p-2 border num-ltr text-center">${this.escapeHtml(p.date)}</td>
+                                    <td class="p-2 border text-center">${this.escapeHtml(p.method)}</td>
+                                    <td class="p-2 border text-right">${this.escapeHtml(p.desc)}</td>
+                                    <td class="p-2 border num-ltr font-bold text-center">${this.formatPKR(p.amount)}</td>
                                 </tr>
                             `).join("") || '<tr><td colspan="4" class="p-3 text-center">کوئی ادائیگی نہیں</td></tr>'}
                         </tbody>
