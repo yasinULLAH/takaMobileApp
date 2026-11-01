@@ -133,6 +133,11 @@
             font-family: 'Inter', sans-serif;
             font-weight: 600;
         }
+        td.num-ltr,
+        th.num-ltr {
+            display: table-cell !important;
+            direction: ltr !important;
+        }
         .theme-header {
             background-color: var(--header-bg);
             color: var(--header-text);
@@ -497,6 +502,7 @@
             .dt-table {
                 width: 100% !important;
                 min-width: 100% !important;
+                display: table !important;
                 table-layout: auto !important;
             }
         }
@@ -513,6 +519,15 @@
             border-collapse: separate !important;
             border-spacing: 0 !important;
             table-layout: auto !important;
+        }
+        table.dataTable thead th,
+        table.dataTable tbody td,
+        .dt-table thead th,
+        .dt-table tbody td,
+        td.num-ltr,
+        th.num-ltr {
+            display: table-cell !important;
+            vertical-align: middle !important;
         }
         table.dataTable thead th,
         .dt-table thead th {
@@ -3418,6 +3433,16 @@
 
                 if (baseSegment === "/dashboard") {
                     this.renderDashboard();
+                } else if (baseSegment === "/thekas") {
+                    this.renderThekasTable();
+                } else if (baseSegment === "/mazdoors") {
+                    this.renderMazdoorsTable();
+                } else if (baseSegment === "/attendance") {
+                    this.renderAttendanceTable();
+                } else if (baseSegment === "/hisab") {
+                    this.renderHisabTable();
+                } else if (baseSegment === "/settings") {
+                    this.renderUsersTable();
                 }
 
                 setTimeout(() => {
@@ -4102,8 +4127,8 @@
                             <td class="p-2.5 text-right text-slate-700 max-w-[140px] truncate" title="${this.escapeHtml(thekaTitle)}">
                                 ${this.escapeHtml(thekaTitle)}
                             </td>
-                            <td class="p-2.5 text-center num-ltr font-bold text-emerald-700">${this.formatPKR(x.fin.earned)}</td>
-                            <td class="p-2.5 text-center num-ltr font-extrabold text-amber-800">${this.formatPKR(x.fin.netPayable)}</td>
+                            <td class="p-2.5 text-center font-bold text-emerald-700"><span class="num-ltr">${this.formatPKR(x.fin.earned)}</span></td>
+                            <td class="p-2.5 text-center font-extrabold text-amber-800"><span class="num-ltr">${this.formatPKR(x.fin.netPayable)}</span></td>
                             <td class="p-2.5 text-center">
                                 <button type="button" onclick="App.openHisabModal('', 'مزدور ادائیگی / ایڈوانس', '${this.escapeHtml(x.m.id)}', '${this.escapeHtml(x.m.thekaId || '')}')" class="bg-amber-100 hover:bg-amber-200 text-amber-900 px-2.5 py-1.5 rounded-lg font-bold text-[10px] touch-target" title="ادائیگی درج کریں">
                                     ادائیگی
@@ -4806,9 +4831,9 @@
                                 <div class="text-xs font-bold">${this.escapeHtml(t.city)}</div>
                                 <div class="text-[11px] text-emerald-700">${this.escapeHtml(t.type)}</div>
                             </td>
-                            <td class="num-ltr font-bold text-slate-900 text-center">${this.formatPKR(fin.contract)}</td>
-                            <td class="num-ltr font-bold text-sky-700 text-center">${this.formatPKR(fin.received)}</td>
-                            <td class="num-ltr font-bold text-rose-600 text-center">${this.formatPKR(fin.totalSpent)}</td>
+                            <td class="text-center font-bold text-slate-900"><span class="num-ltr">${this.formatPKR(fin.contract)}</span></td>
+                            <td class="text-center font-bold text-sky-700"><span class="num-ltr">${this.formatPKR(fin.received)}</span></td>
+                            <td class="text-center font-bold text-rose-600"><span class="num-ltr">${this.formatPKR(fin.totalSpent)}</span></td>
                             <td class="text-right">
                                 <div class="text-xs">مالک بقایا: <span class="num-ltr font-bold text-amber-700">${this.formatPKR(fin.balanceReceivable)}</span></div>
                                 <div class="text-xs">متوقع بچت: <span class="num-ltr font-bold text-emerald-700">${this.formatPKR(fin.projectedProfit)}</span></div>
@@ -4925,15 +4950,15 @@
                             </td>
                             <td class="text-center"><span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800 text-xs font-bold inline-block">${this.escapeHtml(m.role)}</span></td>
                             <td class="text-xs font-bold text-slate-700 text-right">${theka ? this.escapeHtml(theka.title) : "غیر متعین"}</td>
-                            <td class="num-ltr font-bold text-slate-900 text-center">${this.formatPKR(m.dailyWage)}</td>
-                            <td class="num-ltr font-bold text-emerald-700 text-center">${this.formatPKR(fin.earned)}</td>
-                            <td class="num-ltr font-bold text-rose-600 text-center">${this.formatPKR(fin.paid)}</td>
+                            <td class="text-center font-bold text-slate-900"><span class="num-ltr">${this.formatPKR(m.dailyWage)}</span></td>
+                            <td class="text-center font-bold text-emerald-700"><span class="num-ltr">${this.formatPKR(fin.earned)}</span></td>
+                            <td class="text-center font-bold text-rose-600"><span class="num-ltr">${this.formatPKR(fin.paid)}</span></td>
                             <td class="text-center">
                                 <span class="px-2.5 py-1 rounded-lg text-xs font-extrabold num-ltr inline-block ${fin.netPayable >= 0 ? 'bg-amber-100 text-amber-900' : 'bg-rose-100 text-rose-800'}">
                                     ${this.formatPKR(fin.netPayable)} ${fin.netPayable >= 0 ? '(واجب الادا)' : '(ایڈوانس زیادہ)'}
                                 </span>
                             </td>
-                            <td class="num-ltr text-xs font-bold text-center">${this.escapeHtml(m.phone)}</td>
+                            <td class="text-center text-xs font-bold"><span class="num-ltr">${this.escapeHtml(m.phone)}</span></td>
                             <td class="text-center">
                                 <div class="flex items-center justify-center gap-1">
                                     <button type="button" onclick="App.printMazdoorKhata('${this.escapeHtml(m.id)}')" class="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-600 hover:text-white flex items-center justify-center touch-target" title="مزدور کھاتہ سلپ">
@@ -5054,15 +5079,15 @@
                     const t = this.db.thekas.find(x => x.id === a.thekaId);
                     return `
                         <tr>
-                            <td class="num-ltr font-bold text-center">${this.escapeHtml(a.date)}</td>
+                            <td class="text-center font-bold"><span class="num-ltr">${this.escapeHtml(a.date)}</span></td>
                             <td class="font-extrabold text-slate-900 text-right">${m ? this.escapeHtml(m.name) : "نامعلوم"}</td>
                             <td class="text-xs font-bold text-right">${t ? this.escapeHtml(t.title) : "نامعلوم"}</td>
                             <td class="text-center">
                                 <span class="px-2.5 py-1 rounded-full text-xs font-bold inline-block ${a.multiplier > 0 ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">${this.escapeHtml(a.status)}</span>
                             </td>
-                            <td class="num-ltr text-center">${this.formatPKR(a.baseWage)}</td>
-                            <td class="num-ltr text-sky-700 font-bold text-center">${this.formatPKR(a.overtime)}</td>
-                            <td class="num-ltr font-extrabold text-emerald-700 text-center">${this.formatPKR(a.totalEarned)}</td>
+                            <td class="text-center"><span class="num-ltr">${this.formatPKR(a.baseWage)}</span></td>
+                            <td class="text-center font-bold text-sky-700"><span class="num-ltr">${this.formatPKR(a.overtime)}</span></td>
+                            <td class="text-center font-extrabold text-emerald-700"><span class="num-ltr">${this.formatPKR(a.totalEarned)}</span></td>
                             <td class="text-xs text-slate-600 text-right">${this.escapeHtml(a.note || "-")}</td>
                             <td class="text-center">
                                 <div class="flex items-center justify-center gap-1">
@@ -5191,7 +5216,7 @@
                     const isCashIn = h.type === "مالک سے قسط وصولی";
                     return `
                         <tr>
-                            <td class="num-ltr font-bold text-center">${this.escapeHtml(h.date)}</td>
+                            <td class="text-center font-bold"><span class="num-ltr">${this.escapeHtml(h.date)}</span></td>
                             <td class="text-center">
                                 <span class="px-2.5 py-1 rounded-full text-xs font-bold inline-block ${isCashIn ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">
                                     ${this.escapeHtml(h.type)}
@@ -5200,7 +5225,7 @@
                             <td class="text-xs font-bold text-right">${t ? this.escapeHtml(t.title) : "-"}</td>
                             <td class="text-xs font-bold text-right">${m ? this.escapeHtml(m.name) : "سائٹ / جنرل"}</td>
                             <td class="text-xs text-center">${this.escapeHtml(h.method)}</td>
-                            <td class="num-ltr font-extrabold text-center ${isCashIn ? 'text-emerald-700' : 'text-rose-600'}">${isCashIn ? '+' : '-'} ${this.formatPKR(h.amount)}</td>
+                            <td class="text-center font-extrabold ${isCashIn ? 'text-emerald-700' : 'text-rose-600'}"><span class="num-ltr">${isCashIn ? '+' : '-'} ${this.formatPKR(h.amount)}</span></td>
                             <td class="text-right">
                                 <div class="text-xs text-slate-700">${this.escapeHtml(h.desc)}</div>
                                 ${h.receiptImg ? '<span class="text-[10px] text-emerald-600 font-bold"><i class="fa-solid fa-image"></i> رسید منسلک ہے</span>' : ""}
@@ -5242,7 +5267,7 @@
                                 <div>${this.escapeHtml(u.name)}</div>
                                 ${isCurrentUser ? '<span class="inline-block px-2 py-0.5 rounded text-[10px] bg-emerald-100 text-emerald-800 font-bold mt-0.5">موجودہ صارف (You)</span>' : ''}
                             </td>
-                            <td class="num-ltr font-bold text-center">${this.escapeHtml(u.phone)}</td>
+                            <td class="text-center font-bold"><span class="num-ltr">${this.escapeHtml(u.phone)}</span></td>
                             <td class="text-center">
                                 <span class="px-2.5 py-1 rounded-full text-xs font-bold inline-block ${u.role === 'Admin' ? 'bg-emerald-100 text-emerald-800' : 'bg-sky-100 text-sky-800'}">${this.escapeHtml(u.role)}</span>
                             </td>
@@ -7219,8 +7244,8 @@
                                 <tr>
                                     <td class="p-2 border num-ltr text-center">${this.escapeHtml(a.date)}</td>
                                     <td class="p-2 border font-bold text-center">${this.escapeHtml(a.status)}</td>
-                                    <td class="p-2 border num-ltr text-center">${this.formatPKR(a.overtime)}</td>
-                                    <td class="p-2 border num-ltr font-bold text-center">${this.formatPKR(a.totalEarned)}</td>
+                                    <td class="p-2 border text-center"><span class="num-ltr">${this.formatPKR(a.overtime)}</span></td>
+                                    <td class="p-2 border font-bold text-center"><span class="num-ltr">${this.formatPKR(a.totalEarned)}</span></td>
                                     <td class="p-2 border text-right">${this.escapeHtml(a.note || "-")}</td>
                                 </tr>
                             `).join("") || '<tr><td colspan="5" class="p-3 text-center">کوئی حاضری نہیں</td></tr>'}
