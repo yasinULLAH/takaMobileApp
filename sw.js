@@ -67,7 +67,7 @@ if (workbox) {
     },
     {
         "url": "index.html",
-        "revision": "36b4ea51c65c111ef47bdae7160d3d58"
+        "revision": "8d9dfbfb998ba261c46634dcee12a712"
     },
     {
         "url": "logo.png",
@@ -79,7 +79,11 @@ if (workbox) {
     },
     {
         "url": "offline.html",
-        "revision": "e44c2a14d302044a1563011533ecb34c"
+        "revision": "e52dc9dd1c5190dd38867bb3a7b680ad"
+    },
+    {
+        "url": "tekaApp.txt",
+        "revision": "d41d8cd98f00b204e9800998ecf8427e"
     }
 ]);
 

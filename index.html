@@ -1483,7 +1483,6 @@
 <span>نیا ٹھیکہ شامل کریں</span>
 </button>
 </div>
-
 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5" id="thekas-summary-cards">
 <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
 <div class="text-[10px] sm:text-xs font-bold text-slate-500 flex items-center justify-between">
@@ -1534,14 +1533,13 @@
 <div class="text-[10px] text-teal-700 font-bold mt-0.5" id="thk-kpi-margin">0% متوقع مارجن</div>
 </div>
 </div>
-
 <div class="bg-white rounded-2xl border border-slate-200 p-3 sm:p-4 shadow-sm space-y-3">
 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
 <div class="font-extrabold text-xs text-slate-800 flex items-center gap-1.5">
 <i class="fa-solid fa-filter text-emerald-600"></i>
 <span>ٹھیکہ فلٹرز اور تلاش:</span>
 </div>
-<button type="button" onclick="App.resetThekasFilters()" class="text-slate-500 hover:text-rose-600 text-[11px] font-bold flex items-center gap-1 self-start sm:self-auto touch-target">
+<button class="text-slate-500 hover:text-rose-600 text-[11px] font-bold flex items-center gap-1 self-start sm:self-auto touch-target" onclick="App.resetThekasFilters()" type="button">
 <i class="fa-solid fa-rotate-left"></i>
 <span>فلٹرز صاف کریں</span>
 </button>
@@ -1581,7 +1579,6 @@
 </div>
 </div>
 </div>
-
 <div class="bg-white rounded-2xl border border-slate-200 p-3 sm:p-4 shadow-sm">
 <div class="sm:hidden flex items-center justify-between text-[11px] text-slate-500 font-semibold mb-2 px-1">
 <span class="flex items-center gap-1.5"><i class="fa-solid fa-arrows-left-right text-emerald-600"></i> تمام کالم دیکھنے کے لیے دائیں بائیں اسکرول کریں</span>
@@ -1616,7 +1613,6 @@
 <span>نیا مزدور / مستری شامل کریں</span>
 </button>
 </div>
-
 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5" id="mazdoors-summary-cards">
 <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
 <div class="text-[10px] sm:text-xs font-bold text-slate-500 flex items-center justify-between">
@@ -1667,14 +1663,13 @@
 <div class="text-[10px] text-teal-700 font-bold mt-0.5">کل کام شدہ دیہاڑیاں</div>
 </div>
 </div>
-
 <div class="bg-white rounded-2xl border border-slate-200 p-3 sm:p-4 shadow-sm space-y-3">
 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
 <div class="font-extrabold text-xs text-slate-800 flex items-center gap-1.5">
 <i class="fa-solid fa-filter text-emerald-600"></i>
 <span>مزدور کھاتہ فلٹرز اور تلاش:</span>
 </div>
-<button type="button" onclick="App.resetMazdoorsFilters()" class="text-slate-500 hover:text-rose-600 text-[11px] font-bold flex items-center gap-1 self-start sm:self-auto touch-target">
+<button class="text-slate-500 hover:text-rose-600 text-[11px] font-bold flex items-center gap-1 self-start sm:self-auto touch-target" onclick="App.resetMazdoorsFilters()" type="button">
 <i class="fa-solid fa-rotate-left"></i>
 <span>فلٹرز صاف کریں</span>
 </button>
@@ -1703,14 +1698,13 @@
 <label class="block text-[11px] font-bold text-slate-600 mb-1" for="filter-mazdoor-balance">کھاتہ بقایا کیفیت:</label>
 <select class="w-full border border-slate-300 rounded-xl px-2.5 py-2 text-xs font-bold bg-white touch-target no-select2" id="filter-mazdoor-balance" onchange="App.onMazdoorsFilterChange()">
 <option value="ALL">تمام کھاتے (All Balances)</option>
-<option value="DUE">واجب الادا بقایا جات (> 0)</option>
+<option value="DUE">واجب الادا بقایا جات (&gt; 0)</option>
 <option value="ZERO">بے باق شدہ کھاتے (0 Balance)</option>
-<option value="ADVANCE">ایڈوانس زیادہ دیا گیا (< 0)</option>
+<option value="ADVANCE">ایڈوانس زیادہ دیا گیا (&lt; 0)</option>
 </select>
 </div>
 </div>
 </div>
-
 <div class="bg-white rounded-2xl border border-slate-200 p-3 sm:p-4 shadow-sm">
 <div class="sm:hidden flex items-center justify-between text-[11px] text-slate-500 font-semibold mb-2 px-1">
 <span class="flex items-center gap-1.5"><i class="fa-solid fa-arrows-left-right text-emerald-600"></i> تمام کالم دیکھنے کے لیے دائیں بائیں اسکرول کریں</span>
@@ -1751,7 +1745,6 @@
 </button>
 </div>
 </div>
-
 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5" id="attendance-summary-cards">
 <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
 <div class="text-[10px] sm:text-xs font-bold text-slate-500 flex items-center justify-between">
@@ -1802,7 +1795,6 @@
 <div class="text-[10px] text-emerald-700 font-bold mt-0.5">خالص یومیہ لاگت پول</div>
 </div>
 </div>
-
 <div class="bg-white rounded-2xl border border-slate-200 p-3 sm:p-4 shadow-sm space-y-3">
 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
 <div class="flex items-center gap-2 flex-wrap">
@@ -1811,14 +1803,14 @@
 <span>حاضری فلٹرز:</span>
 </span>
 <div class="flex items-center gap-1 flex-wrap">
-<button type="button" id="att-quick-ALL" onclick="App.setAttendanceQuickDate('ALL')" class="att-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-emerald-600 text-white shadow-sm touch-target">سب ریکارڈز</button>
-<button type="button" id="att-quick-TODAY" onclick="App.setAttendanceQuickDate('TODAY')" class="att-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 touch-target">آج</button>
-<button type="button" id="att-quick-YESTERDAY" onclick="App.setAttendanceQuickDate('YESTERDAY')" class="att-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 touch-target">گزشتہ کل</button>
-<button type="button" id="att-quick-THIS_WEEK" onclick="App.setAttendanceQuickDate('THIS_WEEK')" class="att-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 touch-target">اس ہفتے</button>
-<button type="button" id="att-quick-THIS_MONTH" onclick="App.setAttendanceQuickDate('THIS_MONTH')" class="att-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 touch-target">اس مہینے</button>
+<button class="att-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-emerald-600 text-white shadow-sm touch-target" id="att-quick-ALL" onclick="App.setAttendanceQuickDate('ALL')" type="button">سب ریکارڈز</button>
+<button class="att-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 touch-target" id="att-quick-TODAY" onclick="App.setAttendanceQuickDate('TODAY')" type="button">آج</button>
+<button class="att-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 touch-target" id="att-quick-YESTERDAY" onclick="App.setAttendanceQuickDate('YESTERDAY')" type="button">گزشتہ کل</button>
+<button class="att-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 touch-target" id="att-quick-THIS_WEEK" onclick="App.setAttendanceQuickDate('THIS_WEEK')" type="button">اس ہفتے</button>
+<button class="att-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 touch-target" id="att-quick-THIS_MONTH" onclick="App.setAttendanceQuickDate('THIS_MONTH')" type="button">اس مہینے</button>
 </div>
 </div>
-<button type="button" onclick="App.resetAttendanceFilters()" class="text-slate-500 hover:text-rose-600 text-[11px] font-bold flex items-center gap-1 self-start sm:self-auto touch-target">
+<button class="text-slate-500 hover:text-rose-600 text-[11px] font-bold flex items-center gap-1 self-start sm:self-auto touch-target" onclick="App.resetAttendanceFilters()" type="button">
 <i class="fa-solid fa-rotate-left"></i>
 <span>تمام فلٹرز صاف کریں</span>
 </button>
@@ -1865,7 +1857,6 @@
 </div>
 </div>
 </div>
-
 <div class="bg-white rounded-2xl border border-slate-200 p-3 sm:p-4 shadow-sm">
 <div class="sm:hidden flex items-center justify-between text-[11px] text-slate-500 font-semibold mb-2 px-1">
 <span class="flex items-center gap-1.5"><i class="fa-solid fa-arrows-left-right text-emerald-600"></i> تمام کالم دیکھنے کے لیے دائیں بائیں اسکرول کریں</span>
@@ -1900,7 +1891,6 @@
 <span>نیا لین دین درج کریں</span>
 </button>
 </div>
-
 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5" id="hisab-summary-cards">
 <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
 <div class="text-[10px] sm:text-xs font-bold text-slate-500 flex items-center justify-between">
@@ -1951,7 +1941,6 @@
 <div class="text-[10px] text-slate-500 mt-0.5">فلٹر شدہ ٹرانزیکشنز</div>
 </div>
 </div>
-
 <div class="bg-white rounded-2xl border border-slate-200 p-3 sm:p-4 shadow-sm space-y-3">
 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
 <div class="flex items-center gap-2 flex-wrap">
@@ -1960,14 +1949,14 @@
 <span>کھاتہ فلٹرز:</span>
 </span>
 <div class="flex items-center gap-1 flex-wrap">
-<button type="button" id="hisab-quick-ALL" onclick="App.setHisabQuickDate('ALL')" class="hisab-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-emerald-600 text-white shadow-sm touch-target">سب ریکارڈز</button>
-<button type="button" id="hisab-quick-TODAY" onclick="App.setHisabQuickDate('TODAY')" class="hisab-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 touch-target">آج</button>
-<button type="button" id="hisab-quick-YESTERDAY" onclick="App.setHisabQuickDate('YESTERDAY')" class="hisab-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 touch-target">گزشتہ کل</button>
-<button type="button" id="hisab-quick-THIS_WEEK" onclick="App.setHisabQuickDate('THIS_WEEK')" class="hisab-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 touch-target">اس ہفتے</button>
-<button type="button" id="hisab-quick-THIS_MONTH" onclick="App.setHisabQuickDate('THIS_MONTH')" class="hisab-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 touch-target">اس مہینے</button>
+<button class="hisab-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-emerald-600 text-white shadow-sm touch-target" id="hisab-quick-ALL" onclick="App.setHisabQuickDate('ALL')" type="button">سب ریکارڈز</button>
+<button class="hisab-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 touch-target" id="hisab-quick-TODAY" onclick="App.setHisabQuickDate('TODAY')" type="button">آج</button>
+<button class="hisab-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 touch-target" id="hisab-quick-YESTERDAY" onclick="App.setHisabQuickDate('YESTERDAY')" type="button">گزشتہ کل</button>
+<button class="hisab-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 touch-target" id="hisab-quick-THIS_WEEK" onclick="App.setHisabQuickDate('THIS_WEEK')" type="button">اس ہفتے</button>
+<button class="hisab-quick-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 touch-target" id="hisab-quick-THIS_MONTH" onclick="App.setHisabQuickDate('THIS_MONTH')" type="button">اس مہینے</button>
 </div>
 </div>
-<button type="button" onclick="App.resetHisabFilters()" class="text-slate-500 hover:text-rose-600 text-[11px] font-bold flex items-center gap-1 self-start sm:self-auto touch-target">
+<button class="text-slate-500 hover:text-rose-600 text-[11px] font-bold flex items-center gap-1 self-start sm:self-auto touch-target" onclick="App.resetHisabFilters()" type="button">
 <i class="fa-solid fa-rotate-left"></i>
 <span>تمام فلٹرز صاف کریں</span>
 </button>
@@ -2023,7 +2012,6 @@
 </div>
 </div>
 </div>
-
 <div class="bg-white rounded-2xl border border-slate-200 p-3 sm:p-4 shadow-sm">
 <div class="sm:hidden flex items-center justify-between text-[11px] text-slate-500 font-semibold mb-2 px-1">
 <span class="flex items-center gap-1.5"><i class="fa-solid fa-arrows-left-right text-emerald-600"></i> تمام کالم دیکھنے کے لیے دائیں بائیں اسکرول کریں</span>
@@ -2822,14 +2810,15 @@
             },
 
             toast(title, icon = "success") {
+                if (icon === "info") return;
                 Swal.fire({
                     toast: true,
                     position: "top-end",
                     icon: icon,
                     title: title,
                     showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true
+                    timer: 1800,
+                    timerProgressBar: false
                 });
             },
 
@@ -3241,7 +3230,6 @@
                     document.getElementById("login-password").value = "Munshi@786";
                 }
                 document.getElementById("login-captcha-input").value = this.captchas.login;
-                this.toast("ٹیسٹ اکاؤنٹ اور کیپچا درج ہو گیا، اب لاگ ان بٹن دبائیں۔", "info");
             },
 
             togglePasswordVisibility(inputId) {
