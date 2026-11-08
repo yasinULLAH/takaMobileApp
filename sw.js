@@ -67,7 +67,7 @@ if (workbox) {
     },
     {
         "url": "index.html",
-        "revision": "8d9dfbfb998ba261c46634dcee12a712"
+        "revision": "fcf639125b14733192669b4cfa1a0a5a"
     },
     {
         "url": "logo.png",
@@ -79,7 +79,7 @@ if (workbox) {
     },
     {
         "url": "offline.html",
-        "revision": "e52dc9dd1c5190dd38867bb3a7b680ad"
+        "revision": "686929e53e8b2dbff4c7ee00fe7fde5b"
     },
     {
         "url": "tekaApp.txt",

@@ -64,13 +64,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style id="dynamic-theme-vars">
         :root {
-            --app-font-family: 'Calibri', 'Segoe UI', sans-serif;
+            --app-font-family: 'Noto Sans Arabic', 'Readex Pro', 'Inter', sans-serif;
             --app-font-size: 16px;
             --header-bg: #0f172a;
             --header-text: #f8fafc;
             --sidebar-bg: #1e293b;
             --sidebar-text: #f1f5f9;
-            --main-bg: #f1f5f9;
+            --main-bg: #f8fafc;
             --main-text: #0f172a;
             --footer-bg: #0f172a;
             --footer-text: #e2e8f0;
@@ -531,21 +531,25 @@
         }
         table.dataTable thead th,
         .dt-table thead th {
-            background: linear-gradient(180deg, #0f766e 0%, #047857 100%) !important;
-            color: #ffffff !important;
-            font-weight: 800 !important;
-            font-size: 0.85rem !important;
+            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
+            color: #f8fafc !important;
+            font-weight: 700 !important;
+            font-size: 0.84rem !important;
             padding: 12px 10px !important;
             border-top: none !important;
-            border-left: 1px solid #0f5132 !important;
+            border-left: 1px solid #334155 !important;
             border-right: none !important;
-            border-bottom: 2px solid #064e3b !important;
+            border-bottom: 2px solid #059669 !important;
             vertical-align: middle !important;
             white-space: nowrap !important;
             letter-spacing: 0.01em;
             box-sizing: border-box !important;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
         }
+        .bg-indigo-50, .bg-purple-50, .bg-teal-50, .bg-sky-50 { background-color: #f8fafc !important; }
+        .bg-indigo-100, .bg-purple-100, .bg-teal-100, .bg-sky-100 { background-color: #f1f5f9 !important; }
+        .text-indigo-600, .text-indigo-700, .text-indigo-800, .text-purple-600, .text-purple-700, .text-purple-800, .text-teal-600, .text-teal-700, .text-teal-800, .text-sky-600, .text-sky-700, .text-sky-800 { color: #0f172a !important; }
+        .border-indigo-100, .border-indigo-200, .border-indigo-300, .border-purple-200, .border-purple-300, .border-teal-200, .border-teal-300, .border-sky-100, .border-sky-200, .border-sky-300 { border-color: #cbd5e1 !important; }
+        .bg-purple-600, .bg-teal-600, .bg-sky-600, .bg-indigo-600 { background-color: #1e293b !important; }
         table.dataTable thead th:last-child,
         .dt-table thead th:last-child {
             border-left: none !important;
@@ -655,11 +659,12 @@
             box-sizing: border-box !important;
         }
         #modal-chart-data-table thead th {
-            background: #0f766e !important;
-            color: #ffffff !important;
-            font-weight: 800 !important;
+            background: #0f172a !important;
+            color: #f8fafc !important;
+            font-weight: 700 !important;
             padding: 10px !important;
-            border: 1px solid #064e3b !important;
+            border: 1px solid #334155 !important;
+            border-bottom: 2px solid #059669 !important;
             vertical-align: middle !important;
             white-space: nowrap !important;
         }
@@ -981,46 +986,45 @@
 </header>
 <main class="theme-main flex-1 p-3 sm:p-5 max-w-7xl w-full mx-auto space-y-5 no-print">
 <section class="route-view space-y-5 animate__animated animate__fadeIn" id="view-dashboard">
-<div class="bg-gradient-to-l from-emerald-900 via-emerald-800 to-teal-900 text-white rounded-3xl p-4 sm:p-6 shadow-xl border border-emerald-700/40 relative overflow-hidden">
+<div class="bg-gradient-to-l from-slate-900 via-slate-900 to-slate-800 text-white rounded-2xl p-4 sm:p-6 shadow-lg border border-slate-700/80 relative overflow-hidden">
 <div class="absolute -right-16 -top-16 w-52 h-52 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
-<div class="absolute -left-16 -bottom-16 w-52 h-52 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
 <div class="relative z-10 space-y-4">
 <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
 <div>
 <div class="flex flex-wrap items-center gap-2 mb-1.5">
-<span class="bg-emerald-500/30 text-emerald-200 border border-emerald-400/40 text-[10px] sm:text-xs font-bold px-2.5 py-0.5 rounded-full">خیبر پختونخوا کنسٹرکشن مینیجمنٹ سسٹم</span>
-<span class="bg-white/20 text-white text-[10px] sm:text-xs font-bold px-2.5 py-0.5 rounded-full" id="dash-user-role-badge">بڑا ٹھیکیدار (Admin)</span>
-<span class="bg-emerald-400/20 text-emerald-200 border border-emerald-400/30 text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded-full flex items-center gap-1.5">
+<span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] sm:text-xs font-bold px-2.5 py-0.5 rounded-full">خیبر پختونخوا کنسٹرکشن مینیجمنٹ سسٹم</span>
+<span class="bg-slate-700/80 text-slate-200 border border-slate-600 text-[10px] sm:text-xs font-bold px-2.5 py-0.5 rounded-full" id="dash-user-role-badge">بڑا ٹھیکیدار (Admin)</span>
+<span class="bg-slate-800 text-emerald-300 border border-slate-700 text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded-full flex items-center gap-1.5">
 <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> سسٹم 100% آن لائن و محفوظ
                                         </span>
 </div>
 <h2 class="text-base sm:text-2xl font-extrabold leading-snug">
-                                        السلام علیکم، <span class="text-emerald-300" id="dash-user-name">حاجی یاسین اللہ خان</span>!
+                                        السلام علیکم، <span class="text-emerald-400" id="dash-user-name">حاجی یاسین اللہ خان</span>!
                                     </h2>
-<p class="text-emerald-100 text-xs sm:text-sm mt-1 max-w-2xl leading-relaxed">
+<p class="text-slate-300 text-xs sm:text-sm mt-1 max-w-2xl leading-relaxed">
                                         تمام جاری و مکمل ٹھیکوں، مزدور حاضری رجسٹر، نقد آمدن و اخراجات، اور خالص نفع کا مکمل اور تفصیلی تجزیہ۔
                                     </p>
 </div>
 <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2">
-<button class="bg-white text-emerald-950 hover:bg-emerald-50 font-bold text-xs px-3 sm:px-4 py-2.5 rounded-xl shadow-md flex items-center justify-center gap-2 touch-target transition" onclick="App.openAttendanceModal()" type="button">
-<i class="fa-solid fa-user-check text-emerald-700"></i>
+<button class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-3 sm:px-4 py-2.5 rounded-xl shadow flex items-center justify-center gap-2 touch-target transition" onclick="App.openAttendanceModal()" type="button">
+<i class="fa-solid fa-user-check"></i>
 <span>آج کی حاضری</span>
 </button>
-<button class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs px-3 sm:px-4 py-2.5 rounded-xl shadow-md flex items-center justify-center gap-2 touch-target transition" onclick="App.openBulkAttendanceModal()" type="button">
-<i class="fa-solid fa-list-check"></i>
+<button class="bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-600 font-bold text-xs px-3 sm:px-4 py-2.5 rounded-xl shadow-sm flex items-center justify-center gap-2 touch-target transition" onclick="App.openBulkAttendanceModal()" type="button">
+<i class="fa-solid fa-list-check text-emerald-400"></i>
 <span>اجتماعی شیٹ</span>
 </button>
-<button class="bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs px-3 sm:px-4 py-2.5 rounded-xl shadow-md flex items-center justify-center gap-2 touch-target transition" onclick="App.openHisabModal()" type="button">
-<i class="fa-solid fa-hand-holding-dollar"></i>
+<button class="bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-600 font-bold text-xs px-3 sm:px-4 py-2.5 rounded-xl shadow-sm flex items-center justify-center gap-2 touch-target transition" onclick="App.openHisabModal()" type="button">
+<i class="fa-solid fa-hand-holding-dollar text-emerald-400"></i>
 <span>نیا خرچہ / وصولی</span>
 </button>
-<button class="bg-slate-900/80 hover:bg-slate-900 text-white border border-emerald-500/40 font-bold text-xs px-3 sm:px-4 py-2.5 rounded-xl shadow flex items-center justify-center gap-2 touch-target transition" onclick="App.openThekaModal()" type="button">
+<button class="bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-600 font-bold text-xs px-3 sm:px-4 py-2.5 rounded-xl shadow-sm flex items-center justify-center gap-2 touch-target transition" onclick="App.openThekaModal()" type="button">
 <i class="fa-solid fa-plus text-emerald-400"></i>
 <span>نیا ٹھیکہ</span>
 </button>
 </div>
 </div>
-<div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-3 border-t border-emerald-700/50 text-xs">
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-3 border-t border-slate-700/80 text-xs">
 <div class="bg-white/10 rounded-xl p-2 sm:p-2.5">
 <div class="text-[10px] sm:text-xs text-emerald-200">آج کی تاریخ</div>
 <div class="font-bold text-white mt-0.5 truncate" id="dash-hero-date">-</div>
@@ -2824,13 +2828,13 @@
 
             getDefaultTheme() {
                 return {
-                    fontFamily: "'Calibri', 'Segoe UI', sans-serif",
+                    fontFamily: "'Noto Sans Arabic', 'Readex Pro', 'Inter', sans-serif",
                     fontSize: "16px",
                     headerBg: "#0f172a",
                     headerText: "#f8fafc",
                     sidebarBg: "#1e293b",
                     sidebarText: "#f1f5f9",
-                    mainBg: "#f1f5f9",
+                    mainBg: "#f8fafc",
                     mainText: "#0f172a",
                     footerBg: "#0f172a",
                     footerText: "#e2e8f0"
