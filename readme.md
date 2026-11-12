@@ -17,6 +17,19 @@ Access the production application directly in any modern mobile or desktop brows
 
 ---
 
+## 📱 Android APK (fully offline)
+
+A GitHub Actions workflow builds a standalone, full-screen Android APK on every
+commit. All libraries and fonts are bundled inside the APK, so it works with **no
+internet connection**.
+
+📥 **[Download the latest APK](https://github.com/yasinULLAH/takaMobileApp/releases/download/apk-latest/KPK-Tekedar.apk)**
+
+See **[ANDROID-APK.md](ANDROID-APK.md)** for installation, offline behaviour,
+updates, signing and troubleshooting.
+
+---
+
 ## 🔑 Default Credentials
 
 The application comes pre-loaded with demonstration accounts. Defaults are auto-filled on page launch for immediate testing:

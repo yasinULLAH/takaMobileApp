@@ -1,0 +1,22 @@
+# Build output
+/www/
+/android/
+/dist/
+/resources/
+/assets/
+/.cache/
+
+# Node
+/node_modules/
+npm-debug.log*
+
+# Android
+*.apk
+*.aab
+*.jks.bak
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

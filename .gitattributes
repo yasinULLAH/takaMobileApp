@@ -1,2 +1,8 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Never touch binary files
+*.png binary
+*.ico binary
+*.jks binary
+*.apk binary
