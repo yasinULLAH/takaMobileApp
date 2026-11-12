@@ -39,6 +39,11 @@ jobs:
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          # The legacy "tools" package no longer exists in the SDK repository
+          # (the runner already has cmdline-tools), and installing it makes
+          # setup-android fail before the build starts.
+          packages: 'platform-tools'
 
       - name: Install Android SDK packages
         run: |
