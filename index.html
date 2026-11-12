@@ -93,6 +93,12 @@
         html.has-session #app-shell {
             display: flex !important;
         }
+        #rn-fab-trigger {
+            display: none !important;
+        }
+        html.has-session #rn-fab-trigger {
+            display: flex !important;
+        }
         body {
             font-family: var(--app-font-family, 'Noto Sans Arabic', 'Readex Pro', 'Inter', sans-serif);
             background-color: var(--main-bg, #f4f7fb);
@@ -2743,7 +2749,7 @@
 </form>
 </div>
 </div>
-<button class="fixed bottom-20 left-4 md:bottom-6 md:left-6 z-40 w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-xl shadow-emerald-600/30 flex items-center justify-center text-xl no-print transition transform active:scale-95 border-2 border-white" id="rn-fab-trigger" onclick="App.openQuickActionSheet()" title="فوری اندراج مینو (Quick Actions)" type="button">
+<button class="hidden fixed bottom-20 left-4 md:bottom-6 md:left-6 z-40 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-xl shadow-emerald-600/30 items-center justify-center text-xl no-print transition transform active:scale-95 border-2 border-white" id="rn-fab-trigger" onclick="App.openQuickActionSheet()" title="فوری اندراج مینو (Quick Actions)" type="button">
 <i class="fa-solid fa-plus"></i>
 </button>
 <div class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4 no-print" id="modal-quick-sheet" onclick="if(event.target === this) App.closeModal('modal-quick-sheet')">
