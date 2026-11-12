@@ -66,14 +66,14 @@
         :root {
             --app-font-family: 'Noto Sans Arabic', 'Readex Pro', 'Inter', sans-serif;
             --app-font-size: 16px;
-            --header-bg: #0f172a;
-            --header-text: #f8fafc;
-            --sidebar-bg: #1e293b;
-            --sidebar-text: #f1f5f9;
-            --main-bg: #f8fafc;
+            --header-bg: #ffffff;
+            --header-text: #0f172a;
+            --sidebar-bg: #ffffff;
+            --sidebar-text: #334155;
+            --main-bg: #f4f7fb;
             --main-text: #0f172a;
-            --footer-bg: #0f172a;
-            --footer-text: #e2e8f0;
+            --footer-bg: #ffffff;
+            --footer-text: #475569;
             --accent-color: #059669;
         }
     </style>
@@ -85,6 +85,7 @@
         html {
             font-size: var(--app-font-size, 16px);
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
         html.has-session #auth-view {
             display: none !important;
@@ -93,13 +94,14 @@
             display: flex !important;
         }
         body {
-            font-family: var(--app-font-family, 'Calibri', 'Segoe UI', sans-serif);
-            background-color: var(--main-bg, #f1f5f9);
+            font-family: var(--app-font-family, 'Noto Sans Arabic', 'Readex Pro', 'Inter', sans-serif);
+            background-color: var(--main-bg, #f4f7fb);
             color: var(--main-text, #0f172a);
-            line-height: 1.7;
+            line-height: 1.65;
             margin: 0;
             padding: 0;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
         .fa, .fas, .far, .fab, .fa-solid, .fa-regular, .fa-brands, [class*="fa-"] {
             font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
@@ -141,10 +143,14 @@
         .theme-header {
             background-color: var(--header-bg);
             color: var(--header-text);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
         }
         .theme-sidebar {
             background-color: var(--sidebar-bg);
             color: var(--sidebar-text);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
         }
         .theme-main {
             background-color: var(--main-bg);
@@ -154,9 +160,42 @@
             background-color: var(--footer-bg);
             color: var(--footer-text);
         }
+        .bg-white.rounded-2xl {
+            border-radius: 1.15rem;
+            box-shadow: 0 2px 12px -2px rgba(15, 23, 42, 0.04), 0 1px 3px 0 rgba(15, 23, 42, 0.03);
+            border-color: rgba(226, 232, 240, 0.85);
+        }
+        .rn-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.3rem 0.65rem;
+            border-radius: 9999px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            background-color: #f1f5f9;
+            color: #334155;
+            border: 1px solid #cbd5e1;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            user-select: none;
+        }
+        .rn-chip:hover, .rn-chip:active {
+            background-color: #ecfdf5;
+            color: #047857;
+            border-color: #6ee7b7;
+            transform: translateY(-1px);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
         .touch-target {
-            min-height: 46px;
-            min-width: 46px;
+            min-height: 44px;
+            min-width: 44px;
         }
         button.touch-target, a.touch-target, .btn-touch {
             display: inline-flex;
@@ -169,7 +208,25 @@
         #main-app-nav {
             transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        #main-app-nav .nav-item {
+            color: var(--sidebar-text, #475569);
+            position: relative;
+        }
+        #main-app-nav .nav-item:hover {
+            background-color: rgba(5, 150, 105, 0.08);
+            color: #059669;
+        }
+        #main-app-nav .nav-item.nav-active {
+            background: linear-gradient(135deg, #059669 0%, #0d9488 100%) !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
+        }
         @media (max-width: 767px) {
+            #main-app-nav {
+                border-top-left-radius: 1.25rem;
+                border-top-right-radius: 1.25rem;
+                box-shadow: 0 -4px 24px rgba(15, 23, 42, 0.08) !important;
+            }
             #main-app-nav.nav-hidden {
                 transform: translateY(110%);
             }
@@ -179,13 +236,13 @@
                 font-size: 14.5px;
             }
             .touch-target {
-                min-height: 42px;
-                min-width: 42px;
+                min-height: 40px;
+                min-width: 40px;
             }
             #main-app-nav {
                 height: auto;
-                min-height: 56px;
-                padding: 4px 4px max(6px, env(safe-area-inset-bottom)) 4px;
+                min-height: 60px;
+                padding: 5px 6px max(8px, env(safe-area-inset-bottom)) 6px;
             }
             .dataTables_wrapper .dataTables_filter {
                 width: 100% !important;
@@ -241,13 +298,16 @@
                 height: 40px !important;
             }
             .fixed.inset-0.overflow-y-auto {
-                align-items: flex-start !important;
-                padding-top: 1rem !important;
-                padding-bottom: 2rem !important;
+                align-items: flex-end !important;
+                padding: 0 !important;
             }
             .fixed.inset-0 .animate__slideInUp {
                 margin-top: auto;
-                margin-bottom: auto;
+                margin-bottom: 0;
+                border-bottom-left-radius: 0 !important;
+                border-bottom-right-radius: 0 !important;
+                border-top-left-radius: 1.5rem !important;
+                border-top-right-radius: 1.5rem !important;
                 max-height: 92vh;
                 overflow-y: auto;
             }
@@ -263,13 +323,13 @@
         }
         select {
             width: 100%;
-            height: 46px;
+            height: 44px;
             border: 1px solid #cbd5e1;
-            border-radius: 0.75rem;
+            border-radius: 0.85rem;
             background-color: #ffffff;
             color: #0f172a;
             padding: 0 0.85rem;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             direction: rtl;
             outline: none;
             cursor: pointer;
@@ -282,9 +342,9 @@
             -moz-appearance: none;
             appearance: none;
         }
-        select:focus {
+        select:focus, input:focus, textarea:focus {
             border-color: #059669;
-            box-shadow: 0 0 0 2px rgba(5, 150, 105, 0.2);
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.14);
         }
         .select2-container {
             width: 100% !important;
@@ -292,9 +352,9 @@
             text-align: right;
         }
         .select2-container .select2-selection--single {
-            height: 46px !important;
+            height: 44px !important;
             border: 1px solid #cbd5e1 !important;
-            border-radius: 0.75rem !important;
+            border-radius: 0.85rem !important;
             background-color: #ffffff !important;
             display: flex !important;
             align-items: center !important;
@@ -302,30 +362,30 @@
         }
         .select2-container--default .select2-selection--single .select2-selection__rendered {
             color: #0f172a !important;
-            line-height: 44px !important;
+            line-height: 42px !important;
             padding-right: 0 !important;
             padding-left: 24px !important;
-            font-size: 0.95rem !important;
+            font-size: 0.92rem !important;
         }
         .select2-container--default .select2-selection--single .select2-selection__arrow {
-            height: 44px !important;
+            height: 42px !important;
             left: 8px !important;
             right: auto !important;
         }
         .select2-dropdown {
-            border-radius: 0.75rem !important;
+            border-radius: 0.85rem !important;
             border: 1px solid #cbd5e1 !important;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15) !important;
+            box-shadow: 0 12px 28px -5px rgba(15, 23, 42, 0.12) !important;
             direction: rtl;
             z-index: 9999 !important;
         }
         .select2-search--dropdown .select2-search__field {
-            border-radius: 0.5rem !important;
+            border-radius: 0.6rem !important;
             padding: 8px 12px !important;
-            border: 1px solid #94a3b8 !important;
+            border: 1px solid #cbd5e1 !important;
             direction: rtl;
         }
-                .dataTables_wrapper {
+        .dataTables_wrapper {
             padding: 0 !important;
             direction: rtl;
             width: 100% !important;
@@ -382,24 +442,24 @@
             gap: 0.35rem !important;
         }
         .dt-button {
-            background: #f8fafc !important;
+            background: #ffffff !important;
             color: #334155 !important;
-            border: 1px solid #cbd5e1 !important;
-            border-radius: 0.65rem !important;
-            min-width: 44px !important;
-            min-height: 44px !important;
-            padding: 0.45rem 0.75rem !important;
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 0.75rem !important;
+            min-width: 42px !important;
+            min-height: 42px !important;
+            padding: 0.4rem 0.75rem !important;
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
-            font-size: 0.9rem !important;
+            font-size: 0.88rem !important;
             transition: all 0.15s ease !important;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.04) !important;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03) !important;
         }
         .dt-button:hover {
-            background: #059669 !important;
-            color: #ffffff !important;
-            border-color: #059669 !important;
+            background: #ecfdf5 !important;
+            color: #059669 !important;
+            border-color: #a7f3d0 !important;
         }
         .dt-top-controls .dataTables_filter,
         .dataTables_wrapper .dataTables_filter {
@@ -412,25 +472,29 @@
             align-items: center !important;
             gap: 0.5rem !important;
             margin: 0 !important;
-            font-size: 0.85rem !important;
+            font-size: 0.82rem !important;
             font-weight: 700 !important;
             color: #475569 !important;
         }
         .dataTables_wrapper .dataTables_filter input {
             border: 1px solid #cbd5e1 !important;
-            border-radius: 0.75rem !important;
+            border-radius: 0.85rem !important;
             padding: 0.45rem 0.85rem !important;
-            min-height: 42px !important;
-            background: #ffffff !important;
+            min-height: 40px !important;
+            background: #f8fafc !important;
             margin: 0 !important;
             outline: none;
             font-size: 0.85rem !important;
+        }
+        .dataTables_wrapper .dataTables_filter input:focus {
+            background: #ffffff !important;
+            border-color: #059669 !important;
         }
         .dataTables_wrapper .dataTables_length select {
             border: 1px solid #cbd5e1 !important;
             border-radius: 0.65rem !important;
             padding: 0.4rem 0.6rem !important;
-            min-height: 44px;
+            min-height: 42px;
             background: #ffffff !important;
         }
         .dt-scroll-wrapper,
@@ -442,9 +506,9 @@
             overflow-x: auto !important;
             -webkit-overflow-scrolling: touch !important;
             scrollbar-width: thin;
-            scrollbar-color: #059669 #f1f5f9;
-            border-radius: 0.75rem !important;
-            border: 1px solid #cbd5e1 !important;
+            scrollbar-color: #cbd5e1 #f8fafc;
+            border-radius: 0.9rem !important;
+            border: 1px solid #e2e8f0 !important;
             background: #ffffff !important;
             box-sizing: border-box !important;
             margin: 0 !important;
@@ -456,12 +520,12 @@
         }
         .dt-scroll-wrapper::-webkit-scrollbar-track,
         .dt-table-container::-webkit-scrollbar-track {
-            background: #f1f5f9;
+            background: #f8fafc;
             border-radius: 9999px;
         }
         .dt-scroll-wrapper::-webkit-scrollbar-thumb,
         .dt-table-container::-webkit-scrollbar-thumb {
-            background-color: #059669;
+            background-color: #cbd5e1;
             border-radius: 9999px;
         }
         table.dataTable,
@@ -531,25 +595,20 @@
         }
         table.dataTable thead th,
         .dt-table thead th {
-            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
-            color: #f8fafc !important;
-            font-weight: 700 !important;
-            font-size: 0.84rem !important;
+            background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%) !important;
+            color: #1e293b !important;
+            font-weight: 800 !important;
+            font-size: 0.82rem !important;
             padding: 12px 10px !important;
             border-top: none !important;
-            border-left: 1px solid #334155 !important;
+            border-left: 1px solid #e2e8f0 !important;
             border-right: none !important;
-            border-bottom: 2px solid #059669 !important;
+            border-bottom: 2px solid #10b981 !important;
             vertical-align: middle !important;
             white-space: nowrap !important;
             letter-spacing: 0.01em;
             box-sizing: border-box !important;
         }
-        .bg-indigo-50, .bg-purple-50, .bg-teal-50, .bg-sky-50 { background-color: #f8fafc !important; }
-        .bg-indigo-100, .bg-purple-100, .bg-teal-100, .bg-sky-100 { background-color: #f1f5f9 !important; }
-        .text-indigo-600, .text-indigo-700, .text-indigo-800, .text-purple-600, .text-purple-700, .text-purple-800, .text-teal-600, .text-teal-700, .text-teal-800, .text-sky-600, .text-sky-700, .text-sky-800 { color: #0f172a !important; }
-        .border-indigo-100, .border-indigo-200, .border-indigo-300, .border-purple-200, .border-purple-300, .border-teal-200, .border-teal-300, .border-sky-100, .border-sky-200, .border-sky-300 { border-color: #cbd5e1 !important; }
-        .bg-purple-600, .bg-teal-600, .bg-sky-600, .bg-indigo-600 { background-color: #1e293b !important; }
         table.dataTable thead th:last-child,
         .dt-table thead th:last-child {
             border-left: none !important;
@@ -597,7 +656,7 @@
             background-position: center left 8px !important;
             padding-left: 26px !important;
             padding-right: 12px !important;
-            color: #ffffff !important;
+            color: #0f172a !important;
             vertical-align: middle !important;
         }
         table.dataTable tbody tr,
@@ -606,7 +665,7 @@
         }
         table.dataTable tbody tr:nth-child(even),
         .dt-table tbody tr:nth-child(even) {
-            background-color: #f8fafc !important;
+            background-color: #fcfdfe !important;
         }
         table.dataTable tbody tr:nth-child(odd),
         .dt-table tbody tr:nth-child(odd) {
@@ -614,15 +673,15 @@
         }
         table.dataTable tbody tr:hover,
         .dt-table tbody tr:hover {
-            background-color: #ecfdf5 !important;
+            background-color: #f0fdf4 !important;
         }
         table.dataTable tbody td,
         .dt-table tbody td {
             padding: 11px 10px !important;
             border-top: none !important;
-            border-left: 1px solid #e2e8f0 !important;
+            border-left: 1px solid #f1f5f9 !important;
             border-right: none !important;
-            border-bottom: 1px solid #e2e8f0 !important;
+            border-bottom: 1px solid #f1f5f9 !important;
             vertical-align: middle !important;
             white-space: nowrap !important;
             color: #1e293b !important;
@@ -654,17 +713,17 @@
         #printable-area table,
         #printable-area table th,
         #printable-area table td {
-            border: 1px solid #cbd5e1 !important;
+            border: 1px solid #e2e8f0 !important;
             vertical-align: middle !important;
             box-sizing: border-box !important;
         }
         #modal-chart-data-table thead th {
-            background: #0f172a !important;
-            color: #f8fafc !important;
-            font-weight: 700 !important;
+            background: #f8fafc !important;
+            color: #1e293b !important;
+            font-weight: 800 !important;
             padding: 10px !important;
-            border: 1px solid #334155 !important;
-            border-bottom: 2px solid #059669 !important;
+            border: 1px solid #e2e8f0 !important;
+            border-bottom: 2px solid #10b981 !important;
             vertical-align: middle !important;
             white-space: nowrap !important;
         }
@@ -722,7 +781,7 @@
             padding: 0 !important;
             margin: 0 !important;
             font-size: 0.82rem !important;
-            color: #475569 !important;
+            color: #64748b !important;
             font-weight: 700 !important;
         }
         .dt-bottom-controls .dataTables_paginate,
@@ -735,14 +794,15 @@
             gap: 0.25rem !important;
         }
         .dataTables_wrapper .dataTables_paginate .paginate_button {
-            min-width: 44px !important;
-            min-height: 44px !important;
+            min-width: 40px !important;
+            min-height: 40px !important;
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
-            border-radius: 0.65rem !important;
+            border-radius: 0.75rem !important;
             margin: 0 2px !important;
             border: 1px solid #e2e8f0 !important;
+            background: #ffffff !important;
         }
         .dataTables_wrapper .dataTables_paginate .paginate_button.current {
             background: #059669 !important;
@@ -751,7 +811,7 @@
         }
         .just-validate-error-label {
             color: #dc2626 !important;
-            font-size: 0.82rem !important;
+            font-size: 0.8rem !important;
             margin-top: 0.25rem !important;
             font-weight: 600;
         }
@@ -805,106 +865,112 @@
 </div>
 <button class="bg-white text-amber-800 px-3 py-1.5 rounded-lg font-bold text-xs touch-target shadow hover:bg-amber-50" onclick="App.renewTenantSubscription()" type="button">فوری تجدید کریں</button>
 </div>
-<section class="min-h-screen flex flex-col justify-between bg-slate-900 text-slate-100 p-4 no-print" id="auth-view">
-<div class="max-w-md w-full mx-auto my-auto py-4 animate__animated animate__fadeIn">
-<div class="bg-slate-800 border border-slate-700 rounded-2xl shadow-2xl overflow-hidden">
-<div class="bg-gradient-to-l from-emerald-700 to-teal-800 p-5 text-center border-b border-slate-700">
-<img alt="Logo" class="app-logo-img w-16 h-16 rounded-2xl mx-auto mb-3 object-contain shadow-inner border border-white/20 bg-white/10 p-1" src="logo.png"/>
-<h1 class="text-xl font-extrabold text-white nastaliq-heading">پختونخوا ٹھیکیدار حساب کتاب</h1>
-<p class="text-emerald-100 text-xs mt-1">مزدور حاضری، جاری اور پرانے ٹھیکوں کا مکمل موبائل کھاتہ</p>
+<section class="min-h-screen flex flex-col justify-between bg-gradient-to-br from-emerald-50/80 via-slate-50 to-teal-50/70 text-slate-800 p-3 sm:p-5 no-print" id="auth-view">
+<div class="max-w-md w-full mx-auto my-auto py-3 animate__animated animate__fadeIn">
+<div class="bg-white border border-slate-200/90 rounded-3xl shadow-xl shadow-slate-200/70 overflow-hidden">
+<div class="bg-gradient-to-b from-emerald-50/90 to-white p-5 text-center border-b border-slate-100">
+<img alt="Logo" class="app-logo-img w-16 h-16 rounded-2xl mx-auto mb-2.5 object-contain shadow-sm border border-emerald-200 bg-white p-1.5" src="logo.png"/>
+<span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-100 text-emerald-800 mb-1">KPK Construction &amp; Labor App</span>
+<h1 class="text-xl font-extrabold text-slate-900 nastaliq-heading">پختونخوا ٹھیکیدار حساب کتاب</h1>
+<p class="text-slate-500 text-xs mt-0.5">مزدور حاضری، جاری اور پرانے ٹھیکوں کا جدید موبائل کھاتہ</p>
 </div>
-<div class="flex border-b border-slate-700 bg-slate-800/60">
-<button class="flex-1 py-3.5 font-bold text-sm border-b-2 border-emerald-500 text-emerald-400 touch-target transition" id="tab-login-btn" onclick="App.switchAuthTab('login')" type="button">
+<div class="p-1.5 bg-slate-100 mx-5 mt-4 rounded-2xl flex gap-1 border border-slate-200/70">
+<button class="flex-1 py-2.5 rounded-xl font-bold text-xs bg-white text-emerald-700 shadow-sm touch-target transition" id="tab-login-btn" onclick="App.switchAuthTab('login')" type="button">
 <i class="fa-solid fa-right-to-bracket ml-1"></i> لاگ ان (داخلہ)
                     </button>
-<button class="flex-1 py-3.5 font-bold text-sm border-b-2 border-transparent text-slate-400 hover:text-white touch-target transition" id="tab-register-btn" onclick="App.switchAuthTab('register')" type="button">
+<button class="flex-1 py-2.5 rounded-xl font-bold text-xs text-slate-600 hover:text-slate-900 touch-target transition" id="tab-register-btn" onclick="App.switchAuthTab('register')" type="button">
 <i class="fa-solid fa-user-plus ml-1"></i> نیا ٹھیکیدار اکاؤنٹ
                     </button>
 </div>
 <div class="p-5">
-<div class="bg-slate-900/90 border border-emerald-500/30 rounded-xl p-3 mb-4 text-xs">
-<div class="flex items-center justify-between mb-1.5">
-<span class="font-bold text-emerald-400"><i class="fa-solid fa-bolt ml-1"></i> فوری ٹیسٹ لاگ ان (ایک کلک):</span>
-<span class="text-slate-400">کیپچا خود حل ہو جائے گا</span>
+<div class="bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-3 mb-4 text-xs">
+<div class="flex items-center justify-between mb-2">
+<span class="font-extrabold text-emerald-800"><i class="fa-solid fa-bolt text-amber-500 ml-1"></i> فوری ٹیسٹ لاگ ان (1-Tap Demo):</span>
+<span class="text-[10px] font-bold bg-white text-emerald-700 px-2 py-0.5 rounded-full border border-emerald-200">کیپچا آٹو حل</span>
 </div>
-<div class="p-2.5 bg-emerald-950/70 border border-emerald-500/40 rounded-lg text-emerald-200 mb-2">
-<div class="font-bold text-xs text-emerald-300">ڈیفالٹ لاگ ان معلومات (Default Login):</div>
-<div class="flex items-center justify-between text-xs mt-1">
-<span>صارف (User): <b class="num-ltr text-white select-all">03361593533</b></span>
-<span>پاس ورڈ: <b class="num-ltr text-white select-all">Tekedar@786</b></span>
+<div class="p-2 bg-white border border-emerald-100 rounded-xl text-slate-700 mb-2.5 shadow-sm">
+<div class="flex items-center justify-between text-[11px]">
+<span>صارف: <b class="num-ltr text-slate-900 select-all">03361593533</b></span>
+<span>پاس ورڈ: <b class="num-ltr text-slate-900 select-all">Tekedar@786</b></span>
 </div>
 </div>
 <div class="grid grid-cols-2 gap-2">
-<button class="bg-emerald-700/40 hover:bg-emerald-700/70 border border-emerald-500/40 text-emerald-100 rounded-lg py-2 px-2.5 text-right transition touch-target" onclick="App.fillDemoLogin('admin')" type="button">
-<div class="font-bold">بڑا ٹھیکیدار (Admin)</div>
-<div class="text-[11px] text-emerald-300 num-ltr">03361593533 | Tekedar@786</div>
+<button class="bg-white hover:bg-emerald-600 hover:text-white border border-emerald-300 text-slate-800 rounded-xl py-2 px-2.5 text-right transition shadow-sm touch-target group" onclick="App.fillDemoLogin('admin')" type="button">
+<div class="font-extrabold text-xs group-hover:text-white flex items-center justify-between"><span>بڑا ٹھیکیدار</span><i class="fa-solid fa-circle-check text-emerald-600 group-hover:text-white"></i></div>
+<div class="text-[10px] text-slate-500 group-hover:text-emerald-100 num-ltr">Admin Role</div>
 </button>
-<button class="bg-sky-700/40 hover:bg-sky-700/70 border border-sky-500/40 text-sky-100 rounded-lg py-2 px-2.5 text-right transition touch-target" onclick="App.fillDemoLogin('user')" type="button">
-<div class="font-bold">سائٹ منشی (User)</div>
-<div class="text-[11px] text-sky-300 num-ltr">03129876543 | Munshi@786</div>
+<button class="bg-white hover:bg-sky-600 hover:text-white border border-sky-200 text-slate-800 rounded-xl py-2 px-2.5 text-right transition shadow-sm touch-target group" onclick="App.fillDemoLogin('user')" type="button">
+<div class="font-extrabold text-xs group-hover:text-white flex items-center justify-between"><span>سائٹ منشی</span><i class="fa-solid fa-user-check text-sky-600 group-hover:text-white"></i></div>
+<div class="text-[10px] text-slate-500 group-hover:text-sky-100 num-ltr">Munshi Role</div>
 </button>
 </div>
 </div>
-<form class="space-y-4" id="login-form" novalidate="">
+<form class="space-y-3.5" id="login-form" novalidate="">
 <div>
-<label class="block text-xs font-bold text-slate-300 mb-1" for="login-identity">موبائل نمبر یا ای میل <span class="text-red-400">*</span></label>
-<input class="w-full bg-slate-900 border border-slate-600 rounded-xl px-3.5 py-2.5 text-white focus:ring-2 focus:ring-emerald-500 focus:outline-none touch-target num-ltr text-right" id="login-identity" name="identity" placeholder="03361593533" type="text" value="03361593533"/>
+<label class="block text-xs font-bold text-slate-700 mb-1" for="login-identity">موبائل نمبر یا ای میل <span class="text-rose-500">*</span></label>
+<input class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-slate-900 focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none touch-target num-ltr text-right" id="login-identity" name="identity" placeholder="03361593533" type="text" value="03361593533"/>
 </div>
 <div>
-<label class="block text-xs font-bold text-slate-300 mb-1" for="login-password">پاس ورڈ (کم از کم 8 حروف اور 1 خاص نشان) <span class="text-red-400">*</span></label>
+<label class="block text-xs font-bold text-slate-700 mb-1" for="login-password">پاس ورڈ (کم از کم 8 حروف اور 1 خاص نشان) <span class="text-rose-500">*</span></label>
 <div class="relative">
-<input class="w-full bg-slate-900 border border-slate-600 rounded-xl px-3.5 py-2.5 text-white focus:ring-2 focus:ring-emerald-500 focus:outline-none touch-target num-ltr text-right" id="login-password" name="password" placeholder="••••••••" type="password" value="Tekedar@786"/>
-<button class="absolute left-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white w-10 h-10 flex items-center justify-center rounded-lg touch-target" onclick="App.togglePasswordVisibility('login-password')" type="button">
+<input class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-slate-900 focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none touch-target num-ltr text-right" id="login-password" name="password" placeholder="••••••••" type="password" value="Tekedar@786"/>
+<button class="absolute left-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 w-10 h-10 flex items-center justify-center rounded-lg touch-target" onclick="App.togglePasswordVisibility('login-password')" type="button">
 <i class="fa-solid fa-eye"></i>
 </button>
 </div>
 </div>
-<div class="bg-slate-900 p-3 rounded-xl border border-slate-700">
-<label class="block text-xs font-bold text-slate-300 mb-2" for="login-captcha-input">حفاظتی ریاضی کوڈ حل کریں <span class="text-red-400">*</span></label>
+<div class="bg-slate-50 p-3 rounded-2xl border border-slate-200">
+<div class="flex items-center justify-between mb-1.5">
+<label class="block text-xs font-bold text-slate-700" for="login-captcha-input">حفاظتی ریاضی کوڈ <span class="text-rose-500">*</span></label>
+<button class="text-[11px] font-bold text-emerald-700 hover:underline" onclick="App.solveCaptchaHelper('login')" type="button"><i class="fa-solid fa-wand-magic-sparkles ml-1"></i>خودکار حل کریں</button>
+</div>
 <div class="flex items-center gap-2 mb-2">
-<img alt="Math Captcha" class="h-12 rounded-lg border border-slate-600 flex-1 object-cover bg-slate-950" id="login-captcha-img" src=""/>
-<button class="bg-slate-700 hover:bg-slate-600 text-white rounded-xl w-12 h-12 flex items-center justify-center touch-target" onclick="App.generateCaptcha('login')" title="نیا کوڈ" type="button">
+<img alt="Math Captcha" class="h-11 rounded-xl border border-slate-200 flex-1 object-cover bg-white" id="login-captcha-img" src=""/>
+<button class="bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 rounded-xl w-11 h-11 flex items-center justify-center touch-target shadow-sm" onclick="App.generateCaptcha('login')" title="نیا کوڈ" type="button">
 <i class="fa-solid fa-arrows-rotate"></i>
 </button>
 </div>
-<input class="w-full bg-slate-800 border border-slate-600 rounded-xl px-3.5 py-2 text-white focus:ring-2 focus:ring-emerald-500 focus:outline-none touch-target" id="login-captcha-input" name="captcha" placeholder="جواب یہاں لکھیں" type="number"/>
+<input class="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2 text-slate-900 font-bold focus:ring-2 focus:ring-emerald-500 focus:outline-none touch-target" id="login-captcha-input" name="captcha" placeholder="جواب یہاں لکھیں" type="number"/>
 </div>
-<button class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-4 rounded-xl shadow-lg shadow-emerald-900/40 transition flex items-center justify-center gap-2 touch-target" id="login-submit-btn" type="submit">
+<button class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-4 rounded-2xl shadow-md shadow-emerald-600/20 transition flex items-center justify-center gap-2 touch-target" id="login-submit-btn" type="submit">
 <i class="fa-solid fa-unlock-keyhole"></i>
-<span>کھاتہ کھولیں (لاگ ان)</span>
+<span>کھاتہ کھولیں (فوری لاگ ان)</span>
 </button>
 </form>
-<form class="space-y-4 hidden" id="register-form" novalidate="">
+<form class="space-y-3.5 hidden" id="register-form" novalidate="">
 <div>
-<label class="block text-xs font-bold text-slate-300 mb-1" for="reg-name">ٹھیکیدار کا پورا نام <span class="text-red-400">*</span></label>
-<input class="w-full bg-slate-900 border border-slate-600 rounded-xl px-3.5 py-2.5 text-white focus:ring-2 focus:ring-emerald-500 focus:outline-none touch-target" id="reg-name" name="name" placeholder="مثال: حاجی شیر زمان خان" type="text"/>
+<label class="block text-xs font-bold text-slate-700 mb-1" for="reg-name">ٹھیکیدار کا پورا نام <span class="text-rose-500">*</span></label>
+<input class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-slate-900 focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none touch-target" id="reg-name" name="name" placeholder="مثال: حاجی شیر زمان خان" type="text"/>
 </div>
 <div>
-<label class="block text-xs font-bold text-slate-300 mb-1" for="reg-phone">موبائل نمبر <span class="text-red-400">*</span></label>
-<input class="w-full bg-slate-900 border border-slate-600 rounded-xl px-3.5 py-2.5 text-white focus:ring-2 focus:ring-emerald-500 focus:outline-none touch-target num-ltr text-right" id="reg-phone" name="phone" placeholder="03001234567" type="text"/>
+<label class="block text-xs font-bold text-slate-700 mb-1" for="reg-phone">موبائل نمبر <span class="text-rose-500">*</span></label>
+<input class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-slate-900 focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none touch-target num-ltr text-right" id="reg-phone" name="phone" placeholder="03001234567" type="text"/>
 </div>
 <div>
-<label class="block text-xs font-bold text-slate-300 mb-1" for="reg-role">عہدہ منتخب کریں <span class="text-red-400">*</span></label>
+<label class="block text-xs font-bold text-slate-700 mb-1" for="reg-role">عہدہ منتخب کریں <span class="text-rose-500">*</span></label>
 <select class="w-full" id="reg-role" name="role">
 <option value="Admin">بڑا ٹھیکیدار (مکمل اختیارات - Admin)</option>
 <option value="Standard User">سائٹ منشی / سپروائزر (Standard User)</option>
 </select>
 </div>
 <div>
-<label class="block text-xs font-bold text-slate-300 mb-1" for="reg-password">مضبوط پاس ورڈ (8 حروف + خاص نشان @#$%) <span class="text-red-400">*</span></label>
-<input class="w-full bg-slate-900 border border-slate-600 rounded-xl px-3.5 py-2.5 text-white focus:ring-2 focus:ring-emerald-500 focus:outline-none touch-target num-ltr text-right" id="reg-password" name="password" placeholder="مثال: Khan@1234" type="password"/>
+<label class="block text-xs font-bold text-slate-700 mb-1" for="reg-password">مضبوط پاس ورڈ (8 حروف + خاص نشان @#$%) <span class="text-rose-500">*</span></label>
+<input class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-slate-900 focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none touch-target num-ltr text-right" id="reg-password" name="password" placeholder="مثال: Khan@1234" type="password"/>
 </div>
-<div class="bg-slate-900 p-3 rounded-xl border border-slate-700">
-<label class="block text-xs font-bold text-slate-300 mb-2" for="reg-captcha-input">حفاظتی ریاضی کوڈ حل کریں <span class="text-red-400">*</span></label>
+<div class="bg-slate-50 p-3 rounded-2xl border border-slate-200">
+<div class="flex items-center justify-between mb-1.5">
+<label class="block text-xs font-bold text-slate-700" for="reg-captcha-input">حفاظتی ریاضی کوڈ <span class="text-rose-500">*</span></label>
+<button class="text-[11px] font-bold text-emerald-700 hover:underline" onclick="App.solveCaptchaHelper('register')" type="button"><i class="fa-solid fa-wand-magic-sparkles ml-1"></i>خودکار حل کریں</button>
+</div>
 <div class="flex items-center gap-2 mb-2">
-<img alt="Math Captcha" class="h-12 rounded-lg border border-slate-600 flex-1 object-cover bg-slate-950" id="reg-captcha-img" src=""/>
-<button class="bg-slate-700 hover:bg-slate-600 text-white rounded-xl w-12 h-12 flex items-center justify-center touch-target" onclick="App.generateCaptcha('register')" type="button">
+<img alt="Math Captcha" class="h-11 rounded-xl border border-slate-200 flex-1 object-cover bg-white" id="reg-captcha-img" src=""/>
+<button class="bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 rounded-xl w-11 h-11 flex items-center justify-center touch-target shadow-sm" onclick="App.generateCaptcha('register')" type="button">
 <i class="fa-solid fa-arrows-rotate"></i>
 </button>
 </div>
-<input class="w-full bg-slate-800 border border-slate-600 rounded-xl px-3.5 py-2 text-white focus:ring-2 focus:ring-emerald-500 focus:outline-none touch-target" id="reg-captcha-input" name="captcha" placeholder="جواب یہاں لکھیں" type="number"/>
+<input class="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2 text-slate-900 font-bold focus:ring-2 focus:ring-emerald-500 focus:outline-none touch-target" id="reg-captcha-input" name="captcha" placeholder="جواب یہاں لکھیں" type="number"/>
 </div>
-<button class="w-full bg-teal-600 hover:bg-teal-500 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition flex items-center justify-center gap-2 touch-target" id="reg-submit-btn" type="submit">
+<button class="w-full bg-teal-600 hover:bg-teal-500 text-white font-bold py-3 px-4 rounded-2xl shadow-md transition flex items-center justify-center gap-2 touch-target" id="reg-submit-btn" type="submit">
 <i class="fa-solid fa-user-check"></i>
 <span>اکاؤنٹ بنائیں</span>
 </button>
@@ -912,134 +978,150 @@
 </div>
 </div>
 </div>
-<footer class="theme-footer rounded-2xl p-4 text-center text-xs border border-slate-800 max-w-md w-full mx-auto">
+<footer class="bg-white/90 rounded-2xl p-3.5 text-center text-xs border border-slate-200/80 shadow-sm max-w-md w-full mx-auto text-slate-600">
 <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 font-semibold">
-<span>Created by: <a class="text-emerald-400 underline hover:text-emerald-300" href="https://www.linkedin.com/in/yasin-ullah-029229232/" rel="noopener noreferrer" target="_blank">Yasin Ullah</a></span>
-<a class="inline-flex items-center gap-1 text-sky-400 hover:text-sky-300" href="https://www.linkedin.com/in/yasin-ullah-029229232/" rel="noopener noreferrer" target="_blank">
+<span>Created by: <a class="text-emerald-700 font-bold underline hover:text-emerald-600" href="https://www.linkedin.com/in/yasin-ullah-029229232/" rel="noopener noreferrer" target="_blank">Yasin Ullah</a></span>
+<a class="inline-flex items-center gap-1 text-sky-600 font-bold hover:text-sky-500" href="https://www.linkedin.com/in/yasin-ullah-029229232/" rel="noopener noreferrer" target="_blank">
 <i class="fa-brands fa-linkedin text-base"></i> Linkedin
                 </a>
-<span class="inline-flex items-center gap-1 text-emerald-300 num-ltr">
+<span class="inline-flex items-center gap-1 text-emerald-700 font-bold num-ltr">
 <i class="fa-brands fa-whatsapp text-base"></i> WhatsApp: 03361593533
                 </span>
 </div>
 </footer>
 </section>
 <div class="hidden min-h-screen flex flex-col md:flex-row" id="app-shell">
-<nav class="theme-sidebar fixed bottom-0 left-0 right-0 z-40 md:static md:w-64 md:min-h-screen border-t md:border-t-0 md:border-l border-slate-700/80 shadow-2xl no-print flex md:flex-col justify-between md:justify-start p-1 md:p-4" id="main-app-nav">
-<div class="hidden md:flex items-center gap-3 pb-4 mb-4 border-b border-slate-700">
-<img alt="Logo" class="app-logo-img w-11 h-11 rounded-xl object-contain shadow bg-slate-900/40 p-1 border border-emerald-500/30" src="logo.png"/>
-<div>
-<h2 class="font-extrabold text-base leading-tight">پختونخوا ٹھیکیدار</h2>
-<p class="text-xs text-emerald-400" id="nav-user-role-badge">بڑا ٹھیکیدار</p>
+<nav class="theme-sidebar fixed bottom-0 left-0 right-0 z-40 md:static md:w-64 md:min-h-screen border-t md:border-t-0 md:border-l border-slate-200/90 shadow-lg md:shadow-none no-print flex md:flex-col justify-between md:justify-start p-1.5 md:p-4 gap-1" id="main-app-nav">
+<div class="hidden md:flex items-center gap-3 pb-4 mb-2 border-b border-slate-200/80">
+<img alt="Logo" class="app-logo-img w-11 h-11 rounded-2xl object-contain shadow-sm bg-emerald-50 p-1 border border-emerald-200" src="logo.png"/>
+<div class="min-w-0">
+<h2 class="font-extrabold text-base leading-tight text-slate-900 truncate">پختونخوا ٹھیکیدار</h2>
+<p class="text-xs text-emerald-600 font-bold truncate" id="nav-user-role-badge">بڑا ٹھیکیدار</p>
 </div>
 </div>
-<a class="nav-item flex-1 md:flex-none min-w-0 flex flex-col md:flex-row items-center justify-center md:justify-start gap-0.5 md:gap-3 px-1 md:px-4 py-1.5 md:py-3 rounded-xl font-bold text-xs md:text-sm transition" data-route="/dashboard" href="/dashboard" onclick="App.navigate('/dashboard', event)">
+<button class="hidden md:flex items-center justify-center gap-2 w-full py-2.5 px-3 mb-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-sm transition touch-target" onclick="App.openQuickActionSheet()" type="button">
+<i class="fa-solid fa-bolt"></i>
+<span>فوری نیا اندراج (1-Tap)</span>
+</button>
+<a class="nav-item flex-1 md:flex-none min-w-0 flex flex-col md:flex-row items-center justify-center md:justify-start gap-0.5 md:gap-3 px-1 md:px-3.5 py-1.5 md:py-2.5 rounded-xl font-bold text-xs md:text-sm transition" data-route="/dashboard" href="/dashboard" onclick="App.navigate('/dashboard', event)">
 <i class="fa-solid fa-chart-pie text-base md:text-lg"></i>
 <span class="text-[10px] md:text-sm leading-tight text-center truncate"><span class="md:hidden">ڈیش بورڈ</span><span class="hidden md:inline">خلاصہ / ڈیش بورڈ</span></span>
 </a>
-<a class="nav-item flex-1 md:flex-none min-w-0 flex flex-col md:flex-row items-center justify-center md:justify-start gap-0.5 md:gap-3 px-1 md:px-4 py-1.5 md:py-3 rounded-xl font-bold text-xs md:text-sm transition" data-route="/thekas" href="/thekas" onclick="App.navigate('/thekas', event)">
+<a class="nav-item flex-1 md:flex-none min-w-0 flex flex-col md:flex-row items-center justify-center md:justify-start gap-0.5 md:gap-3 px-1 md:px-3.5 py-1.5 md:py-2.5 rounded-xl font-bold text-xs md:text-sm transition" data-route="/thekas" href="/thekas" onclick="App.navigate('/thekas', event)">
 <i class="fa-solid fa-building-shield text-base md:text-lg"></i>
 <span class="text-[10px] md:text-sm leading-tight text-center truncate"><span class="md:hidden">ٹھیکے</span><span class="hidden md:inline">ٹھیکے (جاری/پرانے)</span></span>
 </a>
-<a class="nav-item flex-1 md:flex-none min-w-0 flex flex-col md:flex-row items-center justify-center md:justify-start gap-0.5 md:gap-3 px-1 md:px-4 py-1.5 md:py-3 rounded-xl font-bold text-xs md:text-sm transition" data-route="/mazdoors" href="/mazdoors" onclick="App.navigate('/mazdoors', event)">
+<a class="nav-item flex-1 md:flex-none min-w-0 flex flex-col md:flex-row items-center justify-center md:justify-start gap-0.5 md:gap-3 px-1 md:px-3.5 py-1.5 md:py-2.5 rounded-xl font-bold text-xs md:text-sm transition" data-route="/mazdoors" href="/mazdoors" onclick="App.navigate('/mazdoors', event)">
 <i class="fa-solid fa-users-gear text-base md:text-lg"></i>
 <span class="text-[10px] md:text-sm leading-tight text-center truncate"><span class="md:hidden">مزدور</span><span class="hidden md:inline">مزدور اور مستری</span></span>
 </a>
-<a class="nav-item flex-1 md:flex-none min-w-0 flex flex-col md:flex-row items-center justify-center md:justify-start gap-0.5 md:gap-3 px-1 md:px-4 py-1.5 md:py-3 rounded-xl font-bold text-xs md:text-sm transition" data-route="/attendance" href="/attendance" onclick="App.navigate('/attendance', event)">
+<a class="nav-item flex-1 md:flex-none min-w-0 flex flex-col md:flex-row items-center justify-center md:justify-start gap-0.5 md:gap-3 px-1 md:px-3.5 py-1.5 md:py-2.5 rounded-xl font-bold text-xs md:text-sm transition" data-route="/attendance" href="/attendance" onclick="App.navigate('/attendance', event)">
 <i class="fa-solid fa-calendar-check text-base md:text-lg"></i>
 <span class="text-[10px] md:text-sm leading-tight text-center truncate"><span class="md:hidden">حاضری</span><span class="hidden md:inline">حاضری / دیہاڑی</span></span>
 </a>
-<a class="nav-item flex-1 md:flex-none min-w-0 flex flex-col md:flex-row items-center justify-center md:justify-start gap-0.5 md:gap-3 px-1 md:px-4 py-1.5 md:py-3 rounded-xl font-bold text-xs md:text-sm transition" data-route="/hisab" href="/hisab" onclick="App.navigate('/hisab', event)">
+<a class="nav-item flex-1 md:flex-none min-w-0 flex flex-col md:flex-row items-center justify-center md:justify-start gap-0.5 md:gap-3 px-1 md:px-3.5 py-1.5 md:py-2.5 rounded-xl font-bold text-xs md:text-sm transition" data-route="/hisab" href="/hisab" onclick="App.navigate('/hisab', event)">
 <i class="fa-solid fa-sack-dollar text-base md:text-lg"></i>
 <span class="text-[10px] md:text-sm leading-tight text-center truncate"><span class="md:hidden">کھاتہ</span><span class="hidden md:inline">نقد حساب کتاب</span></span>
 </a>
-<a class="nav-item flex-1 md:flex-none min-w-0 flex flex-col md:flex-row items-center justify-center md:justify-start gap-0.5 md:gap-3 px-1 md:px-4 py-1.5 md:py-3 rounded-xl font-bold text-xs md:text-sm transition" data-route="/settings" href="/settings" onclick="App.navigate('/settings', event)">
+<a class="nav-item flex-1 md:flex-none min-w-0 flex flex-col md:flex-row items-center justify-center md:justify-start gap-0.5 md:gap-3 px-1 md:px-3.5 py-1.5 md:py-2.5 rounded-xl font-bold text-xs md:text-sm transition" data-route="/settings" href="/settings" onclick="App.navigate('/settings', event)">
 <i class="fa-solid fa-sliders text-base md:text-lg"></i>
 <span class="text-[10px] md:text-sm leading-tight text-center truncate"><span class="md:hidden">سیٹنگز</span><span class="hidden md:inline">سیٹنگز / بیک اپ</span></span>
 </a>
 </nav>
 <div class="flex-1 flex flex-col min-w-0 pb-20 sm:pb-24 md:pb-0">
-<header class="theme-header sticky top-0 z-30 shadow-md px-3 sm:px-4 py-2 sm:py-2.5 flex items-center justify-between gap-2 no-print">
-<div class="flex items-center gap-2 sm:gap-2.5 min-w-0">
-<img alt="Logo" class="app-logo-img w-9 h-9 sm:w-10 sm:h-10 rounded-xl object-contain bg-slate-900/50 p-1 border border-emerald-500/30 shadow shrink-0" src="logo.png"/>
+<header class="theme-header sticky top-0 z-30 border-b border-slate-200/80 shadow-sm px-3 sm:px-5 py-2.5 flex items-center justify-between gap-2 no-print">
+<div class="flex items-center gap-2.5 min-w-0">
+<img alt="Logo" class="app-logo-img w-9 h-9 sm:w-10 sm:h-10 rounded-2xl object-contain bg-emerald-50 p-1 border border-emerald-200 shadow-sm shrink-0" src="logo.png"/>
 <div class="min-w-0">
 <h1 class="font-extrabold text-xs sm:text-base leading-tight truncate" id="page-header-title">ٹھیکیدار خلاصہ ڈیش بورڈ</h1>
-<div class="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-[11px] opacity-85 truncate">
-<span class="truncate" id="header-user-name">حاجی یاسین اللہ خان</span>
+<div class="flex items-center gap-1.5 text-[10px] sm:text-[11px] opacity-85 truncate">
+<span class="truncate font-semibold" id="header-user-name">حاجی یاسین اللہ خان</span>
 <span>•</span>
-<span class="bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-1.5 sm:px-2 py-0.5 rounded-full font-bold shrink-0" id="header-role-pill">Admin</span>
+<span class="bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-full font-bold shrink-0" id="header-role-pill">Admin</span>
 </div>
 </div>
 </div>
-<div class="flex items-center gap-1 sm:gap-1.5 shrink-0">
-<button class="bg-emerald-600 hover:bg-emerald-500 text-white px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow touch-target" onclick="App.openQuickReceiptModal()" title="مکمل رپورٹ پرنٹ" type="button">
-<i class="fa-solid fa-print"></i>
+<div class="flex items-center gap-1.5 shrink-0">
+<button class="bg-emerald-600 hover:bg-emerald-500 text-white px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm touch-target" onclick="App.openQuickActionSheet()" title="فوری اندراج مینو" type="button">
+<i class="fa-solid fa-bolt"></i>
+<span class="hidden sm:inline">فوری اندراج</span>
+</button>
+<button class="bg-slate-100 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 border border-slate-200 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 touch-target" onclick="App.openQuickReceiptModal()" title="مکمل رپورٹ پرنٹ" type="button">
+<i class="fa-solid fa-print text-emerald-600"></i>
 <span class="hidden sm:inline">رپورٹ پرنٹ</span>
 </button>
-<button class="bg-slate-700 hover:bg-slate-600 text-white w-9 h-9 sm:w-[46px] sm:h-[46px] p-0 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center touch-target" onclick="App.openPasswordModal()" title="پاس ورڈ تبدیل کریں" type="button">
+<button class="bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 w-9 h-9 sm:w-10 sm:h-10 p-0 rounded-xl text-xs font-bold flex items-center justify-center touch-target" onclick="App.openPasswordModal()" title="پاس ورڈ تبدیل کریں" type="button">
 <i class="fa-solid fa-key"></i>
 </button>
-<button class="bg-rose-600 hover:bg-rose-500 text-white w-9 h-9 sm:w-[46px] sm:h-[46px] p-0 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center touch-target" onclick="App.logout()" title="لاگ آؤٹ" type="button">
+<button class="bg-rose-50 hover:bg-rose-600 text-rose-600 hover:text-white border border-rose-200 w-9 h-9 sm:w-10 sm:h-10 p-0 rounded-xl text-xs font-bold flex items-center justify-center touch-target transition" onclick="App.logout()" title="لاگ آؤٹ" type="button">
 <i class="fa-solid fa-power-off"></i>
 </button>
 </div>
 </header>
-<main class="theme-main flex-1 p-3 sm:p-5 max-w-7xl w-full mx-auto space-y-5 no-print">
-<section class="route-view space-y-5 animate__animated animate__fadeIn" id="view-dashboard">
-<div class="bg-gradient-to-l from-slate-900 via-slate-900 to-slate-800 text-white rounded-2xl p-4 sm:p-6 shadow-lg border border-slate-700/80 relative overflow-hidden">
-<div class="absolute -right-16 -top-16 w-52 h-52 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+<main class="theme-main flex-1 p-3 sm:p-5 max-w-7xl w-full mx-auto space-y-4 sm:space-y-5 no-print">
+<section class="route-view space-y-4 sm:space-y-5 animate__animated animate__fadeIn" id="view-dashboard">
+<div class="bg-gradient-to-br from-white via-emerald-50/40 to-teal-50/50 text-slate-900 rounded-3xl p-4 sm:p-6 shadow-sm border border-emerald-200/80 relative overflow-hidden">
+<div class="absolute -left-16 -top-16 w-52 h-52 bg-emerald-400/10 rounded-full blur-3xl pointer-events-none"></div>
 <div class="relative z-10 space-y-4">
-<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3.5">
 <div>
-<div class="flex flex-wrap items-center gap-2 mb-1.5">
-<span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] sm:text-xs font-bold px-2.5 py-0.5 rounded-full">خیبر پختونخوا کنسٹرکشن مینیجمنٹ سسٹم</span>
-<span class="bg-slate-700/80 text-slate-200 border border-slate-600 text-[10px] sm:text-xs font-bold px-2.5 py-0.5 rounded-full" id="dash-user-role-badge">بڑا ٹھیکیدار (Admin)</span>
-<span class="bg-slate-800 text-emerald-300 border border-slate-700 text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded-full flex items-center gap-1.5">
-<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> سسٹم 100% آن لائن و محفوظ
+<div class="flex flex-wrap items-center gap-1.5 mb-2">
+<span class="bg-emerald-100/90 text-emerald-800 border border-emerald-200 text-[10px] sm:text-xs font-bold px-2.5 py-0.5 rounded-full">خیبر پختونخوا کنسٹرکشن سسٹم</span>
+<span class="bg-white text-slate-700 border border-slate-200 text-[10px] sm:text-xs font-bold px-2.5 py-0.5 rounded-full shadow-sm" id="dash-user-role-badge">بڑا ٹھیکیدار (Admin)</span>
+<span class="bg-white text-emerald-700 border border-emerald-200 text-[10px] sm:text-xs font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1.5 shadow-sm">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> محفوظ کھاتہ
                                         </span>
 </div>
-<h2 class="text-base sm:text-2xl font-extrabold leading-snug">
-                                        السلام علیکم، <span class="text-emerald-400" id="dash-user-name">حاجی یاسین اللہ خان</span>!
+<h2 class="text-lg sm:text-2xl font-extrabold leading-snug text-slate-900">
+                                        السلام علیکم، <span class="text-emerald-700" id="dash-user-name">حاجی یاسین اللہ خان</span>!
                                     </h2>
-<p class="text-slate-300 text-xs sm:text-sm mt-1 max-w-2xl leading-relaxed">
-                                        تمام جاری و مکمل ٹھیکوں، مزدور حاضری رجسٹر، نقد آمدن و اخراجات، اور خالص نفع کا مکمل اور تفصیلی تجزیہ۔
+<p class="text-slate-600 text-xs sm:text-sm mt-0.5 max-w-2xl leading-relaxed">
+                                        روزانہ حاضری، مزدور ادائیگی، میٹریل خرچہ اور ٹھیکوں کی قسطوں کا آسان ترین موبائل کھاتہ۔
                                     </p>
 </div>
 <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2">
-<button class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-3 sm:px-4 py-2.5 rounded-xl shadow flex items-center justify-center gap-2 touch-target transition" onclick="App.openAttendanceModal()" type="button">
-<i class="fa-solid fa-user-check"></i>
-<span>آج کی حاضری</span>
+<button class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-3.5 py-2.5 rounded-2xl shadow-sm flex items-center justify-center gap-2 touch-target transition" onclick="App.openBulkAttendanceModal()" type="button">
+<i class="fa-solid fa-list-check"></i>
+<span>اجتماعی حاضری</span>
 </button>
-<button class="bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-600 font-bold text-xs px-3 sm:px-4 py-2.5 rounded-xl shadow-sm flex items-center justify-center gap-2 touch-target transition" onclick="App.openBulkAttendanceModal()" type="button">
-<i class="fa-solid fa-list-check text-emerald-400"></i>
-<span>اجتماعی شیٹ</span>
+<button class="bg-white hover:bg-emerald-50 text-slate-800 border border-slate-200 font-bold text-xs px-3.5 py-2.5 rounded-2xl shadow-sm flex items-center justify-center gap-2 touch-target transition" onclick="App.openAttendanceModal()" type="button">
+<i class="fa-solid fa-user-check text-emerald-600"></i>
+<span>انفرادی حاضری</span>
 </button>
-<button class="bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-600 font-bold text-xs px-3 sm:px-4 py-2.5 rounded-xl shadow-sm flex items-center justify-center gap-2 touch-target transition" onclick="App.openHisabModal()" type="button">
-<i class="fa-solid fa-hand-holding-dollar text-emerald-400"></i>
-<span>نیا خرچہ / وصولی</span>
+<button class="bg-white hover:bg-amber-50 text-slate-800 border border-slate-200 font-bold text-xs px-3.5 py-2.5 rounded-2xl shadow-sm flex items-center justify-center gap-2 touch-target transition" onclick="App.openHisabModal('', 'مزدور ادائیگی / ایڈوانس')" type="button">
+<i class="fa-solid fa-hand-holding-dollar text-amber-600"></i>
+<span>مزدور ادائیگی</span>
 </button>
-<button class="bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-600 font-bold text-xs px-3 sm:px-4 py-2.5 rounded-xl shadow-sm flex items-center justify-center gap-2 touch-target transition" onclick="App.openThekaModal()" type="button">
-<i class="fa-solid fa-plus text-emerald-400"></i>
+<button class="bg-white hover:bg-sky-50 text-slate-800 border border-slate-200 font-bold text-xs px-3.5 py-2.5 rounded-2xl shadow-sm flex items-center justify-center gap-2 touch-target transition" onclick="App.openHisabModal('', 'مالک سے قسط وصولی')" type="button">
+<i class="fa-solid fa-circle-plus text-sky-600"></i>
+<span>قسط وصولی (+)</span>
+</button>
+<button class="bg-white hover:bg-rose-50 text-slate-800 border border-slate-200 font-bold text-xs px-3.5 py-2.5 rounded-2xl shadow-sm flex items-center justify-center gap-2 touch-target transition" onclick="App.openHisabModal('', 'میٹریل اور سائٹ خرچہ')" type="button">
+<i class="fa-solid fa-truck-ramp-box text-rose-600"></i>
+<span>میٹریل خرچہ (-)</span>
+</button>
+<button class="bg-white hover:bg-teal-50 text-slate-800 border border-slate-200 font-bold text-xs px-3.5 py-2.5 rounded-2xl shadow-sm flex items-center justify-center gap-2 touch-target transition" onclick="App.openThekaModal()" type="button">
+<i class="fa-solid fa-plus text-teal-600"></i>
 <span>نیا ٹھیکہ</span>
 </button>
 </div>
 </div>
-<div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-3 border-t border-slate-700/80 text-xs">
-<div class="bg-white/10 rounded-xl p-2 sm:p-2.5">
-<div class="text-[10px] sm:text-xs text-emerald-200">آج کی تاریخ</div>
-<div class="font-bold text-white mt-0.5 truncate" id="dash-hero-date">-</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-3 border-t border-emerald-200/60 text-xs">
+<div class="bg-white/90 border border-slate-200/80 rounded-2xl p-2.5 shadow-sm">
+<div class="text-[10px] sm:text-xs text-slate-500 font-semibold">آج کی تاریخ</div>
+<div class="font-extrabold text-slate-900 mt-0.5 truncate" id="dash-hero-date">-</div>
 </div>
-<div class="bg-white/10 rounded-xl p-2 sm:p-2.5">
-<div class="text-[10px] sm:text-xs text-emerald-200">فعال تعمیراتی سائٹس</div>
-<div class="font-extrabold text-emerald-200 mt-0.5 truncate" id="dash-hero-sites">0 سائٹس</div>
+<div class="bg-white/90 border border-slate-200/80 rounded-2xl p-2.5 shadow-sm">
+<div class="text-[10px] sm:text-xs text-slate-500 font-semibold">فعال تعمیراتی سائٹس</div>
+<div class="font-extrabold text-emerald-700 mt-0.5 truncate" id="dash-hero-sites">0 سائٹس</div>
 </div>
-<div class="bg-white/10 rounded-xl p-2 sm:p-2.5">
-<div class="text-[10px] sm:text-xs text-emerald-200">آج کے حاضر مزدور</div>
-<div class="font-extrabold text-teal-200 mt-0.5 truncate" id="dash-hero-workers">0 مزدور</div>
+<div class="bg-white/90 border border-slate-200/80 rounded-2xl p-2.5 shadow-sm">
+<div class="text-[10px] sm:text-xs text-slate-500 font-semibold">آج کے حاضر مزدور</div>
+<div class="font-extrabold text-teal-700 mt-0.5 truncate" id="dash-hero-workers">0 مزدور</div>
 </div>
-<div class="bg-white/10 rounded-xl p-2 sm:p-2.5">
-<div class="text-[10px] sm:text-xs text-emerald-200">دستیاب نقد بیلنس</div>
-<div class="font-extrabold text-amber-200 num-ltr mt-0.5 truncate" id="dash-hero-cash">Rs 0</div>
+<div class="bg-white/90 border border-slate-200/80 rounded-2xl p-2.5 shadow-sm">
+<div class="text-[10px] sm:text-xs text-slate-500 font-semibold">دستیاب نقد بیلنس</div>
+<div class="font-extrabold text-sky-700 num-ltr mt-0.5 truncate" id="dash-hero-cash">Rs 0</div>
 </div>
 </div>
 </div>
@@ -1749,6 +1831,22 @@
 </button>
 </div>
 </div>
+<div class="bg-gradient-to-l from-emerald-50/90 via-white to-teal-50/70 rounded-2xl border border-emerald-200 p-3.5 shadow-sm space-y-2.5" id="quick-tap-attendance-panel">
+<div class="flex flex-wrap items-center justify-between gap-2">
+<div class="flex items-center gap-2">
+<span class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-xs shadow-sm"><i class="fa-solid fa-bolt"></i></span>
+<div>
+<h3 class="font-extrabold text-xs sm:text-sm text-slate-900">فوری 1-کلک آج کی حاضری (Instant Touch Attendance)</h3>
+<p class="text-[11px] text-slate-500">کسی بھی مزدور کے بٹن پر ٹیپ کریں — بغیر فارم کھولے آج کی حاضری فوری درج ہو جائے گی</p>
+</div>
+</div>
+<div class="flex items-center gap-1.5">
+<input class="border border-emerald-300 rounded-xl px-2.5 py-1 text-xs font-bold bg-white text-slate-800 touch-target" id="quick-tap-att-date" onchange="App.renderQuickTapAttendance()" type="date"/>
+<button class="px-2.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[11px] shadow-sm touch-target" onclick="App.markAllQuickPresent()" type="button"><i class="fa-solid fa-check-double ml-1"></i>سب پورا دن حاضر</button>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2" id="quick-tap-attendance-grid"></div>
+</div>
 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5" id="attendance-summary-cards">
 <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
 <div class="text-[10px] sm:text-xs font-bold text-slate-500 flex items-center justify-between">
@@ -2100,6 +2198,14 @@
 <input class="w-full h-11 rounded-xl border border-slate-300 cursor-pointer p-1" id="theme-footer-text" type="color"/>
 </div>
 </div>
+<div class="bg-slate-50 border border-slate-200 rounded-xl p-3 space-y-2">
+<div class="text-xs font-bold text-slate-700">تیار شدہ تھیم پری سیٹس (1-Tap Theme Presets):</div>
+<div class="flex flex-wrap gap-2">
+<button class="px-3 py-1.5 rounded-xl bg-white border border-emerald-300 text-emerald-800 text-xs font-bold shadow-sm hover:bg-emerald-50 touch-target" onclick="App.applyThemePreset('light')" type="button"><i class="fa-solid fa-sun text-amber-500 ml-1"></i>روشن منیملسٹ (Default Light)</button>
+<button class="px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-900 text-xs font-bold shadow-sm hover:bg-emerald-100 touch-target" onclick="App.applyThemePreset('emerald')" type="button"><i class="fa-solid fa-leaf text-emerald-600 ml-1"></i>ایمرالڈ سوفٹ (Emerald Clean)</button>
+<button class="px-3 py-1.5 rounded-xl bg-slate-800 text-white text-xs font-bold shadow-sm hover:bg-slate-700 touch-target" onclick="App.applyThemePreset('slate')" type="button"><i class="fa-solid fa-moon text-sky-300 ml-1"></i>کلاسک ڈارک ہیڈر (Slate Bar)</button>
+</div>
+</div>
 <div class="flex flex-wrap gap-2 pt-2">
 <button class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow touch-target flex items-center justify-center gap-1.5" type="submit">
 <i class="fa-solid fa-floppy-disk ml-1"></i> ڈیزائن محفوظ کریں
@@ -2279,9 +2385,10 @@
 </footer>
 </div>
 </div>
-<div class="fixed inset-0 bg-slate-950/75 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 overflow-y-auto no-print" id="modal-theka">
-<div class="bg-white rounded-2xl max-w-xl w-full p-5 shadow-2xl border border-slate-200 animate__animated animate__slideInUp my-auto">
-<div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-4">
+<div class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 overflow-y-auto no-print" id="modal-theka">
+<div class="bg-white rounded-3xl max-w-xl w-full p-5 shadow-2xl border border-slate-200 animate__animated animate__slideInUp my-auto">
+<div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-3 sm:hidden"></div>
+<div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
 <h3 class="font-extrabold text-base text-slate-900" id="modal-theka-title">نیا تعمیراتی ٹھیکہ شامل کریں</h3>
 <button class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-rose-100 text-slate-600 hover:text-rose-600 flex items-center justify-center touch-target" onclick="App.closeModalWithConfirm('modal-theka')" type="button">
 <i class="fa-solid fa-xmark text-lg"></i>
@@ -2321,40 +2428,62 @@
 <option value="مکمل شدہ">مکمل شدہ (Past Completed)</option>
 </select>
 </div>
-<div>
-<label class="block text-xs font-bold text-slate-700 mb-1" for="theka-amount">طے شدہ کل ٹھیکہ رقم (PKR) <span class="text-red-500">*</span></label>
-<input class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm num-ltr text-right touch-target" id="theka-amount" placeholder="1500000" type="number"/>
+<div class="sm:col-span-2">
+<div class="flex items-center justify-between mb-1">
+<label class="block text-xs font-bold text-slate-700" for="theka-amount">طے شدہ کل ٹھیکہ رقم (PKR) <span class="text-red-500">*</span></label>
+<span class="text-[11px] font-extrabold text-emerald-700" id="theka-amount-words"></span>
 </div>
-<div>
+<input class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm num-ltr text-right font-bold touch-target" id="theka-amount" oninput="App.updateThekaAmountWords()" placeholder="1500000" type="number"/>
+<div class="flex flex-wrap gap-1.5 mt-1.5">
+<button class="rn-chip" onclick="App.setQuickAmount('theka-amount', 1500000); App.updateThekaAmountWords()" type="button">15 لاکھ</button>
+<button class="rn-chip" onclick="App.setQuickAmount('theka-amount', 2500000); App.updateThekaAmountWords()" type="button">25 لاکھ</button>
+<button class="rn-chip" onclick="App.setQuickAmount('theka-amount', 4500000); App.updateThekaAmountWords()" type="button">45 لاکھ</button>
+<button class="rn-chip" onclick="App.setQuickAmount('theka-amount', 6500000); App.updateThekaAmountWords()" type="button">65 لاکھ</button>
+<button class="rn-chip" onclick="App.setQuickAmount('theka-amount', 8500000); App.updateThekaAmountWords()" type="button">85 لاکھ</button>
+<button class="rn-chip" onclick="App.setQuickAmount('theka-amount', 10000000); App.updateThekaAmountWords()" type="button">1 کروڑ</button>
+</div>
+</div>
+<div class="sm:col-span-2">
 <label class="block text-xs font-bold text-slate-700 mb-1" for="theka-start">شروع ہونے کی تاریخ <span class="text-red-500">*</span></label>
 <input class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm touch-target" id="theka-start" type="date"/>
 </div>
 </div>
-<details class="bg-slate-50 border border-slate-200 rounded-xl p-3">
-<summary class="text-xs font-bold text-emerald-700 cursor-pointer">مزید تفصیلات (پیمائش مربع فٹ اور نوٹس - اختیاری)</summary>
+<details class="bg-slate-50 border border-slate-200 rounded-2xl p-3" open="">
+<summary class="text-xs font-bold text-emerald-700 cursor-pointer">پیمائش مربع فٹ اور شرائط (اختیاری - 1-Tap ٹیگز)</summary>
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
 <div>
 <label class="block text-xs font-bold text-slate-700 mb-1" for="theka-sqft">رقبہ (مربع فٹ / مرلہ)</label>
 <input class="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm bg-white touch-target" id="theka-sqft" placeholder="مثال: 10 مرلہ - 3200 مربع فٹ" type="text"/>
+<div class="flex flex-wrap gap-1 mt-1.5">
+<button class="rn-chip" onclick="App.setQuickText('theka-sqft', '5 مرلہ - ڈبل سٹوری')" type="button">5 مرلہ</button>
+<button class="rn-chip" onclick="App.setQuickText('theka-sqft', '7 مرلہ - ڈبل سٹوری')" type="button">7 مرلہ</button>
+<button class="rn-chip" onclick="App.setQuickText('theka-sqft', '10 مرلہ - 3400 مربع فٹ')" type="button">10 مرلہ</button>
+<button class="rn-chip" onclick="App.setQuickText('theka-sqft', '1 کنال کوٹھی')" type="button">1 کنال</button>
+</div>
 </div>
 <div>
 <label class="block text-xs font-bold text-slate-700 mb-1" for="theka-notes">شرائط یا خاص نوٹ</label>
 <input class="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm bg-white touch-target" id="theka-notes" placeholder="شٹرنگ اور پلستر شامل ہے" type="text"/>
+<div class="flex flex-wrap gap-1 mt-1.5">
+<button class="rn-chip" onclick="App.setQuickText('theka-notes', 'گرے سٹرکچر بمعہ شٹرنگ اور پلستر')" type="button">گرے سٹرکچر + پلستر</button>
+<button class="rn-chip" onclick="App.setQuickText('theka-notes', 'مکمل فنشنگ بمعہ میٹریل چابی سمیت')" type="button">مکمل فنشنگ</button>
+</div>
 </div>
 </div>
 </details>
-<div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-200">
+<div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
 <button class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs touch-target" onclick="App.closeModalWithConfirm('modal-theka')" type="button">منسوخ کریں</button>
-<button class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow touch-target flex items-center justify-center gap-1.5" id="btn-save-theka" type="submit">
+<button class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-sm touch-target flex items-center justify-center gap-1.5" id="btn-save-theka" type="submit">
 <i class="fa-solid fa-check ml-1"></i> ٹھیکہ محفوظ کریں
                     </button>
 </div>
 </form>
 </div>
 </div>
-<div class="fixed inset-0 bg-slate-950/75 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 overflow-y-auto no-print" id="modal-mazdoor">
-<div class="bg-white rounded-2xl max-w-xl w-full p-5 shadow-2xl border border-slate-200 animate__animated animate__slideInUp my-auto">
-<div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-4">
+<div class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 overflow-y-auto no-print" id="modal-mazdoor">
+<div class="bg-white rounded-3xl max-w-xl w-full p-5 shadow-2xl border border-slate-200 animate__animated animate__slideInUp my-auto">
+<div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-3 sm:hidden"></div>
+<div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
 <h3 class="font-extrabold text-base text-slate-900" id="modal-mazdoor-title">نیا مزدور / مستری شامل کریں</h3>
 <button class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-rose-100 text-slate-600 hover:text-rose-600 flex items-center justify-center touch-target" onclick="App.closeModalWithConfirm('modal-mazdoor')" type="button">
 <i class="fa-solid fa-xmark text-lg"></i>
@@ -2369,22 +2498,30 @@
 </div>
 <div>
 <label class="block text-xs font-bold text-slate-700 mb-1" for="mazdoor-role">ہنر / کام کی قسم <span class="text-red-500">*</span></label>
-<select class="w-full" id="mazdoor-role"></select>
+<select class="w-full" id="mazdoor-role" onchange="App.suggestWageByRole()"></select>
 </div>
-<div>
+<div class="sm:col-span-2">
 <label class="block text-xs font-bold text-slate-700 mb-1" for="mazdoor-wage">روزانہ دیہاڑی ریٹ (PKR) <span class="text-red-500">*</span></label>
-<input class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm num-ltr text-right touch-target" id="mazdoor-wage" placeholder="2500" type="number"/>
+<input class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm num-ltr text-right font-bold touch-target" id="mazdoor-wage" placeholder="2500" type="number"/>
+<div class="flex flex-wrap gap-1.5 mt-1.5">
+<button class="rn-chip" onclick="App.setQuickAmount('mazdoor-wage', 1600)" type="button">Rs 1,600 (مزدور)</button>
+<button class="rn-chip" onclick="App.setQuickAmount('mazdoor-wage', 2000)" type="button">Rs 2,000</button>
+<button class="rn-chip" onclick="App.setQuickAmount('mazdoor-wage', 2500)" type="button">Rs 2,500</button>
+<button class="rn-chip" onclick="App.setQuickAmount('mazdoor-wage', 2800)" type="button">Rs 2,800 (شٹرنگ)</button>
+<button class="rn-chip" onclick="App.setQuickAmount('mazdoor-wage', 3000)" type="button">Rs 3,000 (راج مستری)</button>
+<button class="rn-chip" onclick="App.setQuickAmount('mazdoor-wage', 3500)" type="button">Rs 3,500 (سینئر استاد)</button>
+</div>
 </div>
 <div>
 <label class="block text-xs font-bold text-slate-700 mb-1" for="mazdoor-phone">موبائل نمبر <span class="text-red-500">*</span></label>
 <input class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm num-ltr text-right touch-target" id="mazdoor-phone" placeholder="03151234567" type="text"/>
 </div>
-<div class="sm:col-span-2">
+<div>
 <label class="block text-xs font-bold text-slate-700 mb-1" for="mazdoor-theka">موجودہ ٹھیکہ سائٹ منتخب کریں <span class="text-red-500">*</span></label>
 <select class="w-full" id="mazdoor-theka"></select>
 </div>
 </div>
-<details class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+<details class="bg-slate-50 border border-slate-200 rounded-2xl p-3">
 <summary class="text-xs font-bold text-emerald-700 cursor-pointer">تصویر اور شناختی کارڈ (خودکار کمپریسڈ فوٹو &lt; 100KB)</summary>
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3 items-center">
 <div>
@@ -2399,18 +2536,19 @@
 </div>
 </div>
 </details>
-<div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-200">
+<div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
 <button class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs touch-target" onclick="App.closeModalWithConfirm('modal-mazdoor')" type="button">منسوخ کریں</button>
-<button class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow touch-target flex items-center justify-center gap-1.5" id="btn-save-mazdoor" type="submit">
+<button class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-sm touch-target flex items-center justify-center gap-1.5" id="btn-save-mazdoor" type="submit">
 <i class="fa-solid fa-check ml-1"></i> مزدور محفوظ کریں
                     </button>
 </div>
 </form>
 </div>
 </div>
-<div class="fixed inset-0 bg-slate-950/75 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 overflow-y-auto no-print" id="modal-attendance">
-<div class="bg-white rounded-2xl max-w-lg w-full p-5 shadow-2xl border border-slate-200 animate__animated animate__slideInUp my-auto">
-<div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-4">
+<div class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 overflow-y-auto no-print" id="modal-attendance">
+<div class="bg-white rounded-3xl max-w-lg w-full p-5 shadow-2xl border border-slate-200 animate__animated animate__slideInUp my-auto">
+<div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-3 sm:hidden"></div>
+<div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
 <h3 class="font-extrabold text-base text-slate-900" id="modal-attendance-title">مزدور کی روزانہ حاضری اور دیہاڑی</h3>
 <button class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-rose-100 text-slate-600 hover:text-rose-600 flex items-center justify-center touch-target" onclick="App.closeModalWithConfirm('modal-attendance')" type="button">
 <i class="fa-solid fa-xmark text-lg"></i>
@@ -2419,14 +2557,18 @@
 <form class="space-y-3.5" id="form-attendance" novalidate="">
 <input id="att-id" type="hidden"/>
 <div class="hidden" id="att-duplicate-alert"></div>
+<div class="bg-emerald-50/80 border border-emerald-200 rounded-2xl p-3 flex items-center justify-between text-xs" id="att-live-calc-preview">
+<span class="font-bold text-slate-700">آج کی متوقع دیہاڑی حساب:</span>
+<span class="font-extrabold text-emerald-800 num-ltr text-sm" id="att-live-calc-value">Rs 0</span>
+</div>
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
 <div>
 <label class="block text-xs font-bold text-slate-700 mb-1" for="att-date">تاریخ <span class="text-red-500">*</span></label>
-<input class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm touch-target" id="att-date" onchange="App.checkAttendanceDuplicate()" type="date"/>
+<input class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm touch-target" id="att-date" onchange="App.checkAttendanceDuplicate(); App.updateAttLiveCalc()" type="date"/>
 </div>
 <div>
 <label class="block text-xs font-bold text-slate-700 mb-1" for="att-mazdoor">مزدور / مستری منتخب کریں <span class="text-red-500">*</span></label>
-<select class="w-full" id="att-mazdoor" onchange="App.syncMazdoorWageInAtt(); App.checkAttendanceDuplicate()"></select>
+<select class="w-full" id="att-mazdoor" onchange="App.syncMazdoorWageInAtt(); App.checkAttendanceDuplicate(); App.updateAttLiveCalc()"></select>
 </div>
 <div class="sm:col-span-2">
 <label class="block text-xs font-bold text-slate-700 mb-1" for="att-theka">کس ٹھیکہ سائٹ پر کام کیا؟ <span class="text-red-500">*</span></label>
@@ -2434,7 +2576,7 @@
 </div>
 <div>
 <label class="block text-xs font-bold text-slate-700 mb-1" for="att-status">حاضری کی قسم <span class="text-red-500">*</span></label>
-<select class="w-full" id="att-status">
+<select class="w-full" id="att-status" onchange="App.updateAttLiveCalc()">
 <option value="پورا دن (Full)">پورا دن حاضری (1.0 دیہاڑی)</option>
 <option value="آدھا دن (Half)">آدھا دن حاضری (0.5 دیہاڑی)</option>
 <option value="ڈبل شفٹ (Double)">ڈبل شفٹ کام (2.0 دیہاڑی)</option>
@@ -2443,25 +2585,39 @@
 </div>
 <div>
 <label class="block text-xs font-bold text-slate-700 mb-1" for="att-overtime">اوور ٹائم / اضافی انعام (PKR)</label>
-<input class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm num-ltr text-right touch-target" id="att-overtime" min="0" type="number" value="0"/>
+<input class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm num-ltr text-right font-bold touch-target" id="att-overtime" min="0" oninput="App.updateAttLiveCalc()" type="number" value="0"/>
+<div class="flex flex-wrap gap-1 mt-1.5">
+<button class="rn-chip" onclick="App.setQuickAmount('att-overtime', 0); App.updateAttLiveCalc()" type="button">Rs 0</button>
+<button class="rn-chip" onclick="App.setQuickAmount('att-overtime', 300); App.updateAttLiveCalc()" type="button">+300</button>
+<button class="rn-chip" onclick="App.setQuickAmount('att-overtime', 500); App.updateAttLiveCalc()" type="button">+500</button>
+<button class="rn-chip" onclick="App.setQuickAmount('att-overtime', 1000); App.updateAttLiveCalc()" type="button">+1000</button>
+</div>
 </div>
 <div class="sm:col-span-2">
-<label class="block text-xs font-bold text-slate-700 mb-1" for="att-note">کام کی تفصیل (اختیاری)</label>
+<label class="block text-xs font-bold text-slate-700 mb-1" for="att-note">کام کی تفصیل (اختیاری - 1-Tap ٹیگز)</label>
 <input class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm touch-target" id="att-note" placeholder="مثال: پہلی منزل لنٹر شٹرنگ اور چنائی" type="text"/>
+<div class="flex flex-wrap gap-1 mt-1.5">
+<button class="rn-chip" onclick="App.setQuickText('att-note', 'چنائی اور مسالہ تیاری')" type="button">چنائی کا کام</button>
+<button class="rn-chip" onclick="App.setQuickText('att-note', 'اندرونی و بیرونی پلستر')" type="button">پلستر کا کام</button>
+<button class="rn-chip" onclick="App.setQuickText('att-note', 'لنٹر شٹرنگ اور پلیٹ فکسنگ')" type="button">لنٹر شٹرنگ</button>
+<button class="rn-chip" onclick="App.setQuickText('att-note', 'سریا بائنڈنگ اور جال')" type="button">سریا بائنڈنگ</button>
+<button class="rn-chip" onclick="App.setQuickText('att-note', 'کنکریٹ پورنگ (بھرائی)')" type="button">کنکریٹ بھرائی</button>
 </div>
 </div>
-<div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-200">
+</div>
+<div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
 <button class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs touch-target" onclick="App.closeModalWithConfirm('modal-attendance')" type="button">منسوخ کریں</button>
-<button class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow touch-target flex items-center justify-center gap-1.5" id="btn-save-att" type="submit">
+<button class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-sm touch-target flex items-center justify-center gap-1.5" id="btn-save-att" type="submit">
 <i class="fa-solid fa-check ml-1"></i> حاضری محفوظ کریں
                     </button>
 </div>
 </form>
 </div>
 </div>
-<div class="fixed inset-0 bg-slate-950/75 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 overflow-y-auto no-print" id="modal-bulk-attendance">
-<div class="bg-white rounded-2xl max-w-2xl w-full p-5 shadow-2xl border border-slate-200 animate__animated animate__slideInUp my-auto">
-<div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-4">
+<div class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 overflow-y-auto no-print" id="modal-bulk-attendance">
+<div class="bg-white rounded-3xl max-w-2xl w-full p-5 shadow-2xl border border-slate-200 animate__animated animate__slideInUp my-auto">
+<div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-3 sm:hidden"></div>
+<div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
 <div>
 <h3 class="font-extrabold text-base text-slate-900">اجتماعی حاضری شیٹ (ٹھیکہ و چیک باکس سلیکشن)</h3>
 <p class="text-xs text-slate-500">ٹھیکہ منتخب کریں اور مطلوبہ مزدوروں کو چیک کر کے انفرادی یا اجتماعی حاضری لگائیں</p>
@@ -2471,7 +2627,7 @@
 </button>
 </div>
 <div class="space-y-3">
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 bg-slate-50 p-3 rounded-2xl border border-slate-200">
 <div>
 <label class="block text-xs font-bold text-slate-700 mb-1" for="bulk-att-theka">ٹھیکہ سائٹ فلٹر کریں:</label>
 <select class="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs font-bold bg-white touch-target" id="bulk-att-theka" onchange="App.filterBulkAttendanceByTheka()">
@@ -2482,29 +2638,38 @@
 <input class="w-full border border-slate-300 rounded-xl px-3 py-1.5 text-sm bg-white touch-target" id="bulk-att-date" onchange="App.filterBulkAttendanceByTheka()" type="date"/>
 </div>
 </div>
-<div class="flex flex-col sm:flex-row sm:items-center justify-between bg-emerald-50 border border-emerald-200 px-3 py-2 rounded-xl text-xs gap-1.5">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between bg-emerald-50/90 border border-emerald-200 px-3 py-2.5 rounded-2xl text-xs gap-2">
 <label class="flex items-center gap-2 cursor-pointer font-bold text-emerald-900">
 <input checked="" class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500" id="bulk-select-all" onchange="App.toggleBulkSelectAll(this)" type="checkbox"/>
-<span>تمام منتخب کریں / غیر منتخب کریں</span>
+<span>تمام منتخب کریں</span>
 </label>
+<div class="flex items-center gap-1.5 flex-wrap">
+<button class="rn-chip bg-white" onclick="App.setAllBulkStatus('پورا دن (Full)')" type="button">سب پورا دن</button>
+<button class="rn-chip bg-white" onclick="App.setAllBulkStatus('آدھا دن (Half)')" type="button">سب آدھا دن</button>
+<button class="rn-chip bg-white" onclick="App.setAllBulkStatus('ڈبل شفٹ (Double)')" type="button">سب ڈبل شفٹ</button>
+</div>
 <div class="flex items-center gap-2 flex-wrap">
-<span class="font-extrabold text-emerald-700" id="bulk-selected-counter">0 مزدور منتخب شدہ</span>
-<span class="text-[11px] text-slate-600 bg-white/80 px-2 py-0.5 rounded-md border border-emerald-200" id="bulk-already-marked-info"></span>
+<span class="font-extrabold text-emerald-800" id="bulk-selected-counter">0 مزدور منتخب شدہ</span>
+<span class="text-[11px] text-slate-600 bg-white px-2 py-0.5 rounded-lg border border-emerald-200 font-bold" id="bulk-already-marked-info"></span>
 </div>
 </div>
 <div class="space-y-2 max-h-80 overflow-y-auto pr-1" id="bulk-attendance-list"></div>
-<div class="flex justify-end gap-2 pt-3 border-t border-slate-200">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-3 border-t border-slate-100">
+<div class="text-xs font-bold text-slate-600">منتخب مزدوروں کی آج کی کل دیہاڑی: <span class="font-extrabold text-emerald-700 num-ltr text-sm" id="bulk-live-total-amount">Rs 0</span></div>
+<div class="flex justify-end gap-2">
 <button class="px-4 py-2.5 rounded-xl bg-slate-100 text-slate-700 font-bold text-xs touch-target" onclick="App.closeModal('modal-bulk-attendance')" type="button">بند کریں</button>
-<button class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow touch-target flex items-center justify-center gap-1.5" onclick="App.saveBulkAttendance()" type="button">
+<button class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-sm touch-target flex items-center justify-center gap-1.5" onclick="App.saveBulkAttendance()" type="button">
 <i class="fa-solid fa-check-double ml-1"></i> منتخب شدہ مزدوروں کی حاضری محفوظ کریں
                     </button>
 </div>
 </div>
 </div>
 </div>
-<div class="fixed inset-0 bg-slate-950/75 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 overflow-y-auto no-print" id="modal-hisab">
-<div class="bg-white rounded-2xl max-w-xl w-full p-5 shadow-2xl border border-slate-200 animate__animated animate__slideInUp my-auto">
-<div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-4">
+</div>
+<div class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 overflow-y-auto no-print" id="modal-hisab">
+<div class="bg-white rounded-3xl max-w-xl w-full p-5 shadow-2xl border border-slate-200 animate__animated animate__slideInUp my-auto">
+<div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-3 sm:hidden"></div>
+<div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
 <h3 class="font-extrabold text-base text-slate-900" id="modal-hisab-title">نقد حساب کتاب (وصولی / مزدور ادائیگی / میٹریل خرچہ)</h3>
 <button class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-rose-100 text-slate-600 hover:text-rose-600 flex items-center justify-center touch-target" onclick="App.closeModalWithConfirm('modal-hisab')" type="button">
 <i class="fa-solid fa-xmark text-lg"></i>
@@ -2527,15 +2692,24 @@
 </div>
 <div class="sm:col-span-2">
 <label class="block text-xs font-bold text-slate-700 mb-1" for="hisab-theka">متعلقہ ٹھیکہ سائٹ <span class="text-red-500">*</span></label>
-<select class="w-full" id="hisab-theka"></select>
+<select class="w-full" id="hisab-theka" onchange="App.updateHisabSmartContext()"></select>
 </div>
 <div class="sm:col-span-2 hidden" id="hisab-mazdoor-wrap">
 <label class="block text-xs font-bold text-slate-700 mb-1" for="hisab-mazdoor">کس مزدور / مستری کو رقم دی؟</label>
-<select class="w-full" id="hisab-mazdoor"></select>
+<select class="w-full" id="hisab-mazdoor" onchange="App.onHisabMazdoorSelectChange()"></select>
 </div>
+<div class="sm:col-span-2" id="hisab-smart-context-box"></div>
 <div>
 <label class="block text-xs font-bold text-slate-700 mb-1" for="hisab-amount">رقم (PKR) <span class="text-red-500">*</span></label>
-<input class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm num-ltr text-right touch-target" id="hisab-amount" placeholder="50000" type="number"/>
+<input class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm num-ltr text-right font-bold touch-target" id="hisab-amount" placeholder="50000" type="number"/>
+<div class="flex flex-wrap gap-1 mt-1.5">
+<button class="rn-chip" onclick="App.setQuickAmount('hisab-amount', 1000)" type="button">1,000</button>
+<button class="rn-chip" onclick="App.setQuickAmount('hisab-amount', 3000)" type="button">3,000</button>
+<button class="rn-chip" onclick="App.setQuickAmount('hisab-amount', 5000)" type="button">5,000</button>
+<button class="rn-chip" onclick="App.setQuickAmount('hisab-amount', 10000)" type="button">10,000</button>
+<button class="rn-chip" onclick="App.setQuickAmount('hisab-amount', 50000)" type="button">50,000</button>
+<button class="rn-chip" onclick="App.setQuickAmount('hisab-amount', 100000)" type="button">1 لاکھ</button>
+</div>
 </div>
 <div>
 <label class="block text-xs font-bold text-slate-700 mb-1" for="hisab-method">طریقہ ادائیگی <span class="text-red-500">*</span></label>
@@ -2547,11 +2721,12 @@
 </select>
 </div>
 <div class="sm:col-span-2">
-<label class="block text-xs font-bold text-slate-700 mb-1" for="hisab-desc">تفصیل / مد <span class="text-red-500">*</span></label>
+<label class="block text-xs font-bold text-slate-700 mb-1" for="hisab-desc">تفصیل / مد <span class="text-slate-400 font-normal">(خالی چھوڑنے پر خودکار درج ہو جائے گی)</span></label>
 <input class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm touch-target" id="hisab-desc" placeholder="مثال: دوسری قسط وصولی یا 100 بوری چراٹ سیمنٹ" type="text"/>
+<div class="flex flex-wrap gap-1 mt-1.5" id="hisab-desc-chips"></div>
 </div>
 </div>
-<details class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+<details class="bg-slate-50 border border-slate-200 rounded-2xl p-3">
 <summary class="text-xs font-bold text-emerald-700 cursor-pointer">بل یا رسید کی تصویر منسلک کریں (اختیاری &lt; 100KB)</summary>
 <div class="mt-2">
 <input accept="image/jpeg,image/png,image/webp,image/gif" class="w-full text-xs" id="hisab-receipt-img" onchange="App.handleImageUpload(event, 'hisab-receipt-preview')" type="file"/>
@@ -2559,16 +2734,63 @@
 <img alt="Receipt" class="hidden w-16 h-16 rounded-lg object-cover mt-2 border border-emerald-500" id="hisab-receipt-preview" src=""/>
 </div>
 </details>
-<div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-200">
+<div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
 <button class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs touch-target" onclick="App.closeModalWithConfirm('modal-hisab')" type="button">منسوخ کریں</button>
-<button class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow touch-target flex items-center justify-center gap-1.5" id="btn-save-hisab" type="submit">
+<button class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-sm touch-target flex items-center justify-center gap-1.5" id="btn-save-hisab" type="submit">
 <i class="fa-solid fa-check ml-1"></i> کھاتہ میں درج کریں
                     </button>
 </div>
 </form>
 </div>
 </div>
-<div class="fixed inset-0 bg-slate-950/75 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 no-print" id="modal-password">
+<button class="fixed bottom-20 left-4 md:bottom-6 md:left-6 z-40 w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-xl shadow-emerald-600/30 flex items-center justify-center text-xl no-print transition transform active:scale-95 border-2 border-white" id="rn-fab-trigger" onclick="App.openQuickActionSheet()" title="فوری اندراج مینو (Quick Actions)" type="button">
+<i class="fa-solid fa-plus"></i>
+</button>
+<div class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4 no-print" id="modal-quick-sheet" onclick="if(event.target === this) App.closeModal('modal-quick-sheet')">
+<div class="bg-white rounded-t-3xl sm:rounded-3xl max-w-md w-full p-5 shadow-2xl border border-slate-200 animate__animated animate__slideInUp">
+<div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-3 sm:hidden"></div>
+<div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
+<div>
+<h3 class="font-extrabold text-base text-slate-900 flex items-center gap-2"><i class="fa-solid fa-bolt text-emerald-600"></i> فوری روزمرہ کام (Quick Actions)</h3>
+<p class="text-xs text-slate-500">صرف ایک کلک میں حاضری، ادائیگی یا قسط درج کریں</p>
+</div>
+<button class="w-9 h-9 rounded-xl bg-slate-100 text-slate-600 flex items-center justify-center touch-target" onclick="App.closeModal('modal-quick-sheet')" type="button">
+<i class="fa-solid fa-xmark"></i>
+</button>
+</div>
+<div class="grid grid-cols-2 gap-2.5 text-right">
+<button class="p-3 rounded-2xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 flex items-center gap-3 transition touch-target" onclick="App.closeModal('modal-quick-sheet'); App.openBulkAttendanceModal()" type="button">
+<span class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0"><i class="fa-solid fa-list-check"></i></span>
+<div><div class="font-extrabold text-xs text-slate-900">اجتماعی حاضری</div><div class="text-[10px] text-slate-500">سب کی حاضری شیٹ</div></div>
+</button>
+<button class="p-3 rounded-2xl bg-teal-50 hover:bg-teal-100 border border-teal-200 flex items-center gap-3 transition touch-target" onclick="App.closeModal('modal-quick-sheet'); App.openAttendanceModal()" type="button">
+<span class="w-10 h-10 rounded-xl bg-teal-600 text-white flex items-center justify-center shrink-0"><i class="fa-solid fa-user-check"></i></span>
+<div><div class="font-extrabold text-xs text-slate-900">انفرادی حاضری</div><div class="text-[10px] text-slate-500">ایک مزدور حاضری</div></div>
+</button>
+<button class="p-3 rounded-2xl bg-amber-50 hover:bg-amber-100 border border-amber-200 flex items-center gap-3 transition touch-target" onclick="App.closeModal('modal-quick-sheet'); App.openHisabModal('', 'مزدور ادائیگی / ایڈوانس')" type="button">
+<span class="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0"><i class="fa-solid fa-hand-holding-dollar"></i></span>
+<div><div class="font-extrabold text-xs text-slate-900">مزدور ادائیگی</div><div class="text-[10px] text-slate-500">دیہاڑی یا ایڈوانس</div></div>
+</button>
+<button class="p-3 rounded-2xl bg-sky-50 hover:bg-sky-100 border border-sky-200 flex items-center gap-3 transition touch-target" onclick="App.closeModal('modal-quick-sheet'); App.openHisabModal('', 'مالک سے قسط وصولی')" type="button">
+<span class="w-10 h-10 rounded-xl bg-sky-600 text-white flex items-center justify-center shrink-0"><i class="fa-solid fa-circle-arrow-down"></i></span>
+<div><div class="font-extrabold text-xs text-slate-900">قسط وصولی (+)</div><div class="text-[10px] text-slate-500">مالک مکان سے رقم</div></div>
+</button>
+<button class="p-3 rounded-2xl bg-rose-50 hover:bg-rose-100 border border-rose-200 flex items-center gap-3 transition touch-target" onclick="App.closeModal('modal-quick-sheet'); App.openHisabModal('', 'میٹریل اور سائٹ خرچہ')" type="button">
+<span class="w-10 h-10 rounded-xl bg-rose-600 text-white flex items-center justify-center shrink-0"><i class="fa-solid fa-truck-ramp-box"></i></span>
+<div><div class="font-extrabold text-xs text-slate-900">میٹریل خرچہ (-)</div><div class="text-[10px] text-slate-500">سیمنٹ، سریا، ریت</div></div>
+</button>
+<button class="p-3 rounded-2xl bg-purple-50 hover:bg-purple-100 border border-purple-200 flex items-center gap-3 transition touch-target" onclick="App.closeModal('modal-quick-sheet'); App.openMazdoorModal()" type="button">
+<span class="w-10 h-10 rounded-xl bg-purple-600 text-white flex items-center justify-center shrink-0"><i class="fa-solid fa-user-plus"></i></span>
+<div><div class="font-extrabold text-xs text-slate-900">نیا مزدور / مستری</div><div class="text-[10px] text-slate-500">ورکر رجسٹر کریں</div></div>
+</button>
+<button class="p-3 rounded-2xl bg-slate-50 hover:bg-slate-100 border border-slate-200 flex items-center gap-3 transition touch-target col-span-2" onclick="App.closeModal('modal-quick-sheet'); App.openThekaModal()" type="button">
+<span class="w-10 h-10 rounded-xl bg-slate-800 text-white flex items-center justify-center shrink-0"><i class="fa-solid fa-building-shield"></i></span>
+<div><div class="font-extrabold text-xs text-slate-900">نیا تعمیراتی ٹھیکہ شامل کریں</div><div class="text-[10px] text-slate-500">نئی سائٹ، مالک مکان اور طے شدہ رقم کا اندراج</div></div>
+</button>
+</div>
+</div>
+</div>
+<div class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 no-print" id="modal-password">
 <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-2xl border border-slate-200 animate__animated animate__slideInUp">
 <div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-4">
 <h3 class="font-extrabold text-base text-slate-900"><i class="fa-solid fa-key text-emerald-600 ml-1"></i> پاس ورڈ تبدیل کریں</h3>
@@ -2830,14 +3052,14 @@
                 return {
                     fontFamily: "'Noto Sans Arabic', 'Readex Pro', 'Inter', sans-serif",
                     fontSize: "16px",
-                    headerBg: "#0f172a",
-                    headerText: "#f8fafc",
-                    sidebarBg: "#1e293b",
-                    sidebarText: "#f1f5f9",
-                    mainBg: "#f8fafc",
+                    headerBg: "#ffffff",
+                    headerText: "#0f172a",
+                    sidebarBg: "#ffffff",
+                    sidebarText: "#334155",
+                    mainBg: "#f4f7fb",
                     mainText: "#0f172a",
-                    footerBg: "#0f172a",
-                    footerText: "#e2e8f0"
+                    footerBg: "#ffffff",
+                    footerText: "#475569"
                 };
             },
 
@@ -3135,6 +3357,17 @@
                     this.db.roles = seed.roles;
                     this.saveDatabase();
                 }
+                if (Array.isArray(this.db.users)) {
+                    let themeMigrated = false;
+                    const lightTheme = this.getDefaultTheme();
+                    this.db.users.forEach(u => {
+                        if (!u.theme || (u.theme.headerBg === "#0f172a" && u.theme.sidebarBg === "#1e293b")) {
+                            u.theme = { ...lightTheme };
+                            themeMigrated = true;
+                        }
+                    });
+                    if (themeMigrated) this.saveDatabase();
+                }
                 this.sanitizeAndDeduplicateDatabase();
             },
 
@@ -3154,22 +3387,22 @@
 
                 const canvas = document.createElement("canvas");
                 canvas.width = 220;
-                canvas.height = 54;
+                canvas.height = 50;
                 const ctx = canvas.getContext("2d");
 
-                ctx.fillStyle = "#020617";
+                ctx.fillStyle = "#f8fafc";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-                for (let i = 0; i < 45; i++) {
-                    ctx.fillStyle = `rgba(${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, 0.45)`;
+                for (let i = 0; i < 25; i++) {
+                    ctx.fillStyle = `rgba(16, 185, 129, ${0.08 + Math.random() * 0.15})`;
                     ctx.beginPath();
-                    ctx.arc(Math.random() * canvas.width, Math.random() * canvas.height, Math.random() * 2.5, 0, Math.PI * 2);
+                    ctx.arc(Math.random() * canvas.width, Math.random() * canvas.height, Math.random() * 3, 0, Math.PI * 2);
                     ctx.fill();
                 }
 
-                for (let i = 0; i < 5; i++) {
-                    ctx.strokeStyle = `rgba(16, 185, 129, ${0.35 + Math.random() * 0.4})`;
-                    ctx.lineWidth = 1.6;
+                for (let i = 0; i < 3; i++) {
+                    ctx.strokeStyle = `rgba(5, 150, 105, ${0.2 + Math.random() * 0.25})`;
+                    ctx.lineWidth = 1.4;
                     ctx.beginPath();
                     ctx.moveTo(Math.random() * canvas.width, Math.random() * canvas.height);
                     ctx.bezierCurveTo(
@@ -3180,19 +3413,28 @@
                     ctx.stroke();
                 }
 
-                ctx.font = "bold 26px Inter, sans-serif";
-                ctx.fillStyle = "#34d399";
+                ctx.font = "800 24px Inter, sans-serif";
+                ctx.fillStyle = "#047857";
                 ctx.textBaseline = "middle";
                 const text = `${a}  +  ${b}  =  ?`;
                 ctx.save();
-                ctx.translate(45, 27);
-                ctx.rotate((Math.random() - 0.5) * 0.12);
+                ctx.translate(45, 25);
+                ctx.rotate((Math.random() - 0.5) * 0.08);
                 ctx.fillText(text, 0, 0);
                 ctx.restore();
 
                 const imgId = target === "login" ? "login-captcha-img" : "reg-captcha-img";
                 const imgEl = document.getElementById(imgId);
                 if (imgEl) imgEl.src = canvas.toDataURL("image/png");
+            },
+
+            solveCaptchaHelper(target) {
+                const inpId = target === "login" ? "login-captcha-input" : "reg-captcha-input";
+                const el = document.getElementById(inpId);
+                if (el) {
+                    el.value = this.captchas[target];
+                    this.toast("حفاظتی کوڈ خودکار درج کر دیا گیا!", "success");
+                }
             },
 
             checkThrottle() {
@@ -3250,14 +3492,14 @@
                 if (tab === "login") {
                     loginForm.classList.remove("hidden");
                     regForm.classList.add("hidden");
-                    loginBtn.className = "flex-1 py-3.5 font-bold text-sm border-b-2 border-emerald-500 text-emerald-400 touch-target transition";
-                    regBtn.className = "flex-1 py-3.5 font-bold text-sm border-b-2 border-transparent text-slate-400 hover:text-white touch-target transition";
+                    loginBtn.className = "flex-1 py-2.5 rounded-xl font-bold text-xs bg-white text-emerald-700 shadow-sm touch-target transition";
+                    regBtn.className = "flex-1 py-2.5 rounded-xl font-bold text-xs text-slate-600 hover:text-slate-900 touch-target transition";
                     this.generateCaptcha("login");
                 } else {
                     loginForm.classList.add("hidden");
                     regForm.classList.remove("hidden");
-                    regBtn.className = "flex-1 py-3.5 font-bold text-sm border-b-2 border-emerald-500 text-emerald-400 touch-target transition";
-                    loginBtn.className = "flex-1 py-3.5 font-bold text-sm border-b-2 border-transparent text-slate-400 hover:text-white touch-target transition";
+                    regBtn.className = "flex-1 py-2.5 rounded-xl font-bold text-xs bg-white text-emerald-700 shadow-sm touch-target transition";
+                    loginBtn.className = "flex-1 py-2.5 rounded-xl font-bold text-xs text-slate-600 hover:text-slate-900 touch-target transition";
                     this.generateCaptcha("register");
                 }
             },
@@ -3411,9 +3653,9 @@
 
                 document.querySelectorAll("#main-app-nav .nav-item").forEach(link => {
                     if (link.getAttribute("data-route") === baseSegment) {
-                        link.classList.add("bg-emerald-600", "text-white", "shadow-md");
+                        link.classList.add("nav-active", "bg-emerald-600", "text-white", "shadow-md");
                     } else {
-                        link.classList.remove("bg-emerald-600", "text-white", "shadow-md");
+                        link.classList.remove("nav-active", "bg-emerald-600", "text-white", "shadow-md");
                     }
                 });
 
@@ -4047,41 +4289,53 @@
                     const pct = fin.contract > 0 ? Math.min(100, Math.round((fin.received / fin.contract) * 100)) : 0;
                     const isRunning = t.status === "جاری ہے";
                     return `
-                        <div class="border border-slate-200 rounded-2xl p-3 sm:p-4 bg-slate-50/70 hover:bg-white transition shadow-sm flex flex-col justify-between gap-2.5 sm:gap-3">
+                        <div class="border border-slate-200/90 rounded-2xl p-3.5 sm:p-4 bg-white hover:border-emerald-300 transition shadow-sm flex flex-col justify-between gap-3">
                             <div class="flex items-start justify-between gap-2">
                                 <div class="min-w-0">
-                                    <span class="inline-block px-2 sm:px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-bold ${isRunning ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200 text-slate-800'}">${this.escapeHtml(t.status)}</span>
+                                    <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-bold ${isRunning ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-700'}">${this.escapeHtml(t.status)}</span>
                                     <h4 class="font-extrabold text-sm sm:text-base text-slate-900 mt-1 truncate">${this.escapeHtml(t.title)}</h4>
-                                    <p class="text-[11px] sm:text-xs text-slate-500 truncate"><i class="fa-solid fa-user-tie ml-1"></i> ${this.escapeHtml(t.client)} • ${this.escapeHtml(t.city)}</p>
+                                    <p class="text-[11px] sm:text-xs text-slate-500 truncate"><i class="fa-solid fa-user-tie ml-1 text-slate-400"></i> ${this.escapeHtml(t.client)} • ${this.escapeHtml(t.city)}</p>
                                 </div>
-                                <button type="button" onclick="App.printSingleThekaReport('${this.escapeHtml(t.id)}')" class="bg-white border border-slate-300 hover:border-emerald-600 text-slate-700 hover:text-emerald-700 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-xl text-[11px] sm:text-xs font-bold touch-target shrink-0" title="کھاتہ پرنٹ">
-                                    <i class="fa-solid fa-print ml-1"></i> کھاتہ
+                                <button type="button" onclick="App.printSingleThekaReport('${this.escapeHtml(t.id)}')" class="bg-slate-50 border border-slate-200 hover:border-emerald-500 text-slate-700 hover:text-emerald-700 px-2.5 py-1.5 rounded-xl text-[11px] font-bold touch-target shrink-0" title="کھاتہ پرنٹ">
+                                    <i class="fa-solid fa-print ml-1 text-emerald-600"></i> کھاتہ
                                 </button>
                             </div>
 
-                            <div class="grid grid-cols-3 gap-1 sm:gap-2 text-center bg-white p-2 sm:p-2.5 rounded-xl border border-slate-200/80 text-[11px] sm:text-xs">
+                            <div class="grid grid-cols-3 gap-1.5 sm:gap-2 text-center bg-slate-50/80 p-2.5 rounded-xl border border-slate-100 text-[11px] sm:text-xs">
                                 <div class="min-w-0">
-                                    <div class="text-[10px] sm:text-xs text-slate-500">کل ٹھیکہ</div>
+                                    <div class="text-[10px] text-slate-500">کل ٹھیکہ</div>
                                     <div class="font-extrabold text-slate-900 num-ltr text-[11px] sm:text-xs truncate">${this.formatPKR(fin.contract)}</div>
                                 </div>
                                 <div class="min-w-0">
-                                    <div class="text-[10px] sm:text-xs text-slate-500">وصول شدہ</div>
+                                    <div class="text-[10px] text-slate-500">وصول شدہ</div>
                                     <div class="font-extrabold text-sky-700 num-ltr text-[11px] sm:text-xs truncate">${this.formatPKR(fin.received)}</div>
                                 </div>
                                 <div class="min-w-0">
-                                    <div class="text-[10px] sm:text-xs text-slate-500">کل خرچہ</div>
+                                    <div class="text-[10px] text-slate-500">کل خرچہ</div>
                                     <div class="font-extrabold text-rose-600 num-ltr text-[11px] sm:text-xs truncate">${this.formatPKR(fin.totalSpent)}</div>
                                 </div>
                             </div>
 
                             <div>
                                 <div class="flex justify-between text-[10px] sm:text-[11px] font-bold mb-1">
-                                    <span>وصولی: ${pct}%</span>
-                                    <span class="${fin.projectedProfit >= 0 ? 'text-emerald-700' : 'text-rose-600'} truncate">بچت: <span class="num-ltr">${this.formatPKR(fin.projectedProfit)}</span></span>
+                                    <span class="text-slate-600">وصولی: ${pct}%</span>
+                                    <span class="${fin.projectedProfit >= 0 ? 'text-emerald-700' : 'text-rose-600'} truncate">متوقع بچت: <span class="num-ltr">${this.formatPKR(fin.projectedProfit)}</span></span>
                                 </div>
-                                <div class="w-full h-1.5 sm:h-2 bg-slate-200 rounded-full overflow-hidden">
-                                    <div class="h-full bg-emerald-600 rounded-full" style="width:${pct}%"></div>
+                                <div class="w-full h-1.5 sm:h-2 bg-slate-100 rounded-full overflow-hidden">
+                                    <div class="h-full bg-emerald-500 rounded-full" style="width:${pct}%"></div>
                                 </div>
+                            </div>
+
+                            <div class="pt-2 border-t border-slate-100 flex flex-wrap items-center gap-1.5">
+                                <button type="button" onclick="App.openHisabModal('', 'مالک سے قسط وصولی', '', '${this.escapeHtml(t.id)}')" class="flex-1 py-1.5 px-2 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200 font-bold text-[11px] flex items-center justify-center gap-1 touch-target">
+                                    <i class="fa-solid fa-plus text-[10px]"></i> قسط وصولی
+                                </button>
+                                <button type="button" onclick="App.openHisabModal('', 'میٹریل اور سائٹ خرچہ', '', '${this.escapeHtml(t.id)}')" class="flex-1 py-1.5 px-2 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-200 font-bold text-[11px] flex items-center justify-center gap-1 touch-target">
+                                    <i class="fa-solid fa-minus text-[10px]"></i> میٹریل خرچہ
+                                </button>
+                                <button type="button" onclick="App.openBulkAttendanceForTheka('${this.escapeHtml(t.id)}')" class="py-1.5 px-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 font-bold text-[11px] flex items-center justify-center gap-1 touch-target">
+                                    <i class="fa-solid fa-user-check text-[10px]"></i> حاضری
+                                </button>
                             </div>
                         </div>
                     `;
@@ -4835,6 +5089,12 @@
                             </td>
                             <td class="text-center">
                                 <div class="flex items-center justify-center gap-1">
+                                    <button type="button" onclick="App.openHisabModal('', 'مالک سے قسط وصولی', '', '${this.escapeHtml(t.id)}')" class="px-2 h-8 rounded-lg bg-sky-50 text-sky-700 hover:bg-sky-600 hover:text-white font-bold text-[11px] flex items-center justify-center gap-1 touch-target" title="فوری قسط وصولی درج کریں">
+                                        <i class="fa-solid fa-plus"></i> قسط
+                                    </button>
+                                    <button type="button" onclick="App.openHisabModal('', 'میٹریل اور سائٹ خرچہ', '', '${this.escapeHtml(t.id)}')" class="px-2 h-8 rounded-lg bg-amber-50 text-amber-800 hover:bg-amber-600 hover:text-white font-bold text-[11px] flex items-center justify-center gap-1 touch-target" title="فوری میٹریل خرچہ درج کریں">
+                                        <i class="fa-solid fa-truck-ramp-box"></i> خرچہ
+                                    </button>
                                     <button type="button" onclick="App.printSingleThekaReport('${this.escapeHtml(t.id)}')" class="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-600 hover:text-white flex items-center justify-center touch-target" title="کھاتہ پرنٹ">
                                         <i class="fa-solid fa-print"></i>
                                     </button>
@@ -4953,6 +5213,15 @@
                             <td class="text-center text-xs font-bold"><span class="num-ltr">${this.escapeHtml(m.phone)}</span></td>
                             <td class="text-center">
                                 <div class="flex items-center justify-center gap-1">
+                                    <button type="button" onclick="App.quickMarkAttendance('${this.escapeHtml(m.id)}', 'پورا دن (Full)')" class="px-2 h-8 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-600 hover:text-white font-bold text-[11px] flex items-center justify-center gap-1 touch-target" title="آج کی پورا دن حاضری لگائیں">
+                                        <i class="fa-solid fa-user-check"></i> حاضر
+                                    </button>
+                                    <button type="button" onclick="App.openHisabModal('', 'مزدور ادائیگی / ایڈوانس', '${this.escapeHtml(m.id)}', '${this.escapeHtml(m.thekaId || '')}')" class="px-2 h-8 rounded-lg bg-amber-50 text-amber-800 hover:bg-amber-600 hover:text-white font-bold text-[11px] flex items-center justify-center gap-1 touch-target" title="فوری ادائیگی یا ایڈوانس دیں">
+                                        <i class="fa-solid fa-hand-holding-dollar"></i> ادائیگی
+                                    </button>
+                                    <button type="button" onclick="App.shareMazdoorWhatsApp('${this.escapeHtml(m.id)}')" class="w-8 h-8 rounded-lg bg-green-50 text-green-600 hover:bg-green-600 hover:text-white flex items-center justify-center touch-target" title="واٹس ایپ پر کھاتہ بھیجیں">
+                                        <i class="fa-brands fa-whatsapp"></i>
+                                    </button>
                                     <button type="button" onclick="App.printMazdoorKhata('${this.escapeHtml(m.id)}')" class="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-600 hover:text-white flex items-center justify-center touch-target" title="مزدور کھاتہ سلپ">
                                         <i class="fa-solid fa-receipt"></i>
                                     </button>
@@ -5099,6 +5368,7 @@
                 $("#table-attendance thead th").removeAttr("style");
                 document.querySelector("#table-attendance tbody").innerHTML = rows;
                 this.dataTables.attendance = $("#table-attendance").DataTable(this.buildDataTableConfig());
+                this.renderQuickTapAttendance();
             },
 
             setHisabQuickDate(period) {
@@ -5620,7 +5890,6 @@
                 hisabValidator
                     .addField("#hisab-date", [{ rule: "required", errorMessage: "تاریخ منتخب کریں" }])
                     .addField("#hisab-amount", [{ rule: "required", errorMessage: "رقم درج کریں" }])
-                    .addField("#hisab-desc", [{ rule: "required", errorMessage: "لین دین کی مختصر تفصیل لکھیں" }])
                     .onSuccess((event) => {
                         event.preventDefault();
                         this.saveHisabRecord();
@@ -5716,6 +5985,7 @@
                 } else {
                     document.getElementById("modal-theka-title").textContent = "نیا تعمیراتی ٹھیکہ شامل کریں";
                 }
+                this.updateThekaAmountWords();
                 this.openModal("modal-theka", "theka-title");
             },
 
@@ -5973,6 +6243,7 @@
                     this.syncMazdoorWageInAtt();
                     this.checkAttendanceDuplicate();
                 }
+                this.updateAttLiveCalc();
                 this.openModal("modal-attendance", "att-date");
             },
 
@@ -6273,7 +6544,8 @@
             },
 
             updateBulkSelectedCount() {
-                const checkedCount = document.querySelectorAll(".bulk-mazdoor-check:checked").length;
+                const checkedBoxes = Array.from(document.querySelectorAll(".bulk-mazdoor-check:checked"));
+                const checkedCount = checkedBoxes.length;
                 const totalCount = document.querySelectorAll(".bulk-mazdoor-check").length;
                 const counter = document.getElementById("bulk-selected-counter");
                 if (counter) {
@@ -6283,6 +6555,25 @@
                 if (master && totalCount > 0) {
                     master.checked = (checkedCount === totalCount);
                 }
+                const multMap = {
+                    "پورا دن (Full)": 1,
+                    "آدھا دن (Half)": 0.5,
+                    "ڈبل شفٹ (Double)": 2,
+                    "غیر حاضر (Absent)": 0
+                };
+                let sum = 0;
+                checkedBoxes.forEach(cb => {
+                    const mId = cb.getAttribute("data-mazdoor-id");
+                    const m = this.db.mazdoors.find(x => x.id === mId);
+                    if (!m) return;
+                    const stEl = document.querySelector(`.bulk-status-select[data-bulk-mazdoor="${mId}"]`);
+                    const otEl = document.querySelector(`.bulk-overtime-input[data-mazdoor-overtime="${mId}"]`);
+                    const mult = stEl && multMap[stEl.value] !== undefined ? multMap[stEl.value] : 1;
+                    const ot = otEl ? Math.max(0, Number(otEl.value) || 0) : 0;
+                    sum += Math.round(Number(m.dailyWage || 0) * mult) + ot;
+                });
+                const totalEl = document.getElementById("bulk-live-total-amount");
+                if (totalEl) totalEl.textContent = this.formatPKR(sum);
             },
 
             saveBulkAttendance() {
@@ -6364,8 +6655,84 @@
                 const wrap = document.getElementById("hisab-mazdoor-wrap");
                 if (type === "مزدور ادائیگی / ایڈوانس") {
                     wrap.classList.remove("hidden");
+                    this.onHisabMazdoorSelectChange();
                 } else {
                     wrap.classList.add("hidden");
+                    this.updateHisabSmartContext();
+                }
+            },
+
+            onHisabMazdoorSelectChange() {
+                const type = document.getElementById("hisab-type")?.value;
+                if (type === "مزدور ادائیگی / ایڈوانس") {
+                    const mId = document.getElementById("hisab-mazdoor")?.value;
+                    const m = this.db.mazdoors.find(x => x.id === mId);
+                    if (m && m.thekaId) {
+                        $("#hisab-theka").val(m.thekaId).trigger("change");
+                    }
+                }
+                this.updateHisabSmartContext();
+            },
+
+            updateHisabSmartContext() {
+                const type = document.getElementById("hisab-type")?.value || "";
+                const thekaId = document.getElementById("hisab-theka")?.value || "";
+                const mazdoorId = document.getElementById("hisab-mazdoor")?.value || "";
+                const box = document.getElementById("hisab-smart-context-box");
+                const chipsBox = document.getElementById("hisab-desc-chips");
+                if (!box || !chipsBox) return;
+
+                if (type === "مزدور ادائیگی / ایڈوانس") {
+                    const m = this.db.mazdoors.find(x => x.id === mazdoorId);
+                    const fin = m ? this.getMazdoorFinancials(m.id) : { earned: 0, paid: 0, netPayable: 0 };
+                    box.innerHTML = m ? `
+                        <div class="p-3 rounded-2xl bg-amber-50/90 border border-amber-200 flex flex-wrap items-center justify-between gap-2 text-xs">
+                            <div>
+                                <span class="font-bold text-slate-700">${this.escapeHtml(m.name)} کا خالص بقایا:</span>
+                                <span class="font-extrabold text-amber-800 num-ltr text-sm mr-1">${this.formatPKR(fin.netPayable)}</span>
+                                <span class="text-[11px] text-slate-500 block">کل کمائی: ${this.formatPKR(fin.earned)} • وصول شدہ: ${this.formatPKR(fin.paid)}</span>
+                            </div>
+                            <div class="flex gap-1.5">
+                                ${fin.netPayable > 0 ? `<button type="button" onclick="App.setQuickAmount('hisab-amount', ${fin.netPayable})" class="px-2.5 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-[11px] shadow-sm touch-target">پورا بقایا (${this.formatPKR(fin.netPayable)})</button>` : ''}
+                                <button type="button" onclick="App.setQuickAmount('hisab-amount', ${Number(m.dailyWage || 2000)})" class="px-2.5 py-1.5 rounded-xl bg-white border border-amber-300 text-amber-900 font-bold text-[11px] touch-target">1 دیہاڑی</button>
+                            </div>
+                        </div>
+                    ` : "";
+                    chipsBox.innerHTML = [
+                        "ہفتہ وار دیہاڑی حساب ادائیگی",
+                        "گھر خرچہ و نقد ایڈوانس",
+                        "آج کی دیہاڑی نقد ادائیگی",
+                        "مکمل حساب بے باق ادائیگی"
+                    ].map(c => `<button type="button" class="rn-chip" onclick="App.setQuickText('hisab-desc', '${c}')">${c}</button>`).join("");
+                } else if (type === "مالک سے قسط وصولی") {
+                    const t = this.db.thekas.find(x => x.id === thekaId);
+                    const fin = t ? this.getThekaFinancials(t.id) : { contract: 0, received: 0, balanceReceivable: 0 };
+                    box.innerHTML = t ? `
+                        <div class="p-3 rounded-2xl bg-sky-50/90 border border-sky-200 flex flex-wrap items-center justify-between gap-2 text-xs">
+                            <div>
+                                <span class="font-bold text-slate-700">مالک ذمہ بقایا رقم:</span>
+                                <span class="font-extrabold text-sky-800 num-ltr text-sm mr-1">${this.formatPKR(fin.balanceReceivable)}</span>
+                                <span class="text-[11px] text-slate-500 block">طے شدہ: ${this.formatPKR(fin.contract)} • وصول شدہ: ${this.formatPKR(fin.received)}</span>
+                            </div>
+                            ${fin.balanceReceivable > 0 ? `<button type="button" onclick="App.setQuickAmount('hisab-amount', ${fin.balanceReceivable})" class="px-2.5 py-1.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-[11px] shadow-sm touch-target">پورا بقایا درج کریں</button>` : ''}
+                        </div>
+                    ` : "";
+                    chipsBox.innerHTML = [
+                        "ایڈوانس / پہلی قسط وصولی",
+                        "دوسری قسط بمطابق معاہدہ وصولی",
+                        "لنٹر سلیب قسط وصولی",
+                        "پلستر و فنشنگ قسط وصولی"
+                    ].map(c => `<button type="button" class="rn-chip" onclick="App.setQuickText('hisab-desc', '${c}')">${c}</button>`).join("");
+                } else {
+                    box.innerHTML = "";
+                    chipsBox.innerHTML = [
+                        "چراٹ سیمنٹ بوری خریداری",
+                        "سریا (Steel) و بائنڈنگ تار",
+                        "اول اینٹیں (Bricks) ٹرالی",
+                        "لارنس پور ریت اور بجری کرش",
+                        "شٹرنگ پلیٹس و بانس کرایہ",
+                        "مزدور دوپہر کھانا اور چائے خرچہ"
+                    ].map(c => `<button type="button" class="rn-chip" onclick="App.setQuickText('hisab-desc', '${c}')">${c}</button>`).join("");
                 }
             },
 
@@ -6407,6 +6774,7 @@
                     }
                 }
                 this.toggleHisabMazdoorField();
+                this.updateHisabSmartContext();
                 this.openModal("modal-hisab", "hisab-amount");
             },
 
@@ -6418,7 +6786,7 @@
                 const mazdoorId = type === "مزدور ادائیگی / ایڈوانس" ? document.getElementById("hisab-mazdoor").value : "";
                 const amount = Number(document.getElementById("hisab-amount").value);
                 const method = document.getElementById("hisab-method").value;
-                const desc = document.getElementById("hisab-desc").value.trim();
+                let desc = document.getElementById("hisab-desc").value.trim();
 
                 if (!date) {
                     this.toast("تاریخ منتخب کرنا لازمی ہے۔", "error");
@@ -6435,6 +6803,18 @@
                 if (!amount || amount <= 0 || isNaN(amount)) {
                     this.toast("رقم صفر سے زیادہ ہونی چاہیے۔", "error");
                     return;
+                }
+
+                if (!desc) {
+                    if (type === "مزدور ادائیگی / ایڈوانس") {
+                        const m = this.db.mazdoors.find(x => x.id === mazdoorId);
+                        desc = `${m ? m.name : 'مزدور'} کو دیہاڑی / ایڈوانس ادائیگی`;
+                    } else if (type === "مالک سے قسط وصولی") {
+                        const t = this.db.thekas.find(x => x.id === thekaId);
+                        desc = `${t ? t.client : 'مالک مکان'} سے ٹھیکہ قسط وصولی`;
+                    } else {
+                        desc = "تعمیراتی سائٹ میٹریل و متفرق خرچہ";
+                    }
                 }
 
                 const payload = {
@@ -7426,6 +7806,260 @@
                 });
             }
         };
+
+        Object.assign(App, {
+            openQuickActionSheet() {
+                this.openModal("modal-quick-sheet");
+            },
+
+            setQuickAmount(inputId, val) {
+                const el = document.getElementById(inputId);
+                if (el) {
+                    el.value = val;
+                    this.formDirty = true;
+                    el.dispatchEvent(new Event("input", { bubbles: true }));
+                }
+            },
+
+            setQuickText(inputId, text) {
+                const el = document.getElementById(inputId);
+                if (el) {
+                    el.value = text;
+                    this.formDirty = true;
+                    el.dispatchEvent(new Event("input", { bubbles: true }));
+                }
+            },
+
+            updateThekaAmountWords() {
+                const val = Number(document.getElementById("theka-amount")?.value || 0);
+                const out = document.getElementById("theka-amount-words");
+                if (!out) return;
+                if (!val || val <= 0) {
+                    out.textContent = "";
+                    return;
+                }
+                if (val >= 10000000) {
+                    out.textContent = `${(val / 10000000).toFixed(2).replace(/\.00$/, '')} کروڑ روپے`;
+                } else if (val >= 100000) {
+                    out.textContent = `${(val / 100000).toFixed(2).replace(/\.00$/, '')} لاکھ روپے`;
+                } else if (val >= 1000) {
+                    out.textContent = `${(val / 1000).toFixed(1).replace(/\.0$/, '')} ہزار روپے`;
+                } else {
+                    out.textContent = `${val} روپے`;
+                }
+            },
+
+            suggestWageByRole() {
+                const wageEl = document.getElementById("mazdoor-wage");
+                if (!wageEl || wageEl.value) return;
+                const role = document.getElementById("mazdoor-role")?.value || "";
+                if (role.includes("راج مستری")) wageEl.value = 3000;
+                else if (role.includes("شٹرنگ") || role.includes("سریا")) wageEl.value = 2800;
+                else if (role.includes("پلمبر") || role.includes("ٹائل")) wageEl.value = 3000;
+                else if (role.includes("مزدور") || role.includes("ہیلپر")) wageEl.value = 1600;
+            },
+
+            updateAttLiveCalc() {
+                const mId = document.getElementById("att-mazdoor")?.value;
+                const status = document.getElementById("att-status")?.value || "پورا دن (Full)";
+                const overtime = Math.max(0, Number(document.getElementById("att-overtime")?.value || 0));
+                const out = document.getElementById("att-live-calc-value");
+                if (!out) return;
+                const m = this.db.mazdoors.find(x => x.id === mId);
+                const baseWage = m ? Number(m.dailyWage || 0) : 0;
+                const multMap = {
+                    "پورا دن (Full)": 1,
+                    "آدھا دن (Half)": 0.5,
+                    "ڈبل شفٹ (Double)": 2,
+                    "غیر حاضر (Absent)": 0
+                };
+                const mult = multMap[status] !== undefined ? multMap[status] : 1;
+                const total = Math.round(baseWage * mult) + overtime;
+                out.textContent = `${this.formatPKR(total)} (دیہاڑی: ${this.formatPKR(baseWage)} × ${mult} + OT: ${this.formatPKR(overtime)})`;
+            },
+
+            setAllBulkStatus(statusVal) {
+                document.querySelectorAll(".bulk-status-select").forEach(sel => {
+                    sel.value = statusVal;
+                });
+                this.updateBulkSelectedCount();
+                this.toast(`تمام مزدوروں کی حاضری "${statusVal}" پر سیٹ کر دی گئی۔`, "success");
+            },
+
+            openBulkAttendanceForTheka(thekaId) {
+                this.openBulkAttendanceModal();
+                const sel = document.getElementById("bulk-att-theka");
+                if (sel && thekaId) {
+                    sel.value = thekaId;
+                    this.filterBulkAttendanceByTheka();
+                }
+            },
+
+            renderQuickTapAttendance() {
+                const grid = document.getElementById("quick-tap-attendance-grid");
+                const dateInp = document.getElementById("quick-tap-att-date");
+                if (!grid) return;
+                const todayStr = new Date().toISOString().slice(0, 10);
+                if (dateInp && !dateInp.value) dateInp.value = todayStr;
+                const targetDate = (dateInp && dateInp.value) ? dateInp.value : todayStr;
+
+                if (!this.db.mazdoors || this.db.mazdoors.length === 0) {
+                    grid.innerHTML = `<div class="col-span-full text-center text-xs text-slate-400 py-2">کوئی مزدور رجسٹرڈ نہیں۔</div>`;
+                    return;
+                }
+
+                grid.innerHTML = this.db.mazdoors.map(m => {
+                    const existing = this.db.attendance.find(a => a.mazdoorId === m.id && a.date === targetDate);
+                    const st = existing ? existing.status : "";
+                    const isFull = st.includes("Full") || st.includes("پورا");
+                    const isHalf = st.includes("Half") || st.includes("آدھا");
+                    const isDouble = st.includes("Double") || st.includes("ڈبل");
+                    const isAbsent = st.includes("Absent") || st.includes("غیر");
+                    return `
+                        <div class="bg-white rounded-xl p-2.5 border ${existing ? 'border-emerald-300 shadow-sm' : 'border-slate-200'} flex flex-col justify-between gap-2">
+                            <div class="flex items-center justify-between gap-1">
+                                <div class="min-w-0">
+                                    <div class="font-extrabold text-xs text-slate-900 truncate">${this.escapeHtml(m.name)}</div>
+                                    <div class="text-[10px] text-slate-500 truncate">${this.escapeHtml(m.role)} • <span class="num-ltr font-bold text-emerald-700">Rs ${m.dailyWage}</span></div>
+                                </div>
+                                ${existing ? `<span class="px-1.5 py-0.5 rounded-md text-[10px] font-bold bg-emerald-100 text-emerald-800 shrink-0">✓ درج</span>` : `<span class="px-1.5 py-0.5 rounded-md text-[10px] font-bold bg-slate-100 text-slate-500 shrink-0">باقی</span>`}
+                            </div>
+                            <div class="grid grid-cols-4 gap-1 text-[10px] font-bold">
+                                <button type="button" onclick="App.quickMarkAttendance('${this.escapeHtml(m.id)}', 'پورا دن (Full)', '${targetDate}')" class="py-1.5 rounded-lg border transition ${isFull ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-slate-50 hover:bg-emerald-50 text-slate-700 border-slate-200'}">پورا</button>
+                                <button type="button" onclick="App.quickMarkAttendance('${this.escapeHtml(m.id)}', 'آدھا دن (Half)', '${targetDate}')" class="py-1.5 rounded-lg border transition ${isHalf ? 'bg-amber-500 text-white border-amber-500' : 'bg-slate-50 hover:bg-amber-50 text-slate-700 border-slate-200'}">آدھا</button>
+                                <button type="button" onclick="App.quickMarkAttendance('${this.escapeHtml(m.id)}', 'ڈبل شفٹ (Double)', '${targetDate}')" class="py-1.5 rounded-lg border transition ${isDouble ? 'bg-sky-600 text-white border-sky-600' : 'bg-slate-50 hover:bg-sky-50 text-slate-700 border-slate-200'}">ڈبل</button>
+                                <button type="button" onclick="App.quickMarkAttendance('${this.escapeHtml(m.id)}', 'غیر حاضر (Absent)', '${targetDate}')" class="py-1.5 rounded-lg border transition ${isAbsent ? 'bg-rose-600 text-white border-rose-600' : 'bg-slate-50 hover:bg-rose-50 text-slate-700 border-slate-200'}">چھٹی</button>
+                            </div>
+                        </div>
+                    `;
+                }).join("");
+            },
+
+            quickMarkAttendance(mazdoorId, statusVal, customDate) {
+                const m = this.db.mazdoors.find(x => x.id === mazdoorId);
+                if (!m) return;
+                const date = customDate || new Date().toISOString().slice(0, 10);
+                const thekaId = m.thekaId || (this.db.thekas[0] ? this.db.thekas[0].id : "");
+                if (!thekaId) {
+                    this.toast("پہلے کم از کم ایک ٹھیکہ سائٹ شامل کریں۔", "error");
+                    return;
+                }
+                const multMap = {
+                    "پورا دن (Full)": 1,
+                    "آدھا دن (Half)": 0.5,
+                    "ڈبل شفٹ (Double)": 2,
+                    "غیر حاضر (Absent)": 0
+                };
+                const mult = multMap[statusVal] !== undefined ? multMap[statusVal] : 1;
+                const baseWage = Number(m.dailyWage || 0);
+                const existing = this.db.attendance.find(a => a.mazdoorId === mazdoorId && a.date === date);
+                if (existing) {
+                    existing.status = statusVal;
+                    existing.multiplier = mult;
+                    existing.baseWage = baseWage;
+                    existing.totalEarned = Math.round(baseWage * mult) + Number(existing.overtime || 0);
+                } else {
+                    this.db.attendance.unshift({
+                        id: "ATT-" + Date.now() + "-" + Math.floor(Math.random() * 100),
+                        date,
+                        mazdoorId: m.id,
+                        thekaId,
+                        status: statusVal,
+                        multiplier: mult,
+                        baseWage,
+                        overtime: 0,
+                        totalEarned: Math.round(baseWage * mult),
+                        note: "فوری 1-کلک حاضری"
+                    });
+                }
+                this.saveDatabase();
+                this.refreshAllViews();
+                this.toast(`${m.name}: ${statusVal} (${date}) محفوظ ہو گئی!`, "success");
+            },
+
+            markAllQuickPresent() {
+                const dateInp = document.getElementById("quick-tap-att-date");
+                const targetDate = (dateInp && dateInp.value) ? dateInp.value : new Date().toISOString().slice(0, 10);
+                if (!this.db.mazdoors || this.db.mazdoors.length === 0) return;
+                this.db.mazdoors.forEach((m, idx) => {
+                    const thekaId = m.thekaId || (this.db.thekas[0] ? this.db.thekas[0].id : "");
+                    if (!thekaId) return;
+                    const baseWage = Number(m.dailyWage || 0);
+                    const existing = this.db.attendance.find(a => a.mazdoorId === m.id && a.date === targetDate);
+                    if (!existing) {
+                        this.db.attendance.unshift({
+                            id: "ATT-" + Date.now() + "-" + idx,
+                            date: targetDate,
+                            mazdoorId: m.id,
+                            thekaId,
+                            status: "پورا دن (Full)",
+                            multiplier: 1,
+                            baseWage,
+                            overtime: 0,
+                            totalEarned: baseWage,
+                            note: "فوری اجتماعی حاضری"
+                        });
+                    }
+                });
+                this.saveDatabase();
+                this.refreshAllViews();
+                this.toast(`تمام مزدوروں کی تاریخ ${targetDate} کی حاضری لگ گئی!`, "success");
+            },
+
+            shareMazdoorWhatsApp(mazdoorId) {
+                const m = this.db.mazdoors.find(x => x.id === mazdoorId);
+                if (!m) return;
+                const fin = this.getMazdoorFinancials(mazdoorId);
+                const text = `*پختونخوا ٹھیکیدار کھاتہ خلاصہ*\n` +
+                    `نام: ${m.name} (${m.role})\n` +
+                    `مقررہ دیہاڑی: ${this.formatPKR(m.dailyWage)}\n` +
+                    `کل کام کے دن: ${fin.daysWorked} ایام\n` +
+                    `کل حاضری کمائی: ${this.formatPKR(fin.earned)}\n` +
+                    `وصول شدہ ایڈوانس/رقم: ${this.formatPKR(fin.paid)}\n` +
+                    `*خالص بقایا واجب الادا: ${this.formatPKR(fin.netPayable)}*`;
+                const cleanPhone = String(m.phone || "").replace(/[^0-9]/g, "").replace(/^0/, "92");
+                const url = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(text)}`;
+                window.open(url, "_blank", "noopener,noreferrer");
+            },
+
+            applyThemePreset(presetName) {
+                const user = this.getCurrentUser();
+                if (!user) return;
+                let preset = this.getDefaultTheme();
+                if (presetName === "emerald") {
+                    preset = {
+                        fontFamily: "'Noto Sans Arabic', 'Readex Pro', 'Inter', sans-serif",
+                        fontSize: "16px",
+                        headerBg: "#ecfdf5",
+                        headerText: "#064e3b",
+                        sidebarBg: "#ffffff",
+                        sidebarText: "#065f46",
+                        mainBg: "#f0fdf4",
+                        mainText: "#0f172a",
+                        footerBg: "#ffffff",
+                        footerText: "#065f46"
+                    };
+                } else if (presetName === "slate") {
+                    preset = {
+                        fontFamily: "'Noto Sans Arabic', 'Readex Pro', 'Inter', sans-serif",
+                        fontSize: "16px",
+                        headerBg: "#0f172a",
+                        headerText: "#f8fafc",
+                        sidebarBg: "#ffffff",
+                        sidebarText: "#1e293b",
+                        mainBg: "#f8fafc",
+                        mainText: "#0f172a",
+                        footerBg: "#0f172a",
+                        footerText: "#e2e8f0"
+                    };
+                }
+                user.theme = preset;
+                this.saveDatabase();
+                this.applyUserTheme(preset);
+                this.syncSettingsForm();
+                this.toast("منتخب کردہ ڈیزائن تھیم لاگو کر دی گئی!", "success");
+            }
+        });
 
         document.addEventListener("DOMContentLoaded", () => {
             App.init();
