@@ -203,7 +203,7 @@
             min-height: 44px;
             min-width: 44px;
         }
-        button.touch-target, a.touch-target, .btn-touch {
+        button.touch-target:not(.hidden), a.touch-target:not(.hidden), .btn-touch:not(.hidden) {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -229,9 +229,21 @@
         }
         @media (max-width: 767px) {
             #main-app-nav {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                justify-content: space-between !important;
                 border-top-left-radius: 1.25rem;
                 border-top-right-radius: 1.25rem;
                 box-shadow: 0 -4px 24px rgba(15, 23, 42, 0.08) !important;
+                padding: 6px 8px max(8px, env(safe-area-inset-bottom)) 8px !important;
+                gap: 4px !important;
+            }
+            #main-app-nav .nav-item {
+                flex: 1 1 0% !important;
+                min-width: 0 !important;
+                padding: 6px 2px !important;
+                border-radius: 0.85rem !important;
             }
             #main-app-nav.nav-hidden {
                 transform: translateY(110%);
@@ -1005,10 +1017,12 @@
 <p class="text-xs text-emerald-600 font-bold truncate" id="nav-user-role-badge">بڑا ٹھیکیدار</p>
 </div>
 </div>
-<button class="hidden md:flex items-center justify-center gap-2 w-full py-2.5 px-3 mb-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-sm transition touch-target" onclick="App.openQuickActionSheet()" type="button">
+<div class="hidden md:block w-full mb-3">
+<button class="flex items-center justify-center gap-2 w-full py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-sm transition touch-target" onclick="App.openQuickActionSheet()" type="button">
 <i class="fa-solid fa-bolt"></i>
 <span>فوری نیا اندراج (1-Tap)</span>
 </button>
+</div>
 <a class="nav-item flex-1 md:flex-none min-w-0 flex flex-col md:flex-row items-center justify-center md:justify-start gap-0.5 md:gap-3 px-1 md:px-3.5 py-1.5 md:py-2.5 rounded-xl font-bold text-xs md:text-sm transition" data-route="/dashboard" href="/dashboard" onclick="App.navigate('/dashboard', event)">
 <i class="fa-solid fa-chart-pie text-base md:text-lg"></i>
 <span class="text-[10px] md:text-sm leading-tight text-center truncate"><span class="md:hidden">ڈیش بورڈ</span><span class="hidden md:inline">خلاصہ / ڈیش بورڈ</span></span>

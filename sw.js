@@ -67,11 +67,11 @@ if (workbox) {
     },
     {
         "url": "index.html",
-        "revision": "c3f2a9cdebf23e340dcfb31a0a42c3b4"
+        "revision": "6d81a798793d17bc6ca7c70fd489f053"
     },
     {
         "url": "index.html.bak",
-        "revision": "cbb2e5aa232059c1d90890057fb2d73b"
+        "revision": "c3f2a9cdebf23e340dcfb31a0a42c3b4"
     },
     {
         "url": "logo.png",
